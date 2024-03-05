@@ -86,12 +86,11 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
     'neo4j': {
-        'ENGINE': 'django_neo4j',
         'NAME': 'neo4jdb',
         'BOLT_URL': 'bolt://neo4j:123456789@localhost:7687',
         'OPTIONS': {
             'max_pool_size': 50,
-            'encrypted': True,  # Change to True if encryption is enabled
+            'encrypted': False,
             'timezone': None,
         }
     }
@@ -117,11 +116,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# CHATBOT_CACHE_TIMEOUT = 60 * 10
-# CACHE_KEY_PREFIX = 'Neo4j'
+CHATBOT_CACHE_TIMEOUT = 60 * 10
+CACHE_KEY_PREFIX = 'Neo4j'
 
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
