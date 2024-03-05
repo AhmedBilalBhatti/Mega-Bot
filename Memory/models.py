@@ -3,4 +3,4 @@ from django.conf import settings
 from django.db import models
 
 class Signups(StructuredNode):
-    username = StringProperty(unique_index=False)
+    username = StringProperty()

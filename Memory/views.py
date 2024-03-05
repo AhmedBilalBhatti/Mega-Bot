@@ -5,7 +5,7 @@ from Memory.models import Signups
 
 
 def index(request):
-    signup = Signups(username='example_username', name='AHMED')
+    signup = Signups(username='Ahmed')
     signup.save()
 
     return render(request,'index.html')
