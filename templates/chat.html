@@ -100,7 +100,7 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat" tabindex="0">
                 <div class="main-wrapper">
-                    <nav class="navbar navbar-expand-lg bg-light p-0">
+                    {% comment %} <nav class="navbar navbar-expand-lg bg-light p-0">
                         <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -130,7 +130,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </nav>
+                    </nav> {% endcomment %}
                     <div class="chat-header">
                         <div class="d-flex align-items-center gap-2">
                             <button class="navbar-toggler d-md-none d-block" type="button" data-bs-toggle="collapse"
@@ -143,13 +143,13 @@
                             </a>
                             <h3 id="targetDiv">Ask anything</h3>
                         </div>
-                        <div class="header-option">
+                        {% comment %} <div class="header-option">
                             <a class="del-btn" data-cursor="pointer" href="#"><i class="iconsax"
                                     data-icon="trash"></i></a>
                             <a class="premium-btn" id="subscriptionBtn" data-cursor="pointer" href="#!"><i
                                     class="iconsax" data-icon="crown-2"></i> Get
                                 <span>premium</span></a>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
                     <div class="main-chat">
                         <div class="no-chat">

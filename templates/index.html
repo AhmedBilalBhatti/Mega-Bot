@@ -61,9 +61,9 @@
                                 <a class="nav-link" href="index.html">Home</a>
                             </li>
 
-                            <li class="nav-item">
+                            {% comment %} <li class="nav-item">
                                 <a class="nav-link" href="chat.html">Chat</a>
-                            </li>
+                            </li> {% endcomment %}
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
@@ -98,11 +98,11 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="service.html">service</a>
+                                <a class="nav-link" href="https://portfolio0.pythonanywhere.com/">Developer</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="pricing.html">pricing</a>
+                                <a class="nav-link" href="pricing.html">About</a>
                             </li>
 
                             <li class="nav-item">
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </nav>
-        <a data-cursor="pointer" href="login.html" class="btn btn-theme d-sm-inline-block d-none"><span>Login
+        <a data-cursor="pointer" href="{% url 'login' %}" class="btn btn-theme d-sm-inline-block d-none"><span>Login
                 Now</span></a>
     </header>
     <!-- header end -->
