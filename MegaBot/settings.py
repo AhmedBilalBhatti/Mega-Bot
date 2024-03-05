@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+from neomodel import config, db
 from django.core.cache.backends.filebased import FileBasedCache
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -80,23 +81,9 @@ WSGI_APPLICATION = 'MegaBot.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'neo4j': {
-        'NAME': 'neo4jdb',
-        'BOLT_URL': 'bolt://neo4j:12345678@localhost:7687',
-        'OPTIONS': {
-            'max_pool_size': 50,
-            'encrypted': False,
-            'timezone': None,
-        }
-    }
-}
-
-
+config.DATABASE_URL = 'bolt://neo4j:12345678@localhost:7687'
+config.NEOMODEL_SIGNALS = False
+db.set_connection(config.DATABASE_URL)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

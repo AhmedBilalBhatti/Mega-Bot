@@ -6,7 +6,7 @@ from Memory.models import Signups
 
 
 def index(request):
-    Signups(username='Ahmed').save()
-    return redirect('index')
-
     return render(request,'index.html')
+
+def chat(request):
+    return render(request,'chat.html')
