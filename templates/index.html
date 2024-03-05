@@ -34,6 +34,7 @@
 
     <!-- style css -->
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
+
 </head>
 <body>
     <header>
@@ -139,10 +140,13 @@
                                 The tool was developed to support users with effortlessly generating high-quality
                                 content, saving both energy and time while maintaining an uninterrupted level of
                                 creativity and accuracy.
-
                             </p>
-                            <a data-cursor="pointer" class="start-link"><i class="iconsax"
-                                    data-icon="play-circle"></i>Start free trial</a>
+                            <a href="{% url 'chat' %}" data-cursor="pointer" class="chat-button">
+                                <button class="butto" data-text="Chat Now">
+                                  <span class="actual-text">&nbsp;Chat&nbsp;</span>
+                                  <span aria-hidden="true" class="hover-text">&nbsp;Chat&nbsp;</span>
+                                </button>
+                              </a>
                         </div>
                     </div>
                     <div class="home-laptop px-md-0 px-3">
