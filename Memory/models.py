@@ -1,3 +1,6 @@
+from neomodel import StructuredNode, StringProperty, IntegerProperty,UniqueIdProperty, RelationshipTo, RelationshipFrom,DateProperty,DateTimeProperty,ArrayProperty
+from django.conf import settings
 from django.db import models
 
-# Create your models here.
+class Signups(StructuredNode):
+    username = StringProperty(unique_index=False)

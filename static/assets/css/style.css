@@ -156,7 +156,7 @@ body {
 body:after {
   content: "";
   position: absolute;
-  background-image: url(../images/about-bg.png);
+  background-image: url('{% static "assets/about-bg.png" %}');
   left: 0;
   top: 0;
   width: 100%;
