@@ -87,7 +87,7 @@ DATABASES = {
     },
     'neo4j': {
         'NAME': 'neo4jdb',
-        'BOLT_URL': 'bolt://neo4j:123456789@localhost:7687',
+        'BOLT_URL': 'bolt://neo4j:12345678@localhost:7687',
         'OPTIONS': {
             'max_pool_size': 50,
             'encrypted': False,
