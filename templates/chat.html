@@ -100,22 +100,24 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat" tabindex="0">
                 <div class="main-wrapper">
-                    {% comment %} <nav class="navbar navbar-expand-lg bg-light p-0">
-                        <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
+
+
+                    <nav class="navbar navbar-expand-lg bg-light p-0">
+                        {% comment %} <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">
                             <i class="iconsax" data-icon="text-align-justify"></i>
-                        </button>
+                        </button> {% endcomment %}
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <div class="inner-menu-panel">
-                                <button data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                                {% comment %} <button data-bs-toggle="collapse" data-bs-target="#navbarNav"
                                     class="inner-close d-block d-lg-none">Back
-                                </button>
-                                <div class="search-box">
+                                </button> {% endcomment %}
+                                {% comment %} <div class="search-box">
                                     <i class="iconsax" data-icon="search-normal-2"></i>
                                     <input type="text" class="form-control" placeholder="Search here..">
-                                </div>
-                                <ul class="inner-links-list" id="innerLink">
+                                </div> {% endcomment %}
+                                {% comment %} <ul class="inner-links-list" id="innerLink">
                                     <li class="active"><a href="#!" data-title="Ask anything">Ask anything</a></li>
                                     <li><a href="#!" data-title="Image generator">Image generator</a></li>
                                     <li><a href="#!" data-title="Content writer">Content writer</a></li>
@@ -127,10 +129,14 @@
                                     <li><a href="#!" data-title="Password generator">Password generator</a></li>
                                     <li><a href="#!" data-title="Travel/hangout">Travel/hangout</a></li>
                                     <li><a href="#!" data-title="Essay writer">Essay writer</a></li>
-                                </ul>
+                                </ul> {% endcomment %}
                             </div>
                         </div>
-                    </nav> {% endcomment %}
+                    </nav>
+
+
+
+
                     <div class="chat-header">
                         <div class="d-flex align-items-center gap-2">
                             <button class="navbar-toggler d-md-none d-block" type="button" data-bs-toggle="collapse"
@@ -161,22 +167,18 @@
                         <div class="msger-chat">
                         </div>
 
-                        
-                        <form class="msger-inputarea" method="post" action="{% url 'chat' %}">
-                            {% csrf_token %}
+                        <form class="msger-inputarea">
                             <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-                                    aria-expanded="false" aria-label="Toggle navigation">
+                                data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                                aria-expanded="false" aria-label="Toggle navigation">
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
-                        
-                            <input type="text" class="msger-input" id="msger-input" placeholder="Ask any question here..." />
-
+                            <input type="text" class="msger-input" placeholder="Ask any question here..." />
                             <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
                             <a href="#" class="mic-icon"><i class="iconsax" data-icon="mic-1"></i></a>
-                            <button type="submit" class="msger-send-btn"><i class="iconsax" data-icon="send-1"></i></button>
+                            <button type="submit" class="msger-send-btn"><i class="iconsax"
+                                    data-icon="send-1"></i></button>
                         </form>
-                        
                     </div>
                 </div>
             </div>
@@ -822,7 +824,7 @@
     <!-- aos animation -->
     <script src="{% static 'assets/js/aos.js'%}"></script>
     <script src="{% static 'assets/js/custom-aos.js'%}"></script>
-    <script src="{% static 'assets/js/chatting.js'%}"></script>
+
     <!-- iconsax js -->
     <script src="{% static 'assets/js/iconsax.js'%}"></script>
 
@@ -837,6 +839,9 @@
 
     <!-- Theme js-->
     <script src="{% static 'assets/js/script.js'%}"></script>
-    
+    <script src="{% static 'assets/js/chatting.js'%}"></script>
 </body>
+
+
+<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:36 GMT -->
 </html>

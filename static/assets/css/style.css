@@ -215,7 +215,7 @@ body {
 body:after {
   content: "";
   position: absolute;
-  background-image: url('{% static "assets/about-bg.png" %}');
+  background-image: url('{% static "assets/images/about-bg.png" %}');
   left: 0;
   top: 0;
   width: 100%;
@@ -226,7 +226,7 @@ body:after {
   background-size: cover;
 }
 body.inner-bg:after {
-  background-image: url('{% static "assets/inner-bg.png" %}');
+  background-image: url('{% static "assets/images/inner-bg.png" %}');
 }
 
 h1 {
@@ -5083,7 +5083,7 @@ header .offcanvas-backdrop {
   }
 }
 .home-section .home-content h1 .title-effect span {
-  background: url("../images/title-bg.jpg");
+  background: url("{% ststic 'assets/images/title-bg.jpg'%}");
   background-position: bottom;
   -webkit-background-clip: text;
   color: transparent;
