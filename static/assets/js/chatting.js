@@ -6,9 +6,9 @@ const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "C
 
 
 const BOT_IMG = "{% static 'assets/images/icons/pro1.png'%}";
-const PERSON_IMG = "../../assets/images/icons/profile.png";
+const PERSON_IMG = "{% static 'assets/images/icons/profile.png'%}";
 const BOT_NAME = "BOT";
-const PERSON_NAME = "Kristin Williams";
+const PERSON_NAME = "Ahmed";
 
 msgerForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -64,31 +64,3 @@ function formatDate(date) {
 function random(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
-
-
-
-function sendMessage() {
-    const message = document.querySelector(".msger-input").value;
-    if (!message) return;
-
-    // Append the message to the chat box
-    appendMessage("{{ user.username }}", "{% static 'assets/images/icons/profile.png' %}", "right", message);
-    document.querySelector(".msger-input").value = "";
-
-    // Send the message to the server
-    fetch("{% url 'chat' %}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "X-CSRFToken": "{{ csrf_token }}"
-        },
-        body: "message=" + encodeURIComponent(message)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Append the bot's response to the chat box
-        appendMessage("BOT", "{% static 'assets/images/icons/pro1.png' %}", "left", data.response);
-    });
-}
-
-// Your appendMessage function here
