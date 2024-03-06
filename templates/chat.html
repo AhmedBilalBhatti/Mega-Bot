@@ -161,20 +161,27 @@
                         <div class="msger-chat">
                         </div>
 
-                        <form class="msger-inputarea">
+
+
+
+                        <form class="msger-inputarea" method="post" action="{% url 'chat' %}">
+                            {% csrf_token %}
                             <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-                                aria-expanded="false" aria-label="Toggle navigation">
+                                    aria-controls="navbarNav"
+                                    aria-expanded="false" aria-label="Toggle navigation">
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
-
-                            
-                            <input type="text" class="msger-input" placeholder="Ask any question here..." />
+                    
+                            <input type="text" class="msger-input" name="message" placeholder="Ask any question here..." />
+                    
                             <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
                             <a href="#" class="mic-icon"><i class="iconsax" data-icon="mic-1"></i></a>
-                            <button type="submit" class="msger-send-btn"><i class="iconsax"
-                                    data-icon="send-1"></i></button>
+                            <button type="button" class="msger-send-btn" onclick="sendMessage()"><i class="iconsax"data-icon="send-1"></i></button>
                         </form>
+
+
+
+
                     </div>
                 </div>
             </div>
