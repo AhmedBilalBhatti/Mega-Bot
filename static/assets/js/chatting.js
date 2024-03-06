@@ -8,7 +8,7 @@ const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "C
 const BOT_IMG = "{% static 'assets/images/icons/pro1.png'%}";
 const PERSON_IMG = "{% static 'assets/images/icons/profile.png'%}";
 const BOT_NAME = "BOT";
-const PERSON_NAME = "Ahmed";
+const PERSON_NAME = "Kristin Williams";
 
 msgerForm.addEventListener("submit", (event) => {
     event.preventDefault();
