@@ -167,7 +167,7 @@
                                 <h3>Ask anything to chatbot</h3>
                             </div>
                         </div>
-
+                    
                         <div class="msger-chat" id="chatlog">
                         </div>
                         <form class="msger-inputarea" method="post">
@@ -182,6 +182,7 @@
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
                         </form>
+                        {% csrf_token %}
                     </div>
 
 
@@ -815,7 +816,7 @@
     <div id="cursor"></div>
     <div id="cursor-border"></div>
     <!--custom cursor start  -->
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
     <!-- Bootstrap js-->
     <script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>

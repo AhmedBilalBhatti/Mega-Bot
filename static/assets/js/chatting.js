@@ -1,51 +1,50 @@
-const msgerForm = document.querySelector(".msger-inputarea");
-const msgerInput = document.querySelector(".msger-input");
-const msgerChat = document.querySelector(".msger-chat");
+$(document).ready(function () {
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+        var messageInput = $('#message');
+        var chatlogContainer = $('#chatlog');
+        var botImage = "{% static 'assets/images/icons/pro1.png' %}";
+        var userImage = "{% static 'assets/images/icons/profile.png' %}";
+        var personName = "Kristin Williams";
 
-msgerForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+        var userMessage = messageInput.val();
 
-    const userMessage = msgerInput.value.trim();
-    if (!userMessage) return;
-
-    appendMessage("You", PERSON_IMG, "right", userMessage);
-    msgerInput.value = "";
-
-    sendUserMessage(userMessage);
-});
-
-function appendMessage(name, img, side, text) {
-    const msgHTML = `
-        <div class="msg ${side}-msg">
-            <div class="msg-bubble">
-                <div class="msg-text">${text}</div>
+        var userMessageHtml = `
+            <div class="msg user-msg">
+                <div class="msg-bubble">
+                    <div class="msg-text">${userMessage}</div>
+                </div>
             </div>
-        </div>
-    `;
+        `;
 
-    msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-    msgerChat.scrollTop = msgerChat.scrollHeight;
-}
+        chatlogContainer.append(userMessageHtml);
+        chatlogContainer.append('<div class="msg bot-msg typing"><p><strong>BOT:</strong> Thinking</p></div>');
+        messageInput.val('');
 
-function sendUserMessage(message) {
-    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-    
-    fetch('{% url "chat" %}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-        },
-        body: JSON.stringify({
-            message: message
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        const botResponse = data.bot_response;
-        appendMessage("Bot", BOT_IMG, "left", botResponse);
-    })
-    .catch(error => {
-        console.error('Error:', error);
+        $.ajax({
+            type: 'POST',
+            url: '{% url "chat" %}',
+            data: {
+                'message': userMessage,
+                'csrfmiddlewaretoken': '{% csrf_token %}'
+            },
+            success: function (data) {
+                chatlogContainer.find('.typing').remove();
+
+                var botResponse = `
+                    <div class="msg bot-msg">
+                        <div class="msg-bubble">
+                            <div class="msg-text">${data.message}</div>
+                        </div>
+                    </div>
+                `;
+                chatlogContainer.append(botResponse);
+
+                chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+            },
+            error: function (xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
     });
-}
+});

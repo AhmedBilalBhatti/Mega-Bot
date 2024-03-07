@@ -12,11 +12,25 @@ def login(request):
     return render(request,'login.html')
 
 def chat(request):
+    bot_resp = "Hello"
+    print('bdvhbds')
     if request.method == 'POST':
         user_message = request.POST.get('message', '')
         if user_message:
-            print(user_message)  # This will print the value of the input field to the console
+            print(user_message)
         else:
             print("Not working")
+    
+
+def chat(request):
+    if request.method == 'POST':
+        message = request.POST.get('message', '')
+        if message:
+            print(message)
+            response_data = {'status': 'success', 'message': message}
+        else:
+            response_data = {'status': 'error', 'message': 'No message received'}
+    else:
+        response_data = {'status': 'error', 'message': 'Invalid request method'}
 
     return render(request, 'chat.html')
