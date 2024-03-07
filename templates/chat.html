@@ -157,6 +157,9 @@
                                 <span>premium</span></a>
                         </div> {% endcomment %}
                     </div>
+
+
+                    
                     <div class="main-chat">
                         <div class="no-chat">
                             <div>
@@ -164,22 +167,25 @@
                                 <h3>Ask anything to chatbot</h3>
                             </div>
                         </div>
-                        <div class="msger-chat">
-                        </div>
 
-                        <form class="msger-inputarea">
-                            <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-                                aria-expanded="false" aria-label="Toggle navigation">
+                        <div class="msger-chat" id="chatlog">
+                        </div>
+                        <form class="msger-inputarea" method="post">
+                            {% csrf_token %}
+                            <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button" 
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
-                            <input type="text" class="msger-input" placeholder="Ask any question here..." />
+                            <input type="text" class="msger-input" id="message" placeholder="Ask any question here..." />
                             <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
                             <a href="#" class="mic-icon"><i class="iconsax" data-icon="mic-1"></i></a>
-                            <button type="submit" class="msger-send-btn"><i class="iconsax"
-                                    data-icon="send-1"></i></button>
+                            <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
+                                <i class="iconsax" data-icon="send-1"></i></button>
                         </form>
                     </div>
+
+
+
                 </div>
             </div>
             <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history" tabindex="0">

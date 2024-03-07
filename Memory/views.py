@@ -12,12 +12,11 @@ def login(request):
     return render(request,'login.html')
 
 def chat(request):
-    # if request.method == 'POST':
-    #     message = request.POST.get('msg')  # Get the value of the 'message' input field
-    #     if message:
-    #         return HttpResponse(message)  # This will print the value of the input field to the console
-    #     else:
-    #         print("Not working")
-    
+    if request.method == 'POST':
+        user_message = request.POST.get('message', '')
+        if user_message:
+            print(user_message)  # This will print the value of the input field to the console
+        else:
+            print("Not working")
 
     return render(request, 'chat.html')
