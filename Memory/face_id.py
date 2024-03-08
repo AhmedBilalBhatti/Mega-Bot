@@ -4,7 +4,8 @@ import numpy as np
 from PIL import Image
 from MegaBot.settings import BASE_DIR
 
-detector = cv2.CascadeClassifier(BASE_DIR+'haarcascade_frontalface_default.xml')
+detector = cv2.CascadeClassifier(str(BASE_DIR) + '/haarcascade_frontalface_default.xml')
+
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 class FaceRecognition:    
@@ -23,7 +24,7 @@ class FaceRecognition:
                 count += 1
 
                 # Save the captured image into the datasets folder
-                cv2.imwrite(BASE_DIR+'Face_id_Data' + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
+                cv2.imwrite(str(BASE_DIR) +'Face_id_Data' + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
 
                 cv2.imshow('Register Face', img)
 
@@ -40,7 +41,7 @@ class FaceRecognition:
     
     def trainFace(self):
         # Path for face image database
-        path = BASE_DIR+'Face_id_Data'
+        path = str(BASE_DIR) + '/Face_id_Data'
 
         # function to get the images and label data
         def getImagesAndLabels(path):
@@ -69,15 +70,15 @@ class FaceRecognition:
         recognizer.train(faces, np.array(ids))
 
         # Save the model into trainer/trainer.yml
-        recognizer.save(BASE_DIR+'Mega-Bot\Face_trainertrainer.yml') # recognizer.save() worked on Mac, but not on Pi
+        recognizer.save(str(BASE_DIR) +'/Face_trainer/trainer.yml') # recognizer.save() worked on Mac, but not on Pi
 
         # Print the numer of faces trained and end program
         print("\n {0} faces trained. Exiting Program".format(len(np.unique(ids))))
 
 
     def recognizeFace(self):
-        recognizer.read(BASE_DIR+'/Face_Detection/trainer/trainer.yml')
-        cascadePath = BASE_DIR+'/Face_Detection/haarcascade_frontalface_default.xml'
+        recognizer.read(str(BASE_DIR) +'/Face_trainer/trainer.yml')
+        cascadePath = str(BASE_DIR) +'haarcascade_frontalface_default.xml'
         faceCascade = cv2.CascadeClassifier(cascadePath)
 
         font = cv2.FONT_HERSHEY_SIMPLEX

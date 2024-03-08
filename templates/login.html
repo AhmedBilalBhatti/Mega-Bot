@@ -130,37 +130,36 @@
 
 
 
-                                <form class="auth-form">
+                                <form class="auth-form" method="POST" action="{% url 'signup_login' action='signup' %}">
+                                    {% csrf_token %}
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="user-1"></i>
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="name" placeholder="Enter your name" class="form-control" id="name">
+                                        <input type="text" name="name" placeholder="Enter your name" class="form-control" id="name">
                                     </div>
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="mail"></i>
-                                        <label for="emailid" class="form-label">Email ID</label>
-                                        <input type="email" placeholder="Enter your mail id" class="form-control" id="emailid">
+                                        <label for="email" class="form-label">Email ID</label>
+                                        <input type="email" name="email" placeholder="Enter your email" class="form-control" id="email">
                                     </div>
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="lock-2"></i>
                                         <label for="password" class="form-label">Password</label>
-                                        <input placeholder="Enter your password" type="password" class="form-control" id="password">
+                                        <input type="password" name="password" placeholder="Enter your password" class="form-control" id="password">
                                     </div>
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="calendar-2"></i>
                                         <label for="dob" class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control" id="dob">
+                                        <input type="date" name="dob" class="form-control" id="dob">
                                     </div>
-                                    {% comment %} <div class="mb-3 form-group">
+                                    <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="scan-2"></i>
                                         <label for="faceScan" class="form-label">Face ID Scan</label>
-                                        <label class="file-input">
-                                            <input type="file" accept="image/*" class="form-control" id="faceScan">
-                                        </label>
-                                    </div> {% endcomment %}
-                                    <a href="#" data-cursor="pointer" class="btn-solid w-100 text-center mt-4">Sign up</a>
-                                    {% comment %} <h4 class="text-title text-center mt-2">Already have an account <a data-cursor="pointer" onclick="loginClick()" href="javascript:void(0)">Sign in</a></h4> {% endcomment %}
+                                        <input type="file" name="face_id" accept="image/*" class="form-control" id="faceScan">
+                                    </div>
+                                    <button type="submit" class="btn-solid w-100 text-center mt-4">Sign up</button>
                                 </form>
+                                
                                 
 
 

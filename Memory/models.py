@@ -7,4 +7,4 @@ class Signups(StructuredNode):
     email = StringProperty(unique_index=True, required=True)
     password = StringProperty(required=True)
     dob = DateProperty()
-    face_id = StringProperty()
+    face_id = StringProperty(upload_to='profile_image', blank=True)

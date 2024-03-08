@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from django.conf import settings
+from Memory.face_id import FaceRecognition
 from django.http import HttpResponse ,JsonResponse
 from .models import *
 from Memory.models import Signups
+from MegaBot.settings import BASE_DIR
 
+faceRecognition = FaceRecognition()
 
 def index(request):
     return render(request,'index.html')
@@ -35,7 +38,37 @@ def chat(request):
 
     return render(request, 'chat.html')
 
-
-
-def signup_login(request):
+def signup_login(request , action = None):
+    if request.method == "POST":
+        if action == 'signup':
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            dob = request.POST.get('dob')
+            print(name)
+            addFace(request.POST['face_id'])
+        else:
+            print('login')
+            return redirect('index')
+          
     return render(request,'login.html')
+
+
+def addFace(face_id):
+    face_id = face_id
+    faceRecognition.faceDetect(face_id)
+    faceRecognition.trainFace()
+    return redirect('index')
+
+# def login(request):
+#     face_id = faceRecognition.recognizeFace()
+#     print(face_id)
+#     return redirect('greeting' ,str(face_id))
+
+# def Greeting(request,face_id):
+#     face_id = int(face_id)
+#     context ={
+#         'user' : UserProfile.objects.get(face_id = face_id)
+#     }
+#     return render(request,'faceDetection/greeting.html',context=context)
+
