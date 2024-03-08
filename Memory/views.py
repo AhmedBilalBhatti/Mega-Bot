@@ -34,3 +34,8 @@ def chat(request):
         response_data = {'status': 'error', 'message': 'Invalid request method'}
 
     return render(request, 'chat.html')
+
+
+
+def signup_login(request):
+    return render(request,'login.html')

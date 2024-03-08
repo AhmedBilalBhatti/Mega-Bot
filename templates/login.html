@@ -11,7 +11,10 @@
         <link rel="icon" href="{% static 'assets/images/favicon.png '%}" type="image/x-icon" />
         <link rel="shortcut icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
         <title>Login / Signup</title>
-    
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
         <!--Google font-->
         <link rel="preconnect" href="https://fonts.googleapis.com/">
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -37,8 +40,6 @@
     </head>
 
 <body>
-
-
     <!-- login section start -->
     <section class="login-section">
         <a href="index.html"><img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid logo-auth"></a>
@@ -108,9 +109,11 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="signup-tab-pane" role="tabpanel" aria-labelledby="signup-tab"
-                                tabindex="0">
+                                tabindex="0">  
 
-                                
+
+
+
                                 <form class="auth-form">
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="user-1"></i>
@@ -120,30 +123,27 @@
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="mail"></i>
                                         <label for="emailid" class="form-label">Email ID</label>
-                                        <input type="email" placeholder="Enter your mail id" class="form-control"
-                                            id="emailid">
+                                        <input type="email" placeholder="Enter your mail id" class="form-control" id="emailid">
                                     </div>
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="lock-2"></i>
                                         <label for="password" class="form-label">Password</label>
-                                        <input placeholder="Enter your password" type="password" class="form-control"
-                                            id="password">
+                                        <input placeholder="Enter your password" type="password" class="form-control" id="password">
                                     </div>
                                     <div class="mb-3 form-group">
-                                        <i class="iconsax" data-icon="lock-2"></i>
-                                        <label for="password1" class="form-label">Confirm Password</label>
-                                        <input placeholder="Enter your password" type="password" class="form-control"
-                                            id="password1">
+                                        <i class="iconsax dob-icon" data-icon="calendar-alt"></i>
+                                        <label for="dob" class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control" id="dob">
                                     </div>
-                                    <a href="#" data-cursor="pointer" class="btn-solid w-100 text-center mt-4">Sign
-                                        up</a>
-                                    <h4 class="text-title text-center mt-2">Already have an account <a
-                                            data-cursor="pointer" onclick="loginClick()" href="javascript:void(0)">Sign
-                                            in</a>
-                                    </h4>
+                                    <div class="mb-3 form-group">
+                                        <i class="iconsax face-id-icon" data-icon="face-id"></i>
+                                        <label for="faceScan" class="form-label">Face ID Scan</label>
+                                        <input type="file" accept="image/*" class="form-control" id="faceScan">
+                                    </div>
+                                    <a href="#" data-cursor="pointer" class="btn-solid w-100 text-center mt-4">Sign up</a>
+                                    <h4 class="text-title text-center mt-2">Already have an account <a data-cursor="pointer" onclick="loginClick()" href="javascript:void(0)">Sign in</a></h4>
                                 </form>
-
-
+                                
 
 
 
@@ -193,7 +193,4 @@
     <!-- Theme js-->
     <script src="{% static 'assets/js/script.js'%}"></script>
 </body>
-
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:36 GMT -->
 </html>
