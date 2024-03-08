@@ -8,33 +8,24 @@ detector = cv2.CascadeClassifier(str(BASE_DIR)+'/haarcascade_frontalface_default
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 class FaceRecognition:    
-
     def faceDetect(self, Entry1,):
         face_id = Entry1
         cam = cv2.VideoCapture(0)
         count = 0
-
         while(True):
-
             ret, img = cam.read()
-            # img = cv2.flip(img, -1) # flip video image vertically
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             faces = detector.detectMultiScale(gray, 1.3, 5)
 
             for (x,y,w,h) in faces:
-
                 cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
                 count += 1
-
-                # Save the captured image into the datasets folder
                 cv2.imwrite(str(BASE_DIR) +'/Dataset/User.' + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
-
                 cv2.imshow('Register Face', img)
-
-            k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
+            k = cv2.waitKey(100) & 0xff
             if k == 27:
                 break
-            elif count >= 30: # Take 30 face sample and stop video
+            elif count >= 30:
                 break
     
         cam.release()
@@ -43,18 +34,14 @@ class FaceRecognition:
 #===============================================================================================================================
     
     def trainFace(self):
-        # Path for face image database
         path = str(BASE_DIR) +'/Dataset'
-
         def getImagesAndLabels(path):
-
             imagePaths = [os.path.join(path,f) for f in os.listdir(path)]     
             faceSamples=[]
             ids = []
-
             for imagePath in imagePaths:
 
-                PIL_img = Image.open(imagePath).convert('L') # convert it to grayscale
+                PIL_img = Image.open(imagePath).convert('L') 
                 img_numpy = np.array(PIL_img,'uint8')
 
                 face_id = int(os.path.split(imagePath)[-1].split(".")[1])
@@ -64,24 +51,14 @@ class FaceRecognition:
                 for (x,y,w,h) in faces:
                     faceSamples.append(img_numpy[y:y+h,x:x+w])
                     ids.append(face_id)
-
             return faceSamples,ids
-
         print ("\n Training faces. It will take a few seconds. Wait ...")
         faces,ids = getImagesAndLabels(path)
         recognizer.train(faces, np.array(ids))
-
-        # Save the model into trainer/trainer.yml
-        recognizer.save(str(BASE_DIR) +'/Face_trainer/trainer.yml') # recognizer.save() worked on Mac, but not on Pi
-
-        # Print the numer of faces trained and end program
+        recognizer.save(str(BASE_DIR) +'/Face_trainer/trainer.yml')
         print("\n {0} faces trained. Exiting Program".format(len(np.unique(ids))))
         
         
-        
-        
-
-
     def recognizeFace(self):
         recognizer.read(str(BASE_DIR) +'/Face_trainer/trainer.yml')
         cascadePath = str(BASE_DIR) +'/haarcascade_frontalface_default.xml'
@@ -92,7 +69,6 @@ class FaceRecognition:
         confidence = 0
         cam = cv2.VideoCapture(0)
 
-        # Define min window size to be recognized as a face
         minW = 0.1*cam.get(3)
         minH = 0.1*cam.get(4)
 
@@ -115,7 +91,6 @@ class FaceRecognition:
 
                 face_id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
 
-                # Check if confidence is less then 100 ==> "0" is perfect match 
                 if (confidence < 100):
                     name = 'Detected'
                 else:
@@ -126,7 +101,7 @@ class FaceRecognition:
             
             cv2.imshow('Detect Face',img) 
 
-            k = cv2.waitKey(10) & 0xff # Press 'ESC' for exiting video
+            k = cv2.waitKey(10) & 0xff 
             if k == 27:
                 break
             if confidence > 50:

@@ -15,31 +15,6 @@ def index(request):
 def login(request):
     return render(request,'login.html')
 
-def chat(request):
-    bot_resp = "Hello"
-    print('bdvhbds')
-    if request.method == 'POST':
-        user_message = request.POST.get('message', '')
-        if user_message:
-            print(user_message)
-        else:
-            print("Not working")
-    
-
-def chat(request):
-    if request.method == 'POST':
-        message = request.POST.get('message', '')
-        if message:
-            print(message)
-            response_data = {'status': 'success', 'message': message}
-        else:
-            response_data = {'status': 'error', 'message': 'No message received'}
-    else:
-        response_data = {'status': 'error', 'message': 'Invalid request method'}
-
-    return render(request, 'chat.html')
-
-
 def signup_login(request, action=None):
     if request.method == "POST":
         if action == 'signup':
@@ -67,14 +42,13 @@ def signup_login(request, action=None):
             mail = request.POST.get('emailid')
             passcode = request.POST.get('password')
             user = Signups.nodes.get(email=mail, password=passcode)
+            request.session['face_id'] = user.face_id
             if user:
                 return redirect('index')
             else:
                 return HttpResponse('Wrong Email or Password')
                      
     return render(request, 'login.html')
-
-
 
 def addFace(face_id):
     face_id = face_id
@@ -87,17 +61,29 @@ def face_id(request):
     try:
         user = Signups.nodes.filter(uid=face_id).get()
         if user:
-            return redirect('index',str(face_id))
+            request.session['face_id'] = face_id
+            return redirect('index')
         else:
             return HttpResponse('Wrong Email or Password')
     except Signups.DoesNotExist:
         return HttpResponse('User not found')
+    
+    
+    
+    
+    
+    
+    
+    
+def chat(request):
+    if request.method == 'POST':
+        message = request.POST.get('message', '')
+        if message:
+            print(message)
+            response_data = {'status': 'success', 'message': message}
+        else:
+            response_data = {'status': 'error', 'message': 'No message received'}
+    else:
+        response_data = {'status': 'error', 'message': 'Invalid request method'}
 
-
-
-# def Greeting(request,face_id):
-#     face_id = int(face_id)
-#     context ={
-#         'user' : UserProfile.objects.get(face_id = face_id)
-#     }
-#     return render(request,'faceDetection/greeting.html',context=context)
+    return render(request, 'chat.html')

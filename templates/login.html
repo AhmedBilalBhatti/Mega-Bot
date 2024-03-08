@@ -73,8 +73,6 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel"
                                 aria-labelledby="login-tab" tabindex="0">
-
-
                                 <form class="auth-form" method="post"action="{% url 'signup_login' action='login' %}">
                                     {% csrf_token %}
                                     <div class="mb-3 form-group">
@@ -101,18 +99,10 @@
                                     </div>
                                     <button type="submit" class="btn-solid w-100 text-center mt-3">Log me in</button>
                                 </form>
-                                
-
-
-
 
                             </div>
                             <div class="tab-pane fade" id="signup-tab-pane" role="tabpanel" aria-labelledby="signup-tab"
                                 tabindex="0">  
-
-
-
-
                                 <form class="auth-form" method="POST" action="{% url 'signup_login' action='signup' %}">
                                     {% csrf_token %}
                                     <div class="mb-3 form-group">
@@ -146,12 +136,6 @@
                                     </h4>
                                     <button type="submit" class="btn-solid w-100 text-center mt-4">Sign up</button>
                                 </form>
-                                
-                                
-
-
-
-
                             </div>
                         </div>
                     </div>
