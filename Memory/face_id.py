@@ -20,7 +20,8 @@ class FaceRecognition:
             for (x,y,w,h) in faces:
                 cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
                 count += 1
-                cv2.imwrite(str(BASE_DIR) +'/Dataset/User.' + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
+                image_path = os.path.join(BASE_DIR, 'Dataset', 'User.' + str(face_id) + '.' + str(count) + ".jpg")
+                cv2.imwrite(image_path, gray[y:y+h, x:x+w])
                 cv2.imshow('Register Face', img)
             k = cv2.waitKey(100) & 0xff
             if k == 27:
