@@ -153,10 +153,14 @@
                                         <input type="date" name="dob" class="form-control" id="dob">
                                     </div>
                                     <div class="mb-3 form-group">
-                                        <i class="iconsax" data-icon="scan-2"></i>
-                                        <label for="faceScan" class="form-label">Face ID Scan</label>
-                                        <input type="file" name="face_id" accept="image/*" class="form-control" id="faceScan">
+                                        {% comment %} <i class="iconsax" data-icon="scan-2"></i> {% endcomment %}
+                                        {% comment %} <label for="faceScan" class="form-label">Face ID Scan</label> {% endcomment %}
+                                        <input type="file" name="face_id" accept="image/*" class="form-control" id="faceScan" style="display: none;">
                                     </div>
+                                    <h4 class="text-title text-center mt-2">
+                                        Please wait a few seconds after clicking "Signup" for the Face ID scan. 
+                                        If you don't have a camera, you can still log in using your email.<a data-cursor="pointer"></a>
+                                    </h4>
                                     <button type="submit" class="btn-solid w-100 text-center mt-4">Sign up</button>
                                 </form>
                                 

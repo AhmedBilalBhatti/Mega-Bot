@@ -5,6 +5,7 @@ from PIL import Image
 from MegaBot.settings import BASE_DIR
 
 detector = cv2.CascadeClassifier(str(BASE_DIR) + '/haarcascade_frontalface_default.xml')
+print(detector)
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
@@ -24,7 +25,7 @@ class FaceRecognition:
                 count += 1
 
                 # Save the captured image into the datasets folder
-                cv2.imwrite(str(BASE_DIR) +'Face_id_Data' + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
+                cv2.imwrite(str(BASE_DIR) +'/media' + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
 
                 cv2.imshow('Register Face', img)
 
@@ -34,14 +35,13 @@ class FaceRecognition:
             elif count >= 15: # Take 30 face sample and stop video
                 break
     
-    
         cam.release()
         cv2.destroyAllWindows()
 
     
     def trainFace(self):
         # Path for face image database
-        path = str(BASE_DIR) + '/Face_id_Data'
+        path = str(BASE_DIR) + '/media'
 
         # function to get the images and label data
         def getImagesAndLabels(path):
