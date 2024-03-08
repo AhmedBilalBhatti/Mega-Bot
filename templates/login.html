@@ -73,25 +73,36 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel"
                                 aria-labelledby="login-tab" tabindex="0">
+
+
+                                
                                 <form class="auth-form">
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="mail"></i>
                                         <label for="emailid" class="form-label">Email ID</label>
-                                        <input type="email" placeholder="Enter your mail id" class="form-control"
-                                            id="emailid">
+                                        <input type="email" placeholder="Enter your mail id" class="form-control" name="emailid">
                                     </div>
                                     <div class="mb-2 form-group">
                                         <i class="iconsax" data-icon="lock-2"></i>
                                         <label for="password" class="form-label">Password</label>
-                                        <input placeholder="Enter your password" type="password" class="form-control"
-                                            id="password">
+                                        <input placeholder="Enter your password" type="password" class="form-control" name="password">
+                                    </div>
+                                    <br>
+                                    <p style="margin-left:80px;">Alternatively, log in using Face ID.</p>
+                                    <div class="mb-3 form-group">
+                                        <i class="iconsax" data-icon="scan-2"></i>
+                                        <label for="faceScan" class="form-label">Face ID Scan</label>
+                                        <label class="file-input">
+                                            <input type="file" accept="image/*" class="form-control" name="faceScan">
+                                        </label>
                                     </div>
                                     <div class="text-end">
                                         <a data-cursor="pointer" href="reset-password.html">Forget Password?</a>
                                     </div>
+
                                     <a href="#" data-cursor="pointer" class="btn-solid w-100 text-center mt-3">Log me
                                         in</a>
-                                    <h4 class="text-title text-center mt-2">Don’t have an account ? <a
+                                    {% comment %} <h4 class="text-title text-center mt-2">Don’t have an account ? <a
                                             data-cursor="pointer" onclick="signupClick()" href="javascript:void(0)">Sign
                                             up</a>
                                     </h4>
@@ -105,8 +116,13 @@
                                         <li><a data-cursor="pointer" href="https://www.apple.com/"><img
                                                     src="https://themes.pixelstrap.net/mega_bot/assets/svg/apple.svg" class="img-fluid">Continue with
                                                 apple</a></li>
-                                    </ul>
+                                    </ul> {% endcomment %}
                                 </form>
+
+
+
+
+
                             </div>
                             <div class="tab-pane fade" id="signup-tab-pane" role="tabpanel" aria-labelledby="signup-tab"
                                 tabindex="0">  
@@ -131,17 +147,19 @@
                                         <input placeholder="Enter your password" type="password" class="form-control" id="password">
                                     </div>
                                     <div class="mb-3 form-group">
-                                        <i class="iconsax dob-icon" data-icon="calendar-alt"></i>
+                                        <i class="iconsax" data-icon="calendar-2"></i>
                                         <label for="dob" class="form-label">Date of Birth</label>
                                         <input type="date" class="form-control" id="dob">
                                     </div>
-                                    <div class="mb-3 form-group">
-                                        <i class="iconsax face-id-icon" data-icon="face-id"></i>
+                                    {% comment %} <div class="mb-3 form-group">
+                                        <i class="iconsax" data-icon="scan-2"></i>
                                         <label for="faceScan" class="form-label">Face ID Scan</label>
-                                        <input type="file" accept="image/*" class="form-control" id="faceScan">
-                                    </div>
+                                        <label class="file-input">
+                                            <input type="file" accept="image/*" class="form-control" id="faceScan">
+                                        </label>
+                                    </div> {% endcomment %}
                                     <a href="#" data-cursor="pointer" class="btn-solid w-100 text-center mt-4">Sign up</a>
-                                    <h4 class="text-title text-center mt-2">Already have an account <a data-cursor="pointer" onclick="loginClick()" href="javascript:void(0)">Sign in</a></h4>
+                                    {% comment %} <h4 class="text-title text-center mt-2">Already have an account <a data-cursor="pointer" onclick="loginClick()" href="javascript:void(0)">Sign in</a></h4> {% endcomment %}
                                 </form>
                                 
 
