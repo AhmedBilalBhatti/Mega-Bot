@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 
 class Signups(StructuredNode):
+    uid = StringProperty()
     username = StringProperty(required=True)
     email = StringProperty(unique_index=True, required=True)
     password = StringProperty(required=True)

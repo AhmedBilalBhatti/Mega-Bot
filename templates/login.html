@@ -75,8 +75,8 @@
                                 aria-labelledby="login-tab" tabindex="0">
 
 
-                                
-                                <form class="auth-form">
+                                <form class="auth-form" method="post"action="{% url 'signup_login' action='login' %}">
+                                    {% csrf_token %}
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="mail"></i>
                                         <label for="emailid" class="form-label">Email ID</label>
@@ -87,38 +87,21 @@
                                         <label for="password" class="form-label">Password</label>
                                         <input placeholder="Enter your password" type="password" class="form-control" name="password">
                                     </div>
+                                    <br>             
+                                    <p style="text-align: center;">Alternatively, log in using Face ID.</p>
+
                                     <br>
-                                    <p style="margin-left:80px;">Alternatively, log in using Face ID.</p>
                                     <div class="mb-3 form-group">
-                                        <i class="iconsax" data-icon="scan-2"></i>
-                                        <label for="faceScan" class="form-label">Face ID Scan</label>
-                                        <label class="file-input">
-                                            <input type="file" accept="image/*" class="form-control" name="faceScan">
-                                        </label>
+                                        <button class="butn" type="button"><a href="{% url 'face_id' %}">Face ID Log in</a></button>
                                     </div>
+                                    
+                                    <br>
                                     <div class="text-end">
                                         <a data-cursor="pointer" href="reset-password.html">Forget Password?</a>
                                     </div>
-
-                                    <a href="#" data-cursor="pointer" class="btn-solid w-100 text-center mt-3">Log me
-                                        in</a>
-                                    {% comment %} <h4 class="text-title text-center mt-2">Don’t have an account ? <a
-                                            data-cursor="pointer" onclick="signupClick()" href="javascript:void(0)">Sign
-                                            up</a>
-                                    </h4>
-                                    <div class="divider">
-                                        <h3>or sign in with</h3>
-                                    </div>
-                                    <ul class="social-btn">
-                                        <li><a data-cursor="pointer" href="https://www.google.com/"><img
-                                                    src="https://themes.pixelstrap.net/mega_bot/assets/svg/google.svg" class="img-fluid">Continue with
-                                                google</a></li>
-                                        <li><a data-cursor="pointer" href="https://www.apple.com/"><img
-                                                    src="https://themes.pixelstrap.net/mega_bot/assets/svg/apple.svg" class="img-fluid">Continue with
-                                                apple</a></li>
-                                    </ul> {% endcomment %}
+                                    <button type="submit" class="btn-solid w-100 text-center mt-3">Log me in</button>
                                 </form>
-
+                                
 
 
 

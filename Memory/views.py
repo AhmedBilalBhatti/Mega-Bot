@@ -47,34 +47,32 @@ def signup_login(request, action=None):
             email = request.POST.get('email')
             password = request.POST.get('password')
             dob_str = request.POST.get('dob')
-            
-            # Validate the date of birth
             if dob_str:
                 try:
                     dob = datetime.strptime(dob_str, '%Y-%m-%d').date()
                 except ValueError:
-                    # Handle invalid date format
                     return HttpResponseBadRequest("Invalid date format for date of birth.")
             else:
-                # Handle missing date of birth
                 return HttpResponseBadRequest("Date of birth is required.")
-            
-            # Save the user object
             user = Signups(username=name, email=email, password=password, dob=dob)
             user.save()
-            
-            # Get the element_id instead of id
             user_element_id = user.element_id
             face_id = user_element_id[-2:]
+            user.uid = face_id
+            user.save()
             print("Id===", face_id)
             addFace(face_id)
-        else:
-            print('login')
             return redirect('index')
-          
+        else:
+            mail = request.POST.get('emailid')
+            passcode = request.POST.get('password')
+            user = Signups.nodes.get(email=mail, password=passcode)
+            if user:
+                return redirect('index')
+            else:
+                return HttpResponse('Wrong Email or Password')
+                     
     return render(request, 'login.html')
-
-
 
 
 
@@ -84,10 +82,18 @@ def addFace(face_id):
     faceRecognition.trainFace()
     return redirect('index')
 
-# def login(request):
-#     face_id = faceRecognition.recognizeFace()
-#     print(face_id)
-#     return redirect('greeting' ,str(face_id))
+def face_id(request):
+    face_id = faceRecognition.recognizeFace()
+    try:
+        user = Signups.nodes.filter(uid=face_id).get()
+        if user:
+            return redirect('index',str(face_id))
+        else:
+            return HttpResponse('Wrong Email or Password')
+    except Signups.DoesNotExist:
+        return HttpResponse('User not found')
+
+
 
 # def Greeting(request,face_id):
 #     face_id = int(face_id)
@@ -95,4 +101,3 @@ def addFace(face_id):
 #         'user' : UserProfile.objects.get(face_id = face_id)
 #     }
 #     return render(request,'faceDetection/greeting.html',context=context)
-
