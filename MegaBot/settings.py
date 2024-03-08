@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'neo4j',
     'django_neomodel',
     'neomodel',
+    'Memory'
 ]
 
 MIDDLEWARE = [

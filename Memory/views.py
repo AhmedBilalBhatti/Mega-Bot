@@ -9,11 +9,20 @@ from MegaBot.settings import BASE_DIR
 
 faceRecognition = FaceRecognition()
 
+def addFace(face_id):
+    face_id = face_id
+    faceRecognition.faceDetect(face_id)
+    faceRecognition.trainFace()
+    return redirect('index')
+
 def index(request):
+    session = request.session.get('user_id')
     return render(request,'index.html')
 
 def login(request):
-    return render(request,'login.html')
+    return render(request, 'login.html')
+
+    
 
 def signup_login(request, action=None):
     if request.method == "POST":
@@ -32,36 +41,35 @@ def signup_login(request, action=None):
             user = Signups(username=name, email=email, password=password, dob=dob)
             user.save()
             user_element_id = user.element_id
-            face_id = user_element_id[-2:]
+            if user_element_id[-2] == ":":
+                face_id = user_element_id[-1:]
+            else:
+                face_id = user_element_id[-2:]
             user.uid = face_id
             user.save()
             print("Id===", face_id)
             addFace(face_id)
             return redirect('index')
+
         else:
-            mail = request.POST.get('emailid')
-            passcode = request.POST.get('password')
-            user = Signups.nodes.get(email=mail, password=passcode)
-            request.session['face_id'] = user.face_id
-            if user:
-                return redirect('index')
-            else:
-                return HttpResponse('Wrong Email or Password')
+            if action == 'login':
+                mail = request.POST.get('emailid')
+                passcode = request.POST.get('password')
+                user = Signups.nodes.get(email=mail, password=passcode)
+                request.session['user_id'] = user.face_id
+                if user:
+                    return redirect('index')
+                else:
+                    return HttpResponse('Wrong Email or Password')
                      
     return render(request, 'login.html')
-
-def addFace(face_id):
-    face_id = face_id
-    faceRecognition.faceDetect(face_id)
-    faceRecognition.trainFace()
-    return redirect('index')
 
 def face_id(request):
     face_id = faceRecognition.recognizeFace()
     try:
         user = Signups.nodes.filter(uid=face_id).get()
         if user:
-            request.session['face_id'] = face_id
+            request.session['user_id'] = face_id
             return redirect('index')
         else:
             return HttpResponse('Wrong Email or Password')
