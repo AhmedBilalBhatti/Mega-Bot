@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.conf import settings
 from Memory.face_id import FaceRecognition
-from django.http import HttpResponse ,JsonResponse
+from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
 from .models import *
 from datetime import datetime
 from Memory.models import Signups
@@ -47,7 +47,17 @@ def signup_login(request, action=None):
             email = request.POST.get('email')
             password = request.POST.get('password')
             dob_str = request.POST.get('dob')
-            dob = datetime.strptime(dob_str, '%Y-%m-%d').date()
+            
+            # Validate the date of birth
+            if dob_str:
+                try:
+                    dob = datetime.strptime(dob_str, '%Y-%m-%d').date()
+                except ValueError:
+                    # Handle invalid date format
+                    return HttpResponseBadRequest("Invalid date format for date of birth.")
+            else:
+                # Handle missing date of birth
+                return HttpResponseBadRequest("Date of birth is required.")
             
             # Save the user object
             user = Signups(username=name, email=email, password=password, dob=dob)
@@ -55,12 +65,15 @@ def signup_login(request, action=None):
             
             # Get the element_id instead of id
             user_element_id = user.element_id
-            addFace(user_element_id)
+            face_id = user_element_id[-2:]
+            print("Id===", face_id)
+            addFace(face_id)
         else:
             print('login')
             return redirect('index')
           
     return render(request, 'login.html')
+
 
 
 
