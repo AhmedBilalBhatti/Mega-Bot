@@ -8,12 +8,11 @@
         <meta name="description" content="megabot">
         <meta name="keywords" content="megabot">
         <meta name="author" content="megabot">
-        <link rel="icon" href="{% static 'assets/images/favicon.png '%}" type="image/x-icon" />
-        <link rel="shortcut icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
+        <link rel="icon" href="{% static 'assets/images/favicon.png ' %}" type="image/x-icon" />
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
         <title>Login / Signup</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 
         <!--Google font-->
         <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -21,22 +20,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
     
         <!-- bootstrap css -->
-        <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
+        <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}">
     
         <!-- remixicon css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css' %}">
     
         <!-- iconsax css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css'%}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css' %}" />
     
         <!-- animation css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css' %}">
     
         <!-- swiper slider css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css'%}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
     
         <!-- style css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
     </head>
 
 <body>
@@ -87,20 +86,16 @@
                                     </div>
                                     <br>             
                                     <p style="text-align: center;">Alternatively, log in using Face ID.</p>
-
                                     <br>
                                     <div class="mb-3 form-group">
-                                        <button style="color: #000;" class="butn" type="button"><a href="{% url 'face_id' %}">Face ID Log in</a></button>
-                                    </div>
-                                    
-                                    
+                                        <button class="butn" type="button"><a href="{% url 'face_id' %}"><span style="color: #252525;">Face ID Log in</span></a></button>
+                                    </div>                                    
                                     <br>
                                     <div class="text-end">
                                         <a data-cursor="pointer" href="reset-password.html">Forget Password?</a>
                                     </div>
                                     <button type="submit" class="btn-solid w-100 text-center mt-3">Log me in</button>
                                 </form>
-
                             </div>
                             <div class="tab-pane fade" id="signup-tab-pane" role="tabpanel" aria-labelledby="signup-tab"
                                 tabindex="0">  

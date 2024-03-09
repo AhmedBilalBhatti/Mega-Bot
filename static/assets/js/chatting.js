@@ -5,20 +5,23 @@ $(document).ready(function () {
         event.preventDefault();
         var messageInput = $('#userInput');
         var chatlogContainer = $('#chatlog');
-        var userMessage = messageInput.val();
+        var userMessage = messageInput.val().trim(); // Trim leading and trailing whitespace
+
+        // Check if the message input is empty
+        if (userMessage === '') {
+            return; // Do nothing if the message is empty
+        }
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
         chatlogContainer.append(userMessageHtml);
         chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong><span class="typewriter glow">Thinking<span class="dots"></span></span></p></div></div>`);
 
-        // Check if the message input is empty
-        if (userMessage.trim() !== '') {
-            $('.no-chat').addClass('d-none'); // If not empty, hide the "no chat" message
-            if (!chatStarted) {
-                $('.main-chat').css('background-color', '#0a0e17'); // Change background color if chat starts
-                $('.chat-header').css('background-color', '#0a0e17'); // Change background color of chat header if chat starts
-                chatStarted = true; // Set chatStarted to true
-            }
+        // If the chat has not started yet, update the UI
+        if (!chatStarted) {
+            $('.no-chat').addClass('d-none'); // Hide the "no chat" message
+            $('.main-chat').css('background-color', '#0a0e17'); // Change background color if chat starts
+            $('.chat-header').css('background-color', '#0a0e17'); // Change background color of chat header if chat starts
+            chatStarted = true; // Set chatStarted to true
         }
 
         $.ajax({
@@ -38,8 +41,7 @@ $(document).ready(function () {
 
                     typeWriter(botResponse.find('.typewriter'), function () {
                         messageInput.val('');
-                        // Scroll to the bottom of the chat log
-                        chatlogContainer.scrollTop(chatlogContainer.prop("scrollHeight"));
+                        chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
                     });
                 }
             },
@@ -72,6 +74,7 @@ $(document).ready(function () {
     }
     setInterval(toggleDots, 300);
 });
+
 
 
 
