@@ -2,7 +2,7 @@ const msgerForm = get(".msger-inputarea");
 const msgerInput = get(".msger-input");
 const msgerChat = get(".msger-chat");
 
-const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "Can you please share your QR-code ?", "Oky..!! ", "Thank you..!!", "Yes, I’ll send in 10 min"];
+// const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "Can you please share your QR-code ?", "Oky..!! ", "Thank you..!!", "Yes, I’ll send in 10 min"];
 
 
 const BOT_IMG = "{% static 'assets/images/icons/pro1.png' %}";
@@ -27,12 +27,14 @@ const PERSON_NAME = "Kristin Williams";
 
 // function appendMessage(name, img, side, text) {
 //     //   Simple solution for small apps
+
 //     const msgHTML = `
 //     <div class="msg ${side}-msg">
 //       <div class="msg-bubble">
 //             <div class="msg-text">${text}</div>
 //       </div>
 //     </div>
+
 //   `;
 
 //     msgerChat.insertAdjacentHTML("beforeend", msgHTML);
@@ -48,20 +50,20 @@ const PERSON_NAME = "Kristin Williams";
 //         appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
 //     }, delay);
 // }
+
 $(document).ready(function () {
     $('form').on('submit', function (event) {
         event.preventDefault();
         var messageInput = $('#userInput');
         var chatlogContainer = $('#chatlog');
         var botImage = "{% static '/assets/images/user/1.jpg' %}";
+        var PERSON_IMG = "{% static 'assets/images/icons/pro1.png' %}";
         var userMessage = messageInput.val();
-        // if ('{{ image_data }}') {
-        //     imgSrc = 'data:image/png;base64,' + '{{ image_data }}';
-        // }
-        var userMessageHtml = '<div class="humanchat" style="color: red;"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>You:</strong> ' + userMessage + '</p></div>';
-        
+
+        var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;    
         chatlogContainer.append(userMessageHtml);
-        chatlogContainer.append('<div class="botchat typing"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>Dexter:</strong> <span class="typewriter glow">Thinking<span class="dots"></span></span></p></div>');
+        chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong><span class="typewriter glow">Thinking<span class="dots"></span></span></p></div></div>`);
+    
         $.ajax({
             type: 'POST',
             url: '{% url "chat" %}',
@@ -71,7 +73,7 @@ $(document).ready(function () {
             success: function (data) {
                 chatlogContainer.find('.bocha typing').remove();
 
-                var botResponse = $('<div class=".botchat typing"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div>');
+                var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div></div>');
                 chatlogContainer.append(botResponse);
 
                 typeWriter(botResponse.find('.typewriter'), function () {

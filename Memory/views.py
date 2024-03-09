@@ -78,13 +78,7 @@ def face_id(request):
 
     return redirect ('index')
 
-    
-    
-    
-    
-    
-    
-    
+
     
 def chat(request):
     if request.method == 'POST':
