@@ -8,7 +8,6 @@ from .models import *
 from .aiml import *
 import re
 
-
 faceRecognition = FaceRecognition()
 kernel = init_kernel()
 translator = Translator()
@@ -84,6 +83,7 @@ def face_id(request):
 def chat(request):
     if request.method == 'POST':
         message = request.POST.get('message', '')
+        kernel.setPredicate('name', 'Ahmed')
         if message:
             try:
                 bot_response = kernel.respond(message)
