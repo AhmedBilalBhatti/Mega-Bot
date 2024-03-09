@@ -8,32 +8,33 @@
     <meta name="description" content="megabot">
     <meta name="keywords" content="megabot">
     <meta name="author" content="megabot">
-    <link rel="icon" href="{% static 'assets/images/favicon.png ' %}" type="image/x-icon" />
-    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
-    <title>Chat</title>
+<link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
+<link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
+<title>Chat</title>
 
-    <!--Google font-->
-    <link rel="preconnect" href="https://fonts.googleapis.com/">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
+<!--Google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
 
-    <!-- bootstrap css -->
-    <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
+<!-- bootstrap css -->
+<link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
 
-    <!-- remixicon css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css' %}">
+<!-- remixicon css -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css' %}">
 
-    <!-- iconsax css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css' %}" />
+<!-- iconsax css -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css' %}" />
 
-    <!-- animation css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css' %}">
+<!-- animation css -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css' %}">
 
-    <!-- swiper slider css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
+<!-- swiper slider css -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
 
-    <!-- style css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+<!-- style css -->
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+
 </head>
 
 <body>
@@ -172,7 +173,7 @@
 
                         <div class="msger-chat" id="chatlog">
                         </div>
-                        <form class="msger-inputarea" method="post">
+                        <form class="msger-inputarea" method="post" action='{% url 'chat' %}'>
                             {% csrf_token %}
                             <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button" 
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -835,34 +836,34 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
     <!-- Bootstrap js-->
-    <script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- slider js-->
-    <script src="{% static 'assets/js/swiper-bundle.min.js'%}"></script>
-    <script src="{% static 'assets/js/custom-slider.js'%}"></script>
+    <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/custom-slider.js' %}"></script>
 
     <!-- custom cursor -->
-    <script src="{% static 'assets/js/custom-cursor.js'%}"></script>
+    <script src="{% static 'assets/js/custom-cursor.js' %}"></script>
 
     <!-- aos animation -->
-    <script src="{% static 'assets/js/aos.js'%}"></script>
-    <script src="{% static 'assets/js/custom-aos.js'%}"></script>
+    <script src="{% static 'assets/js/aos.js' %}"></script>
+    <script src="{% static 'assets/js/custom-aos.js' %}"></script>
 
     <!-- iconsax js -->
-    <script src="{% static 'assets/js/iconsax.js'%}"></script>
+    <script src="{% static 'assets/js/iconsax.js' %}"></script>
 
     <!-- laptop animation js -->
-    <script src="{% static 'assets/js/home-animation.js'%}"></script>
+    <script src="{% static 'assets/js/home-animation.js' %}"></script>
 
     <!-- header sticky js -->
-    <script src="{% static 'assets/js/header_sticky.js'%}"></script>
+    <script src="{% static 'assets/js/header_sticky.js' %}"></script>
 
     <!-- pricing js -->
-    <script src="{% static 'assets/js/pricing-table.js'%}"></script>
+    <script src="{% static 'assets/js/pricing-table.js' %}"></script>
 
     <!-- Theme js-->
-    <script src="{% static 'assets/js/script.js'%}"></script>
-    <script src="{% static 'assets/js/chatting.js'%}"></script>
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <script src="{% static 'assets/js/chatting.js' %}"></script>
 
     <!--AXJS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

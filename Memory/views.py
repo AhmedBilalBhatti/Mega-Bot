@@ -91,8 +91,8 @@ def chat(request):
         message = request.POST.get('userInput', '')
         if message:
             print(message)
-            bot_response = 'helo'
-            
+        
+        bot_response = 'helo'    
         return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html')

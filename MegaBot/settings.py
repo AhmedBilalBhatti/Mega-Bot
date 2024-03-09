@@ -104,8 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CHATBOT_CACHE_TIMEOUT = 60 * 10
-CACHE_KEY_PREFIX = 'Neo4j'
+# CHATBOT_CACHE_TIMEOUT = 60 * 10
+# CACHE_KEY_PREFIX = 'Neo4j'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
@@ -127,13 +127,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 
 # Default primary key field type
@@ -142,9 +142,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ahmadbilalssg@gmail.com'
-EMAIL_HOST_PASSWORD = 'jkfwaisisezpkmmr'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'ahmadbilalssg@gmail.com'
+# EMAIL_HOST_PASSWORD = 'jkfwaisisezpkmmr'

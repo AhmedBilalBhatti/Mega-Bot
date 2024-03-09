@@ -6,7 +6,7 @@ const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "C
 
 
 const BOT_IMG = "{% static 'assets/images/icons/pro1.png' %}";
-const PERSON_IMG = "{% static 'assets/images/icons/profile.png' %}";
+const PERSON_IMG = "{% static 'assets/images/icons/pro1.png' %}";
 const BOT_NAME = "BOT";
 const PERSON_NAME = "Kristin Williams";
 
@@ -58,7 +58,7 @@ $(document).ready(function () {
         // if ('{{ image_data }}') {
         //     imgSrc = 'data:image/png;base64,' + '{{ image_data }}';
         // }
-        var userMessageHtml = '<div class="humanchat"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>You:</strong> ' + userMessage + '</p></div>';
+        var userMessageHtml = '<div class="humanchat" style="color: red;"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>You:</strong> ' + userMessage + '</p></div>';
         
         chatlogContainer.append(userMessageHtml);
         chatlogContainer.append('<div class="botchat typing"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>Dexter:</strong> <span class="typewriter glow">Thinking<span class="dots"></span></span></p></div>');
@@ -69,9 +69,9 @@ $(document).ready(function () {
                 message: userMessage,
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()},
             success: function (data) {
-                chatlogContainer.find('.typing').remove();
+                chatlogContainer.find('.bocha typing').remove();
 
-                var botResponse = $('<div class="botchat"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div>');
+                var botResponse = $('<div class=".botchat typing"><img src="' + botImage + '" class="rounded-circle user_img_msg"/><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div>');
                 chatlogContainer.append(botResponse);
 
                 typeWriter(botResponse.find('.typewriter'), function () {
