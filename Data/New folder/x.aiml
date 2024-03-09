@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml>
+   <!-- Define some basic categories -->
+<category>
+  <pattern>HELLO</pattern>
+  <template>Hi there!</template>
+</category>
+
+<category>
+  <pattern>Hi</pattern>
+  <template>Hi there!</template>
+</category>
+
+<category>
+  <pattern>WHAT IS YOUR NAME</pattern>
+  <template>My name is Dexter and I am an AI based Chatbot.</template>
+</category>
+
+<category>
+  <pattern>What is my name *</pattern>
+  <template>I dont want to know</template>
+</category>
+
+<category>
+  <pattern>MY NAME IS *</pattern>
+  <template>Nice to meet you, <star/></template>
+</category>
+
+<category>
+  <pattern>HOW ARE YOU</pattern>
+  <template>I'm doing well, thank you. How about you?</template>
+</category>
+
+<category>
+  <pattern>What is your GENDER</pattern>
+  <template>I am a AI robot and I have no Gender</template>
+</category>
+
+<!-- Add a default category for unknown input -->
+<category>
+  <pattern>*</pattern>
+  <template>I'm sorry, I didn't understand what you said.</template>
+</category>
+
+<category>
+  <pattern></pattern>
+  <template>What</template>
+</category>
+</aiml>

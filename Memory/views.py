@@ -77,9 +77,7 @@ def face_id(request):
     
 def chat(request):
     if request.method == 'POST':
-        message = request.POST.get('message', '') 
-        if message:
-            print(message)
+        message = request.POST.get('message', '')
         
         bot_response = 'hello'
         return JsonResponse({'bot_response': bot_response})

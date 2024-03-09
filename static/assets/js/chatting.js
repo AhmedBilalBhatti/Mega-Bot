@@ -1,27 +1,25 @@
 $(document).ready(function () {
-    var chatStarted = false; // Variable to track if the chat has started
+    var chatStarted = false;
 
     $('form').on('submit', function (event) {
         event.preventDefault();
         var messageInput = $('#userInput');
         var chatlogContainer = $('#chatlog');
-        var userMessage = messageInput.val().trim(); // Trim leading and trailing whitespace
+        var userMessage = messageInput.val().trim();
 
-        // Check if the message input is empty
         if (userMessage === '') {
-            return; // Do nothing if the message is empty
+            return;
         }
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
         chatlogContainer.append(userMessageHtml);
         chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong><span class="typewriter glow">Thinking<span class="dots"></span></span></p></div></div>`);
 
-        // If the chat has not started yet, update the UI
         if (!chatStarted) {
-            $('.no-chat').addClass('d-none'); // Hide the "no chat" message
-            $('.main-chat').css('background-color', '#0a0e17'); // Change background color if chat starts
-            $('.chat-header').css('background-color', '#0a0e17'); // Change background color of chat header if chat starts
-            chatStarted = true; // Set chatStarted to true
+            $('.no-chat').addClass('d-none');
+            $('.main-chat').css('background-color', '#0a0e17'); 
+            $('.chat-header').css('background-color', '#0a0e17');
+            chatStarted = true;
         }
 
         $.ajax({
@@ -74,9 +72,6 @@ $(document).ready(function () {
     }
     setInterval(toggleDots, 300);
 });
-
-
-
 
 // Utils
 function get(selector, root = document) {
