@@ -6,8 +6,10 @@ from .models import *
 from datetime import datetime
 from Memory.models import Signups
 from MegaBot.settings import BASE_DIR
+from .aiml import *
 
 faceRecognition = FaceRecognition()
+kernel = init_kernel()
 
 def addFace(face_id):
     face_id = face_id
@@ -75,11 +77,16 @@ def face_id(request):
         return HttpResponse('User not found')
 
     
+from django.http import JsonResponse
+
 def chat(request):
     if request.method == 'POST':
         message = request.POST.get('message', '')
-        
-        bot_response = 'hello'
-        return JsonResponse({'bot_response': bot_response})
-
+        if message:
+            try:
+                bot_response = kernel.respond(message)
+                return JsonResponse({'bot_response': bot_response})
+            except Exception as e:
+                return JsonResponse({'error': str(e)}, status=500)
+            
     return render(request, 'chat.html')
