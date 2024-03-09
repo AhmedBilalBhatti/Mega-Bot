@@ -114,23 +114,16 @@
                                 <button data-bs-toggle="collapse" data-bs-target="#navbarNav"
                                     class="inner-close d-block d-lg-none">Back
                                 </button>
-                                {% comment %} <div class="search-box">
+                                <div class="search-box">
                                     <i class="iconsax" data-icon="search-normal-2"></i>
-                                    <input type="text" class="form-control" placeholder="Search here..">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Search here..">
                                 </div>
                                 <ul class="inner-links-list" id="innerLink">
                                     <li class="active"><a href="#!" data-title="Ask anything">Ask anything</a></li>
                                     <li><a href="#!" data-title="Image generator">Image generator</a></li>
-                                    <li><a href="#!" data-title="Content writer">Content writer</a></li>
-                                    <li><a href="#!" data-title="Code generator">Code generator</a></li>
-                                    <li><a href="#!" data-title="Translate anything">Translate anything</a></li>
-                                    <li><a href="#!" data-title="Social media">Social media</a></li>
-                                    <li><a href="#!" data-title="Email generator">Email generator</a></li>
-                                    <li><a href="#!" data-title="Personal advise">Personal advise</a></li>
-                                    <li><a href="#!" data-title="Password generator">Password generator</a></li>
-                                    <li><a href="#!" data-title="Travel/hangout">Travel/hangout</a></li>
                                     <li><a href="#!" data-title="Essay writer">Essay writer</a></li>
-                                </ul> {% endcomment %}
+                                </ul>
+                                 
                             </div>
                         </div>
                     </nav>
@@ -839,6 +832,26 @@
 
     <!--AXJS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const innerLinks = document.querySelectorAll('.inner-links-list li');
+        
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                innerLinks.forEach(function (link) {
+                    const title = link.querySelector('a').getAttribute('data-title').toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        link.style.display = 'block';
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+    </script>
 </body>
 
 
