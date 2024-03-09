@@ -1,15 +1,17 @@
-from django.shortcuts import render,redirect
-from django.conf import settings
-from Memory.face_id import FaceRecognition
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
-from .models import *
-from datetime import datetime
+from django.shortcuts import render,redirect
+from Memory.face_id import FaceRecognition
+from googletrans import Translator
 from Memory.models import Signups
-from MegaBot.settings import BASE_DIR
+from datetime import datetime
+from .models import *
 from .aiml import *
+import re
+
 
 faceRecognition = FaceRecognition()
 kernel = init_kernel()
+translator = Translator()
 
 def addFace(face_id):
     face_id = face_id
@@ -76,17 +78,18 @@ def face_id(request):
     except Signups.DoesNotExist:
         return HttpResponse('User not found')
 
-    
-from django.http import JsonResponse
 
+
+    
 def chat(request):
     if request.method == 'POST':
         message = request.POST.get('message', '')
         if message:
             try:
                 bot_response = kernel.respond(message)
+
                 return JsonResponse({'bot_response': bot_response})
             except Exception as e:
                 return JsonResponse({'error': str(e)}, status=500)
-            
-    return render(request, 'chat.html')
+                
+    return render(request,'chat.html')
