@@ -55,7 +55,7 @@ def signup_login(request, action=None):
             if action == 'login':
                 mail = request.POST.get('emailid')
                 passcode = request.POST.get('password')
-                user = Signups.nodes.get(email=mail, password=passcode)
+                user = Signups.nodes.get(email=mail, password=password)
                 request.session['user_id'] = user.face_id
                 if user:
                     return redirect('index')
@@ -66,15 +66,18 @@ def signup_login(request, action=None):
 
 def face_id(request):
     face_id = faceRecognition.recognizeFace()
-    try:
-        user = Signups.nodes.filter(uid=face_id).get()
-        if user:
-            request.session['user_id'] = face_id
-            return redirect('index')
-        else:
-            return HttpResponse('Wrong Email or Password')
-    except Signups.DoesNotExist:
-        return HttpResponse('User not found')
+    # try:
+    #     user = Signups.nodes.filter(uid=face_id).get()
+    #     if user:
+    #         request.session['user_id'] = face_id
+    #         return redirect('index')
+    #     else:
+    #         return HttpResponse('Wrong Email or Password')
+    # except Signups.DoesNotExist:
+    #     return HttpResponse('User not found')
+
+    return redirect ('index')
+
     
     
     
@@ -85,13 +88,11 @@ def face_id(request):
     
 def chat(request):
     if request.method == 'POST':
-        message = request.POST.get('message', '')
+        message = request.POST.get('userInput', '')
         if message:
             print(message)
-            response_data = {'status': 'success', 'message': message}
-        else:
-            response_data = {'status': 'error', 'message': 'No message received'}
-    else:
-        response_data = {'status': 'error', 'message': 'Invalid request method'}
+            bot_response = 'helo'
+            
+        return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html')

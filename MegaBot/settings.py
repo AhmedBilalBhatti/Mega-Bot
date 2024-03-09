@@ -39,10 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'neo4j',
     'django_neomodel',
     'neomodel',
-    'Memory'
+    'Memory',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +84,7 @@ WSGI_APPLICATION = 'MegaBot.wsgi.application'
 config.DATABASE_URL = 'bolt://neo4j:12345678@localhost:7687'
 config.NEOMODEL_SIGNALS = False
 db.set_connection(config.DATABASE_URL)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -132,6 +132,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 

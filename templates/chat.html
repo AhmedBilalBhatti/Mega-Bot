@@ -8,8 +8,8 @@
     <meta name="description" content="megabot">
     <meta name="keywords" content="megabot">
     <meta name="author" content="megabot">
-    <link rel="icon" href="{% static 'assets/images/favicon.png '%}" type="image/x-icon" />
-    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'assets/images/favicon.png ' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
     <title>Chat</title>
 
     <!--Google font-->
@@ -21,19 +21,19 @@
     <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
 
     <!-- remixicon css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css' %}">
 
     <!-- iconsax css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css'%}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css' %}" />
 
     <!-- animation css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css' %}">
 
     <!-- swiper slider css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css'%}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css' %}" />
 
     <!-- style css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
 </head>
 
 <body>
@@ -103,21 +103,21 @@
 
 
                     <nav class="navbar navbar-expand-lg bg-light p-0">
-                        {% comment %} <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
+                        <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">
                             <i class="iconsax" data-icon="text-align-justify"></i>
-                        </button> {% endcomment %}
+                        </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <div class="inner-menu-panel">
-                                {% comment %} <button data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                                <button data-bs-toggle="collapse" data-bs-target="#navbarNav"
                                     class="inner-close d-block d-lg-none">Back
-                                </button> {% endcomment %}
-                                {% comment %} <div class="search-box">
+                                </button>
+                                <div class="search-box">
                                     <i class="iconsax" data-icon="search-normal-2"></i>
                                     <input type="text" class="form-control" placeholder="Search here..">
-                                </div> {% endcomment %}
-                                {% comment %} <ul class="inner-links-list" id="innerLink">
+                                </div>
+                                <ul class="inner-links-list" id="innerLink">
                                     <li class="active"><a href="#!" data-title="Ask anything">Ask anything</a></li>
                                     <li><a href="#!" data-title="Image generator">Image generator</a></li>
                                     <li><a href="#!" data-title="Content writer">Content writer</a></li>
@@ -129,7 +129,7 @@
                                     <li><a href="#!" data-title="Password generator">Password generator</a></li>
                                     <li><a href="#!" data-title="Travel/hangout">Travel/hangout</a></li>
                                     <li><a href="#!" data-title="Essay writer">Essay writer</a></li>
-                                </ul> {% endcomment %}
+                                </ul>
                             </div>
                         </div>
                     </nav>
@@ -149,13 +149,13 @@
                             </a>
                             <h3 id="targetDiv">Ask anything</h3>
                         </div>
-                        {% comment %} <div class="header-option">
+                        <div class="header-option">
                             <a class="del-btn" data-cursor="pointer" href="#"><i class="iconsax"
                                     data-icon="trash"></i></a>
                             <a class="premium-btn" id="subscriptionBtn" data-cursor="pointer" href="#!"><i
                                     class="iconsax" data-icon="crown-2"></i> Get
                                 <span>premium</span></a>
-                        </div> {% endcomment %}
+                        </div>
                     </div>
 
 
@@ -168,6 +168,8 @@
                             </div>
                         </div>
                     
+
+
                         <div class="msger-chat" id="chatlog">
                         </div>
                         <form class="msger-inputarea" method="post">
@@ -176,14 +178,28 @@
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
-                            <input type="text" class="msger-input" id="message" placeholder="Ask any question here..." />
+                            <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
                             <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
                             <a href="#" class="mic-icon"><i class="iconsax" data-icon="mic-1"></i></a>
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
-                        </form>
-                        {% csrf_token %}
+                        </form> 
+                        
+                        <!-- <form class="msger-inputarea"  method="post" action = {% url 'chat' %}>
+                            {% csrf_token %}
+                            <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button" aria-controls="navbarNav"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="iconsax" data-icon="text-align-justify"></i>
+                            </button>
+                            <input type="text" id='userInput' class="msger-input"  placeholder="Ask any question here..." />
+                            <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
+                            <a href="#" class="mic-icon"><i class="iconsax" data-icon="mic-1"></i></a>
+                            <button type="submit" class="msger-send-btn"><i class="iconsax"
+                                    data-icon="send-1"></i></button>
+                        </form> -->
                     </div>
+
+
 
 
 
@@ -847,6 +863,9 @@
     <!-- Theme js-->
     <script src="{% static 'assets/js/script.js'%}"></script>
     <script src="{% static 'assets/js/chatting.js'%}"></script>
+
+    <!--AXJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 
 
