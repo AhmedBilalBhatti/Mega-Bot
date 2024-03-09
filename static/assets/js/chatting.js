@@ -5,10 +5,10 @@ const msgerChat = get(".msger-chat");
 // const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "Can you please share your QR-code ?", "Oky..!! ", "Thank you..!!", "Yes, I’ll send in 10 min"];
 
 
-const BOT_IMG = "{% static 'assets/images/icons/pro1.png' %}";
-const PERSON_IMG = "{% static 'assets/images/icons/pro1.png' %}";
-const BOT_NAME = "BOT";
-const PERSON_NAME = "Kristin Williams";
+// const BOT_IMG = "{% static 'assets/images/icons/pro1.png' %}";
+// const PERSON_IMG = "{% static 'assets/images/icons/pro1.png' %}";
+// const BOT_NAME = "BOT";
+// const PERSON_NAME = "Kristin Williams";
 
 // msgerForm.addEventListener("submit", (event) => {
 //     event.preventDefault();
@@ -56,8 +56,6 @@ $(document).ready(function () {
         event.preventDefault();
         var messageInput = $('#userInput');
         var chatlogContainer = $('#chatlog');
-        var botImage = "{% static '/assets/images/user/1.jpg' %}";
-        var PERSON_IMG = "{% static 'assets/images/icons/pro1.png' %}";
         var userMessage = messageInput.val();
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;    
@@ -66,12 +64,14 @@ $(document).ready(function () {
     
         $.ajax({
             type: 'POST',
-            url: '{% url "chat" %}',
+            url: '/chat/',
             data: {
                 message: userMessage,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()},
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
             success: function (data) {
-                chatlogContainer.find('.bocha typing').remove();
+                console.log(data); // Check if the response is received properly
+                chatlogContainer.find('.botchat.typing').remove(); // Corrected selector
 
                 var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div></div>');
                 chatlogContainer.append(botResponse);
@@ -80,6 +80,9 @@ $(document).ready(function () {
                     messageInput.val('');
                     chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
                 });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText); // Log any error messages
             }
         });
     });
@@ -107,6 +110,7 @@ $(document).ready(function () {
     }
     setInterval(toggleDots, 300);
 });
+
 
 // Utils
 function get(selector, root = document) {

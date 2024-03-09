@@ -82,11 +82,11 @@ def face_id(request):
     
 def chat(request):
     if request.method == 'POST':
-        message = request.POST.get('userInput', '')
+        message = request.POST.get('message', '') 
         if message:
             print(message)
         
-        bot_response = 'helo'    
+        bot_response = 'hello'  # Fixed the response message
         return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html')
