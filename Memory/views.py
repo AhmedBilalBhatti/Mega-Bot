@@ -20,9 +20,7 @@ def index(request):
     return render(request,'index.html')
 
 def login(request):
-    return render(request, 'login.html')
-
-    
+    return render(request, 'login.html')   
 
 def signup_login(request, action=None):
     if request.method == "POST":
@@ -75,9 +73,6 @@ def face_id(request):
             return HttpResponse('Wrong Email or Password')
     except Signups.DoesNotExist:
         return HttpResponse('User not found')
-
-    return redirect ('index')
-
 
     
 def chat(request):

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var chatStarted = false; // Variable to track if the chat has started
+
     $('form').on('submit', function (event) {
         event.preventDefault();
         var messageInput = $('#userInput');
@@ -12,6 +14,11 @@ $(document).ready(function () {
         // Check if the message input is empty
         if (userMessage.trim() !== '') {
             $('.no-chat').addClass('d-none'); // If not empty, hide the "no chat" message
+            if (!chatStarted) {
+                $('.main-chat').css('background-color', '#0a0e17'); // Change background color if chat starts
+                $('.chat-header').css('background-color', '#0a0e17'); // Change background color of chat header if chat starts
+                chatStarted = true; // Set chatStarted to true
+            }
         }
 
         $.ajax({
