@@ -1,56 +1,3 @@
-const msgerForm = get(".msger-inputarea");
-const msgerInput = get(".msger-input");
-const msgerChat = get(".msger-chat");
-
-// const BOT_MSGS = ["Hey !!", "Can you please send me $20.59 ?", "Received it", "Can you please share your QR-code ?", "Oky..!! ", "Thank you..!!", "Yes, I’ll send in 10 min"];
-
-
-// const BOT_IMG = "{% static 'assets/images/icons/pro1.png' %}";
-// const PERSON_IMG = "{% static 'assets/images/icons/pro1.png' %}";
-// const BOT_NAME = "BOT";
-// const PERSON_NAME = "Kristin Williams";
-
-// msgerForm.addEventListener("submit", (event) => {
-//     event.preventDefault();
-
-//     const msgText = msgerInput.value;
-//     if (!msgText) return;
-
-//     appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
-//     msgerInput.value = "";
-
-//     botResponse();
-
-//     const nochat = document.querySelector(".no-chat");
-//     nochat.classList.add("d-none");
-// });
-
-// function appendMessage(name, img, side, text) {
-//     //   Simple solution for small apps
-
-//     const msgHTML = `
-//     <div class="msg ${side}-msg">
-//       <div class="msg-bubble">
-//             <div class="msg-text">${text}</div>
-//       </div>
-//     </div>
-
-//   `;
-
-//     msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-//     msgerChat.scrollTop += 500;
-// }
-
-// function botResponse() {
-//     const r = random(0, BOT_MSGS.length - 1);
-//     const msgText = BOT_MSGS[r];
-//     const delay = msgText.split(" ").length * 100;
-
-//     setTimeout(() => {
-//         appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-//     }, delay);
-// }
-
 $(document).ready(function () {
     $('form').on('submit', function (event) {
         event.preventDefault();
@@ -58,10 +5,15 @@ $(document).ready(function () {
         var chatlogContainer = $('#chatlog');
         var userMessage = messageInput.val();
 
-        var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;    
+        var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
         chatlogContainer.append(userMessageHtml);
         chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong><span class="typewriter glow">Thinking<span class="dots"></span></span></p></div></div>`);
-    
+
+        // Check if the message input is empty
+        if (userMessage.trim() !== '') {
+            $('.no-chat').addClass('d-none'); // If not empty, hide the "no chat" message
+        }
+
         $.ajax({
             type: 'POST',
             url: '/chat/',
@@ -70,19 +22,22 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success: function (data) {
-                console.log(data); // Check if the response is received properly
-                chatlogContainer.find('.botchat.typing').remove(); // Corrected selector
+                console.log(data);
+                chatlogContainer.find('.botchat.typing').remove();
 
-                var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div></div>');
-                chatlogContainer.append(botResponse);
+                if (data.bot_response) {
+                    var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div></div>');
+                    chatlogContainer.append(botResponse);
 
-                typeWriter(botResponse.find('.typewriter'), function () {
-                    messageInput.val('');
-                    chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
-                });
+                    typeWriter(botResponse.find('.typewriter'), function () {
+                        messageInput.val('');
+                        // Scroll to the bottom of the chat log
+                        chatlogContainer.scrollTop(chatlogContainer.prop("scrollHeight"));
+                    });
+                }
             },
             error: function(xhr, status, error) {
-                console.error(xhr.responseText); // Log any error messages
+                console.error(xhr.responseText); 
             }
         });
     });
@@ -110,6 +65,7 @@ $(document).ready(function () {
     }
     setInterval(toggleDots, 300);
 });
+
 
 
 // Utils

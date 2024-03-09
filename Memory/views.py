@@ -66,15 +66,15 @@ def signup_login(request, action=None):
 
 def face_id(request):
     face_id = faceRecognition.recognizeFace()
-    # try:
-    #     user = Signups.nodes.filter(uid=face_id).get()
-    #     if user:
-    #         request.session['user_id'] = face_id
-    #         return redirect('index')
-    #     else:
-    #         return HttpResponse('Wrong Email or Password')
-    # except Signups.DoesNotExist:
-    #     return HttpResponse('User not found')
+    try:
+        user = Signups.nodes.filter(uid=face_id).get()
+        if user:
+            request.session['user_id'] = face_id
+            return redirect('index')
+        else:
+            return HttpResponse('Wrong Email or Password')
+    except Signups.DoesNotExist:
+        return HttpResponse('User not found')
 
     return redirect ('index')
 
@@ -86,7 +86,7 @@ def chat(request):
         if message:
             print(message)
         
-        bot_response = 'hello'  # Fixed the response message
+        bot_response = 'hello'
         return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html')
