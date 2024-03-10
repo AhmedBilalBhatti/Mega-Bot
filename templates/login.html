@@ -99,7 +99,7 @@
                             </div>
                             <div class="tab-pane fade" id="signup-tab-pane" role="tabpanel" aria-labelledby="signup-tab"
                                 tabindex="0">  
-                                <form class="auth-form" method="POST" action="{% url 'signup_login' action='signup' %}">
+                                <form class="auth-form" id="signupForm" method="POST" action="{% url 'signup_login' action='signup' %}">
                                     {% csrf_token %}
                                     <div class="mb-3 form-group">
                                         <i class="iconsax" data-icon="user-1"></i>
@@ -122,8 +122,8 @@
                                         <input type="date" name="dob" class="form-control" id="dob">
                                     </div>
                                     <div class="mb-3 form-group">
-                                        {% comment %} <i class="iconsax" data-icon="scan-2"></i> {% endcomment %}
-                                        {% comment %} <label for="faceScan" class="form-label">Face ID Scan</label> {% endcomment %}
+<!--                                         <i class="iconsax" data-icon="scan-2"></i>
+                                        <label for="faceScan" class="form-label">Face ID Scan</label>  -->
                                         <input type="file" name="face_id" accept="image/*" class="form-control" id="faceScan" style="display: none;">
                                     </div>
                                     <h4 class="text-title text-center mt-2">
@@ -176,6 +176,36 @@
 
     <!-- Theme js-->
     <script src="{% static 'assets/js/script.js'%}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Add event listener for form submission
+            $('#signupForm').submit(function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Detect webcam
+                detectWebcam(function(hasWebcam) {
+                    // Add hasWebcam value to form data
+                    $('#signupForm').append('<input type="hidden" name="has_webcam" value="' + hasWebcam + '">');
+
+                    // Submit the form
+                    $('#signupForm')[0].submit();
+                });
+            });
+        });
+
+        // Function to detect webcam
+        function detectWebcam(callback) {
+            let md = navigator.mediaDevices;
+            if (!md || !md.enumerateDevices) return callback(false);
+            md.enumerateDevices().then(devices => {
+                callback(devices.some(device => device.kind === 'videoinput'));
+            });
+        }
+    </script>
+
 
 </body>
 </html>

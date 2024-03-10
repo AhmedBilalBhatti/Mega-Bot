@@ -33,6 +33,8 @@ def signup_login(request, action=None):
             email = request.POST.get('email')
             password = request.POST.get('password')
             dob_str = request.POST.get('dob')
+            has_webcam = request.POST.get('has_webcam', )
+            print(has_webcam)
             if dob_str:
                 try:
                     dob = datetime.strptime(dob_str, '%Y-%m-%d').date()
@@ -50,7 +52,8 @@ def signup_login(request, action=None):
             user.uid = face_id
             user.save()
             print("Id===", face_id)
-            addFace(face_id)
+            if has_webcam:
+                addFace(face_id)
             return redirect('index')
 
         else:
@@ -68,13 +71,15 @@ def signup_login(request, action=None):
 
 def face_id(request):
     face_id = faceRecognition.recognizeFace()
+    if not face_id:
+        return HttpResponse('Face id Not Found try using login form')
     try:
         user = Signups.nodes.filter(uid=face_id).get()
         if user:
             request.session['user_id'] = face_id
             return redirect('index')
         else:
-            return HttpResponse('Wrong Email or Password')
+            return HttpResponse('No Face id Found')
     except Signups.DoesNotExist:
         return HttpResponse('User not found')
 
