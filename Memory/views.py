@@ -78,8 +78,12 @@ def face_id(request):
     except Signups.DoesNotExist:
         return HttpResponse('User not found')
 
+def contact(request):
+    return render(request,'contact-us.html')
 
-
+def signout(request):
+    logout(request)
+    return redirect('index')
     
 def chat(request):
     if request.method == 'POST':
@@ -94,8 +98,3 @@ def chat(request):
                 return JsonResponse({'error': str(e)}, status=500)
                 
     return render(request,'chat.html')
-
-
-def signout(request):
-    logout(request)
-    return redirect('index')

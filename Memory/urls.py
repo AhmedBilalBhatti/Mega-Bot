@@ -8,4 +8,5 @@ urlpatterns = [
     path('signup_login/<str:action>', views.signup_login, name='signup_login'),
     path('face_id', views.face_id, name='face_id'),
     path('signout', views.signout, name='signout'),
+    path('contact', views.contact, name='contact'),
 ]

@@ -81,13 +81,17 @@ WSGI_APPLICATION = 'MegaBot.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-# config.DATABASE_URL = 'bolt://neo4j:12345678@localhost:7687'
-# config.NEOMODEL_SIGNALS = False
-# db.set_connection(config.DATABASE_URL)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
-# config.DATABASE_URL = 'bolt://neo4j:neo4j@localhost:7687'
-# Neo4j configuration for neomodel
-NEOMODEL_NEO4J_BOLT_URL = 'bolt://neo4j:12345678@localhost:7687'
+NEOMODEL_NEO4J_BOLT_URL = os.environ.get('NEO4J_BOLT_URL', 'bolt://neo4j:12345678@localhost:7687')
+NEOMODEL_SIGNALS = True
+NEOMODEL_FORCE_TIMEZONE = False
+NEOMODEL_MAX_CONNECTION_POOL_SIZE = 50
 
 
 # Password validation

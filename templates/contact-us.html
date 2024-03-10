@@ -1,8 +1,7 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/contact-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:39 GMT -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +9,9 @@
     <meta name="description" content="megabot">
     <meta name="keywords" content="megabot">
     <meta name="author" content="megabot">
-    <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon" />
-    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
-    <title>Megabot</title>
+    <link rel="icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
+    <title>Contact</title>
 
     <!--Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -20,22 +19,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
 
     <!-- bootstrap css -->
-    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap.css">
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
 
     <!-- remixicon css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/remixicon.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css'%}">
 
     <!-- iconsax css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/iconsax.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css'%}" />
 
     <!-- animation css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/aos.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css'%}">
 
     <!-- swiper slider css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/swiper-bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css'%}" />
 
     <!-- style css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
 
 
 
@@ -72,7 +71,7 @@
                                 <a class="nav-link" href="chat.html">Chat</a>
                             </li>
 
-                            <li class="nav-item dropdown">
+<!--                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
                                     data-bs-toggle="dropdown">Pages</a>
 
@@ -102,7 +101,7 @@
                                         <a class="dropdown-item" href="terms.html">Terms & Conditon</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
 
                             <li class="nav-item">
                                 <a class="nav-link" href="service.html">service</a>
@@ -352,27 +351,27 @@
 
 
     <!-- Bootstrap js-->
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
 
     <!-- slider js-->
-    <script src="../assets/js/swiper-bundle.min.js"></script>
-    <script src="../assets/js/custom-slider.js"></script>
+    <script src="{% static 'assets/js/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'assets/js/custom-slider.js'%}"></script>
 
     <!-- custom cursor -->
-    <script src="../assets/js/custom-cursor.js"></script>
+    <script src="{% static 'assets/js/custom-cursor.js'%}"></script>
 
     <!-- aos animation -->
-    <script src="../assets/js/aos.js"></script>
-    <script src="../assets/js/custom-aos.js"></script>
+    <script src="{% static 'assets/js/aos.js'%}"></script>
+    <script src="{% static 'assets/js/custom-aos.js'%}"></script>
 
     <!-- header sticky js -->
-    <script src="../assets/js/header_sticky.js"></script>
+    <script src="{% static 'assets/js/header_sticky.js'%}"></script>
 
     <!-- iconsax js -->
-    <script src="../assets/js/iconsax.js"></script>
+    <script src="{% static 'assets/js/iconsax.js'%}"></script>
 
     <!-- Theme js-->
-    <script src="../assets/js/script.js"></script>
+    <script src="{% static 'assets/js/script.js'%}"></script>
 
 </body>
 
