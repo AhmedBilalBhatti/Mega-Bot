@@ -113,8 +113,16 @@
                 </div>
             </div>
         </nav>
-        <a data-cursor="pointer" href="{% url 'login' %}" class="btn btn-theme d-sm-inline-block d-none">
-            <span>Login Now</span></a>
+{% if request.user.is_authenticated %}
+    <a data-cursor="pointer" href="{% url 'logout' %}" class="btn btn-theme d-sm-inline-block d-none">
+        <span>Logout</span>
+    </a>
+{% else %}
+    <a data-cursor="pointer" href="{% url 'login' %}" class="btn btn-theme d-sm-inline-block d-none">
+        <span>Login Now</span>
+    </a>
+{% endif %}
+
     </header>
     <!-- header end -->
 

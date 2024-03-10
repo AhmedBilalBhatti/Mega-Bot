@@ -7,5 +7,5 @@ urlpatterns = [
     path('chat/', views.chat, name='chat'),
     path('signup_login/<str:action>', views.signup_login, name='signup_login'),
     path('face_id', views.face_id, name='face_id'),
-    path('logout', views.logout, name='logout'),
+    path('signout', views.signout, name='signout'),
 ]

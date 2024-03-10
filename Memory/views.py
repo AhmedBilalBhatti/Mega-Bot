@@ -21,7 +21,7 @@ def addFace(face_id):
 
 def index(request):
     session = request.session.get('user_id')
-    return render(request,'index.html')
+    return render(request,'index.html',{'session':session})
 
 def login(request):
     return render(request, 'login.html')   
@@ -96,6 +96,6 @@ def chat(request):
     return render(request,'chat.html')
 
 
-def logout(request):
+def signout(request):
     logout(request)
     return redirect('index')
