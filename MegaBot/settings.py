@@ -86,10 +86,8 @@ WSGI_APPLICATION = 'MegaBot.wsgi.application'
 # db.set_connection(config.DATABASE_URL)
 
 # config.DATABASE_URL = 'bolt://neo4j:neo4j@localhost:7687'
+# Neo4j configuration for neomodel
 NEOMODEL_NEO4J_BOLT_URL = 'bolt://neo4j:12345678@localhost:7687'
-NEOMODEL_SIGNALS = True
-NEOMODEL_FORCE_TIMEZONE = False
-NEOMODEL_MAX_CONNECTION_POOL_SIZE = 50
 
 
 # Password validation
