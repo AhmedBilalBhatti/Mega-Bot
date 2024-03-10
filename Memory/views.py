@@ -56,7 +56,7 @@ def signup_login(request, action=None):
             if action == 'login':
                 mail = request.POST.get('emailid')
                 passcode = request.POST.get('password')
-                user = Signups.nodes.get(email=mail, password=password)
+                user = Signups.nodes.get(email=mail, password=passcode)
                 request.session['user_id'] = user.face_id
                 if user:
                     return redirect('index')
