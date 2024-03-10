@@ -1,6 +1,7 @@
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
 from django.shortcuts import render,redirect
 from Memory.face_id import FaceRecognition
+from django.contrib.auth import logout
 from googletrans import Translator
 from Memory.models import Signups
 from datetime import datetime
@@ -93,3 +94,8 @@ def chat(request):
                 return JsonResponse({'error': str(e)}, status=500)
                 
     return render(request,'chat.html')
+
+
+def logout(request):
+    logout(request)
+    return redirect('index')
