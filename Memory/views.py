@@ -54,6 +54,7 @@ def signup_login(request, action=None):
             print("Id===", face_id)
             if has_webcam:
                 addFace(face_id)
+            request.session['user_id'] = user.uid
             return redirect('index')
 
         else:
@@ -91,9 +92,12 @@ def signout(request):
     return redirect('index')
     
 def chat(request):
+    session = request.session.get('user_id')
+    user = Signups.nodes.filter(uid=session).get()
+
     if request.method == 'POST':
         message = request.POST.get('message', '')
-        kernel.setPredicate('name', 'Ahmed')
+        kernel.setPredicate('name', user.username )
         if message:
             try:
                 bot_response = kernel.respond(message)
