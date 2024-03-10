@@ -9,3 +9,18 @@ class Signups(StructuredNode):
     password = StringProperty(required=True)
     dob = DateProperty()
     face_id = StringProperty(upload_to='profile_image', blank=True)
+
+
+
+class User_Chat(StructuredNode):
+    email = StringProperty(unique_index=True)
+    name = StringProperty()
+    chat = ArrayProperty(StringProperty())
+    created_at = DateTimeProperty(default_now=True)
+
+    def save_message(self, message_content):
+        if self.chat is None:
+            self.chat = []
+
+        self.chat.append(message_content)
+        self.save()
