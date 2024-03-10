@@ -87,9 +87,15 @@
                                     <br>             
                                     <p style="text-align: center;">Alternatively, log in using Face ID.</p>
                                     <br>
+
+
+
                                     <div class="mb-3 form-group">
                                         <button class="butn" type="button"><a href="{% url 'face_id' %}"><span style="color: #252525;">Face ID Log in</span></a></button>
-                                    </div>                                    
+                                    </div>  
+
+
+
                                     <br>
                                     <div class="text-end">
                                         <a data-cursor="pointer" href="reset-password.html">Forget Password?</a>
@@ -180,23 +186,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Add event listener for form submission
             $('#signupForm').submit(function (event) {
-                // Prevent the default form submission
                 event.preventDefault();
-
-                // Detect webcam
                 detectWebcam(function(hasWebcam) {
-                    // Add hasWebcam value to form data
                     $('#signupForm').append('<input type="hidden" name="has_webcam" value="' + hasWebcam + '">');
-
-                    // Submit the form
                     $('#signupForm')[0].submit();
                 });
             });
         });
-
-        // Function to detect webcam
         function detectWebcam(callback) {
             let md = navigator.mediaDevices;
             if (!md || !md.enumerateDevices) return callback(false);
@@ -204,8 +201,6 @@
                 callback(devices.some(device => device.kind === 'videoinput'));
             });
         }
-    </script>
-
-
+    </script> 
 </body>
 </html>
