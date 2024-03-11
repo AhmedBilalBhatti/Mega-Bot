@@ -865,31 +865,31 @@
         
     </script>
 
-<script>
-    const micIcon = document.getElementById('mic-icon');
-    const micListen = document.getElementById('mic-listen');
-    const userInput = document.getElementById('userInput');
+    <script>
+        const micIcon = document.getElementById('mic-icon');
+        const micListen = document.getElementById('mic-listen');
+        const userInput = document.getElementById('userInput');
 
-    let isListening = false;
-    let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
-    recognition.lang = 'en-IN';
+        let isListening = false;
+        let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = 'en-IN';
 
-    micListen.addEventListener('click', function(event) {
-        event.preventDefault();
-        if (!isListening) {
-            micIcon.innerHTML = '<i class="iconsax" data-icon="stop"></i>';
-            recognition.start();
-        } else {
-            micIcon.innerHTML = '<i class="iconsax" data-icon="mic-1"></i>';
-            recognition.stop();
-        }
-        isListening = !isListening;
-    });
+        micListen.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (!isListening) {
+                micIcon.innerHTML = '<i class="iconsax" data-icon="stop"></i>';
+                recognition.start();
+            } else {
+                micIcon.innerHTML = '<i class="iconsax" data-icon="mic-1"></i>';
+                recognition.stop();
+            }
+            isListening = !isListening;
+        });
 
-    recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        userInput.value += transcript;
-    };
-</script>
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            userInput.value += transcript;
+        };
+    </script>
 
 </body>

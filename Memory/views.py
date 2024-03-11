@@ -6,6 +6,7 @@ from googletrans import Translator
 from Memory.models import Signups
 from datetime import datetime
 from .models import *
+from .Speech import *
 from .aiml import *
 import re
 
