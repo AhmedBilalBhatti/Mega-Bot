@@ -165,7 +165,8 @@
                         </div>
                         <div class="msger-chat" id="chatlog">
                         </div>
-                        <form class="msger-inputarea" method="post" action='{% url 'chat' %}'>
+
+                        <form class="msger-inputarea" method="post" action="{% url 'chat' %}">
                             {% csrf_token %}
                             <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button" 
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,10 +174,12 @@
                             </button>
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
                             <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
-                            <a href="#" class="mic-icon"><i class="iconsax" data-icon="mic-1"></i></a>
+                            <a href="{% url 'speech_to_text' %}" class="mic-icon" id="mic-listen"><i class="iconsax" data-icon="mic-1"></i></a>
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
                         </form>
+
+
                     </div>
                 </div>
             </div>
@@ -861,8 +864,32 @@
         });
         
     </script>
+
+<script>
+    const micIcon = document.getElementById('mic-icon');
+    const micListen = document.getElementById('mic-listen');
+    const userInput = document.getElementById('userInput');
+
+    let isListening = false;
+    let recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+    recognition.lang = 'en-IN';
+
+    micListen.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (!isListening) {
+            micIcon.innerHTML = '<i class="iconsax" data-icon="stop"></i>';
+            recognition.start();
+        } else {
+            micIcon.innerHTML = '<i class="iconsax" data-icon="mic-1"></i>';
+            recognition.stop();
+        }
+        isListening = !isListening;
+    });
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        userInput.value += transcript;
+    };
+</script>
+
 </body>
-
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:36 GMT -->
-</html>

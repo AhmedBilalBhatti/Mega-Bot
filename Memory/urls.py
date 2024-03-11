@@ -9,4 +9,5 @@ urlpatterns = [
     path('face_id', views.face_id, name='face_id'),
     path('signout', views.signout, name='signout'),
     path('contact', views.contact, name='contact'),
+    # path('speech_to_text', views.speech_to_text, name='speech_to_text'),
 ]
