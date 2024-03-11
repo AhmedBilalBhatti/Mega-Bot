@@ -11,7 +11,7 @@
 <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
 <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon" />
 <title>Chat</title>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iconsax@1.0.0/css/iconsax.min.css">
 <!--Google font-->
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -173,7 +173,7 @@
                             </button>
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
                             <!-- <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a> -->
-                            <a href="#" class="mic-icon" id="mic-listen"><i class="iconsax" data-icon="mic-1"></i></a>
+                            <a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
 
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
@@ -861,6 +861,25 @@
             });
         });
         
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/iconsax@1.0.0/js/iconsax.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const micListen = document.getElementById('mic-listen');
+            let isListening = false;
+
+            micListen.addEventListener('click', function(event) {
+                event.preventDefault();
+                const micIcon = micListen.querySelector('i.iconsax');
+                if (!isListening) {
+                    iconsax.change(micIcon, 'mic-1'); // Change the icon
+                } else {
+                    iconsax.change(micIcon, 'mic-2s'); // Change the icon
+                }
+                isListening = !isListening;
+            });
+        });
     </script>
 </body>
 </html>
