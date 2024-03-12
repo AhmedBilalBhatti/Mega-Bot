@@ -6,6 +6,7 @@ from django.contrib import messages
 from googletrans import Translator
 from Memory.models import Signups
 from datetime import datetime
+from .web_scrap import *
 from .models import *
 from .Speech import *
 from .aiml import *
@@ -114,6 +115,8 @@ def chat(request):
         kernel.setPredicate('name', user.username )
         if message:
             bot_response = kernel.respond(message)
+            if bot_response == "I'm sorry, I didn't understand what you said.":
+                bot_response = web_scraping(message)
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')
