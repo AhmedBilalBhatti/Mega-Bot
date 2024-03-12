@@ -163,9 +163,13 @@
                                 <h3>Ask anything to chatbot</h3>
                             </div>
                         </div>
+
+
+
+
                         <div class="msger-chat" id="chatlog">
                         </div>
-                        <form class="msger-inputarea" method="post" action="{% url 'chat' %}">
+                        <form class="msger-inputarea" method="post" action="{% url 'chat' %}" id="speechForm">
                             {% csrf_token %}
                             <button class="navbar-toggler d-lg-none d-block msger-send-btn" type="button" 
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,11 +177,19 @@
                             </button>
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
                             <!-- <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a> -->
+
                             <a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
 
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
                         </form>
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -863,23 +875,52 @@
         
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/iconsax@1.0.0/js/iconsax.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const micListen = document.getElementById('mic-listen');
-            let isListening = false;
+<script>
+        // Function to handle speech recognition
+        function startSpeechRecognition() {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-IN'; // Set the language
+            recognition.interimResults = true;
 
-            micListen.addEventListener('click', function(event) {
-                event.preventDefault();
-                const micIcon = micListen.querySelector('i.iconsax');
-                if (!isListening) {
-                    iconsax.change(micIcon, 'mic-1'); // Change the icon
-                } else {
-                    iconsax.change(micIcon, 'mic-2s'); // Change the icon
-                }
-                isListening = !isListening;
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                $('#userInput').val(transcript); // Set the recognized text to the input field
+            }
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            }
+
+            recognition.onend = function() {
+                // You can perform any actions after the speech recognition ends
+            }
+
+            recognition.start();
+        }
+
+        $(document).ready(function() {
+            $('#mic-listen').click(function(e) {
+                e.preventDefault();
+                startSpeechRecognition();
+            });
+
+            $('#speechForm').submit(function(e) {
+                e.preventDefault();
+                // Submit the form using AJAX or perform any other action
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "speech_to_text" %}',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        // Handle the response from the server
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
         });
     </script>
+
 </body>
 </html>

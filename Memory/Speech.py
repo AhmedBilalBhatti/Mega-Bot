@@ -38,11 +38,12 @@ def speech_to_text(request):
             audio_data = r.record(source)
             text = r.recognize_google(audio_data, language='en-IN', show_all=True)
             print(text)
-            return_text = "Did you say:<br>"
+            return_text = ""
             try:
                 for num, texts in enumerate(text['alternative']):
-                    return_text += str(num + 1) + ") " + texts['transcript'] + "<br>"
+                    return_text += str(num + 1) + ") " + texts['transcript'] + "\n"
             except:
                 return_text = "Sorry!!!! Voice not Detected"
 
-        return HttpResponse(return_text)
+        return return_text
+
