@@ -92,19 +92,26 @@ def signout(request):
     logout(request)
     return redirect('index')
     
+
+from django.contrib import messages
+
 def chat(request):
     session = request.session.get('user_id')
-    user = Signups.nodes.filter(uid=session).get()
+    try:
+        if session:
+            user = Signups.nodes.filter(uid=session).get()
+        else:
+            messages.error(request, 'You must log in to access the chat.')
+            return redirect('index')
+    except:
+        messages.error(request, 'An error occurred. Please try again.')
+        return redirect('index')
 
     if request.method == 'POST':
         message = request.POST.get('message', '')
         kernel.setPredicate('name', user.username )
         if message:
-            try:
-                bot_response = kernel.respond(message)
-
-                return JsonResponse({'bot_response': bot_response})
-            except Exception as e:
-                return JsonResponse({'error': str(e)}, status=500)
+            bot_response = kernel.respond(message)
+            return JsonResponse({'bot_response': bot_response})
                 
-    return render(request,'chat.html')
+    return render(request, 'chat.html')
