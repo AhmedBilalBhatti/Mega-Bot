@@ -1,7 +1,10 @@
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
+from django.template.loader import render_to_string
 from django.shortcuts import render,redirect
 from Memory.face_id import FaceRecognition
+from django.core.mail import EmailMessage
 from django.contrib.auth import logout
+from django.core.mail import send_mail
 from django.contrib import messages
 from googletrans import Translator
 from Memory.models import Signups
@@ -51,6 +54,8 @@ def signup_login(request, action=None):
             gen = predict_gender(name)
             user = Signups(username=name, email=email, password=password, dob=dob, gender=gen)
             user.save()
+            msg = "We are delighted to welcome you to our community! Your registration is confirmed, and we are excited to have you on board."
+            # send_contact_confirmation_mail(name,email,msg)
             user_element_id = user.element_id
             if user_element_id[-2] == ":":
                 face_id = user_element_id[-1:]
@@ -126,3 +131,16 @@ def chat(request):
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')
+
+
+def send_contact_confirmation_mail(name, email, message):
+    subject = 'Thank You for Signing Up'
+    email_context = {'name': name, 'email': email, 'message': message}
+    html_message = render_to_string('Thanks.html', email_context)
+    recipient_list = [email]
+    
+    try:
+        send_mail(subject, '', 'ahmadbilalssg@gmail.com', recipient_list, html_message=html_message, fail_silently=True)
+        return True, 'Your message has been submitted successfully.'
+    except Exception as e:
+        return False, f'Failed to send confirmation email: {str(e)}'

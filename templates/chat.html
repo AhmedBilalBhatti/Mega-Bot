@@ -16,7 +16,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
-
 <!-- bootstrap css -->
 <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
 
@@ -173,7 +172,8 @@
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
                             <!-- <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a> -->
 
-                            <a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
+<a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
+
 
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
@@ -863,48 +863,53 @@
         
     </script>
 
-    <script>
-        function startSpeechRecognition() {
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = 'en-IN';
-            recognition.interimResults = true;
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                $('#userInput').val(transcript); 
-            }
+<script>
+    function startSpeechRecognition() {
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-IN';
+        recognition.interimResults = true;
 
-            recognition.onerror = function(event) {
-                console.error('Speech recognition error:', event.error);
-            }
-
-            recognition.onend = function() {
-            }
-
-            recognition.start();
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            $('#userInput').val(transcript); 
         }
 
-        $(document).ready(function() {
-            $('#mic-listen').click(function(e) {
-                e.preventDefault();
-                startSpeechRecognition();
-            });
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+        }
 
-            $('#speechForm').submit(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "speech_to_text" %}',
-                    data: $(this).serialize(),
-                    success: function(response) {
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
+        recognition.onend = function() {
+            $('#mic-listen i').removeClass('fas fa-microphone-alt-slash').addClass('iconsax').attr('data-icon', 'mic-2');
+        }
+
+        $('#mic-listen i').removeClass('iconsax').addClass('fas fa-microphone-alt-slash');
+        recognition.start();
+    }
+
+    $(document).ready(function() {
+        $('#mic-listen').click(function(e) {
+            e.preventDefault();
+            startSpeechRecognition();
+        });
+
+        $('#speechForm').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "speech_to_text" %}',
+                data: $(this).serialize(),
+                success: function(response) {
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                }
             });
         });
-    </script>
+    });
+</script>
+
 
 </body>
 </html>
