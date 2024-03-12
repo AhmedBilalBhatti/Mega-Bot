@@ -97,7 +97,6 @@ def signout(request):
     logout(request)
     return redirect('index')
     
-
 def chat(request):
     session = request.session.get('user_id')
     try:
@@ -112,7 +111,8 @@ def chat(request):
 
     if request.method == 'POST':
         message = request.POST.get('message', '')
-        kernel.setPredicate('name', user.username )
+        kernel.setPredicate('name',user.username)
+        kernel.setPredicate('gender',user.gender)
         if message:
             bot_response = kernel.respond(message)
             if bot_response == "I'm sorry, I didn't understand what you said.":
