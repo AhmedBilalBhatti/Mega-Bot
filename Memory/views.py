@@ -2,12 +2,14 @@ from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
 from django.shortcuts import render,redirect
 from Memory.face_id import FaceRecognition
 from django.contrib.auth import logout
+from django.contrib import messages
 from googletrans import Translator
 from Memory.models import Signups
 from datetime import datetime
 from .models import *
 from .Speech import *
 from .aiml import *
+from .ML import *
 import re
 
 faceRecognition = FaceRecognition()
@@ -28,6 +30,7 @@ def login(request):
     return render(request, 'login.html')   
 
 def signup_login(request, action=None):
+    face_id = None
     if request.method == "POST":
         if action == 'signup':
             name = request.POST.get('name')
@@ -43,7 +46,8 @@ def signup_login(request, action=None):
                     return HttpResponseBadRequest("Invalid date format for date of birth.")
             else:
                 return HttpResponseBadRequest("Date of birth is required.")
-            user = Signups(username=name, email=email, password=password, dob=dob)
+            gen = predict_gender(name)
+            user = Signups(username=name, email=email, password=password, dob=dob, gender=gen)
             user.save()
             user_element_id = user.element_id
             if user_element_id[-2] == ":":
@@ -55,7 +59,7 @@ def signup_login(request, action=None):
             print("Id===", face_id)
             if has_webcam:
                 addFace(face_id)
-            request.session['user_id'] = user.uid
+            request.session['user_id'] = face_id or user.uid
             return redirect('index')
 
         else:
@@ -63,7 +67,7 @@ def signup_login(request, action=None):
                 mail = request.POST.get('emailid')
                 passcode = request.POST.get('password')
                 user = Signups.nodes.get(email=mail, password=passcode)
-                request.session['user_id'] = user.face_id
+                request.session['user_id'] = face_id or user.uid
                 if user:
                     return redirect('index')
                 else:
@@ -92,8 +96,6 @@ def signout(request):
     logout(request)
     return redirect('index')
     
-
-from django.contrib import messages
 
 def chat(request):
     session = request.session.get('user_id')

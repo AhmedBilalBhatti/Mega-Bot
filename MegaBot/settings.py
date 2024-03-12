@@ -115,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # CHATBOT_CACHE_TIMEOUT = 60 * 10
 # CACHE_KEY_PREFIX = 'Neo4j'
 
+SESSION_COOKIE_AGE = 300
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
@@ -150,9 +151,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'ahmadbilalssg@gmail.com'
-# EMAIL_HOST_PASSWORD = 'jkfwaisisezpkmmr'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ahmadbilalssg@gmail.com'
+EMAIL_HOST_PASSWORD = 'jkfwaisisezpkmmr'
