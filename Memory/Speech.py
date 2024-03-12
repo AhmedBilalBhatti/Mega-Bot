@@ -69,7 +69,7 @@ def speech_to_text(request):
             except Exception as e:
                 print("Error:", e)
                 return_text = "Sorry!!!! Voice not Detected"
-        print()
+
         return HttpResponse(return_text)
 
 

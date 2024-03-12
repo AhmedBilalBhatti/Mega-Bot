@@ -16,6 +16,7 @@ import re
 faceRecognition = FaceRecognition()
 kernel = init_kernel()
 translator = Translator()
+urdu_pattern = r'^[\u0600-\u06FF\s]+$'
 
 def addFace(face_id):
     face_id = face_id
@@ -114,9 +115,14 @@ def chat(request):
         kernel.setPredicate('name',user.username)
         kernel.setPredicate('gender',user.gender)
         if message:
-            bot_response = kernel.respond(message)
-            if bot_response == "I'm sorry, I didn't understand what you said.":
-                bot_response = web_scraping(message)
+            if  re.match(urdu_pattern, message):
+                english = translator.translate(message).text
+                response = kernel.respond(english)
+                bot_response = translator.translate(response, dest='ur').text
+            else:
+                bot_response = kernel.respond(message)
+                if bot_response == "I'm sorry, I didn't understand what you said.":
+                    bot_response = web_scraping(message)
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')
