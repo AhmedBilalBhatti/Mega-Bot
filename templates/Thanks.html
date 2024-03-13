@@ -5,35 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Message</title>
 </head>
-<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #3cedb2; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <div style="max-width: 460px; padding: 35px; background-color: #252525; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
-        <a href="https://themes.pixelstrap.net/mega_bot/" style="margin: 0 auto 20px; display: block;">
-            <img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" alt="Chatbot Logo" style="max-width: 161px; height: auto;">
-        </a>
-        <img src="https://cdn.templates.unlayer.com/assets/1597218650916-xxxxc.png" alt="Message Image" style="max-width: 260px; margin-top: 10px; height: 70px; display: block; margin: 0 auto;">
-        <h1 style="font-size: 16px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; color:#3cedb2;">THANKS FOR SIGNING UP!</h1>
-        {% if email_context %}
-        <p style="font-size: 20px; margin-bottom: 20px; text-align: center;">Dear {{email_context.name}},</p>
-        {% endif %}        
-        <p style="font-weight: bold; margin-bottom: 20px; font-size: 14px; text-align: center;">We're thrilled to have you join our community. Thank you for signing up with us. Your support means the world to us! If you have any questions or need assistance, feel free to reach out to us anytime.</p>
-        <p style="font-weight: bold; margin-bottom: 20px; font-size: 14px; text-align: center;">Once again, thank you for choosing us. We're excited to embark on this journey together!</p>
-        <p style="font-style: italic; margin-top: 20px;">Best regards,<br>A2B MegaBot</p>
-        <div style="margin-top: 20px; text-align: center;">
-            <h3>Get in touch with us</h3>
-            <a href="https://www.facebook.com/profile.php?id=100016213909392" style="margin-right: 10px;">
-                <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/facebook.png" alt="Facebook" style="width: 30px; height: auto;">
-            </a>
-            <a href="https://www.linkedin.com/in/ahmed-bilal-27a9b7226/" style="margin-right: 10px;">
-                <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/linkedin.png" alt="LinkedIn" style="width: 30px; height: auto;">
-            </a>
-            <a href="https://www.instagram.com/i._.ahmedbilal_bhatti/" style="margin-right: 10px;">
-                <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/instagram.png" alt="Instagram" style="width: 30px; height: auto;">
-            </a>
-            <a href="mailto:ahmadbilalssg@gmail.com">
-                <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/email.png" alt="Email" style="width: 30px; height: auto;">
-            </a>
-        </div>
-        <p style="margin-top: 20px; font-size: 14px; text-align: center;">Copyrights © A2B All Rights Reserved</p>
-    </div>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #fff;">
+    <table style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #252525; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <tr>
+            <td style="padding: 35px; text-align: center;">
+                <a href="https://themes.pixelstrap.net/mega_bot/">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" alt="Chatbot Logo" style="max-width: 161px; height: auto; display: block; margin: 0 auto 20px;">
+                </a>
+                <img src="https://cdn.templates.unlayer.com/assets/1597218650916-xxxxc.png" alt="Message Image" style="max-width: 260px; margin-top: 10px; height: 70px; display: block; margin: 0 auto;">
+                <h1 style="font-size: 16px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; color:#3cedb2;">THANKS FOR SIGNING UP!</h1>
+                {% if email_context %}
+                <p style="font-size: 20px; margin-bottom: 20px; color: #fff;">Dear {{email_context.name}},</p>
+                {% endif %}
+                <p style="font-size: 14px; margin-bottom: 20px; color: #fff;">We're thrilled to have you join our community. Thank you for signing up with us. Your support means the world to us! If you have any questions or need assistance, feel free to reach out to us anytime.</p>
+                <p style="font-size: 14px; margin-bottom: 20px; color: #fff;">Once again, thank you for choosing us. We're excited to embark on this journey together!</p>
+                <p style="font-style: italic; margin-top: 20px; color: #fff;">Best regards,<br>A2B MegaBot</p>
+                <div style="margin-top: 20px;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #fff;">Get in touch with me</h3>
+                    <a href="https://www.facebook.com/profile.php?id=100016213909392" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/facebook.png" alt="Facebook" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                    <a href="https://www.linkedin.com/in/ahmed-bilal-27a9b7226/" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/linkedin.png" alt="LinkedIn" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                    <a href="https://www.instagram.com/i._.ahmedbilal_bhatti/" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/instagram.png" alt="Instagram" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                    <a href="mailto:ahmadbilalssg@gmail.com" style="text-decoration: none; color: #fff;">
+                        <img src="https://cdn.tools.unlayer.com/social/icons/circle-black/email.png" alt="Email" style="width: 30px; height: auto; margin-right: 10px; vertical-align: middle;">
+                    </a>
+                </div>
+                <p style="font-size: 14px; margin-top: 20px; color: #fff;">Copyrights © A2B All Rights Reserved</p>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
