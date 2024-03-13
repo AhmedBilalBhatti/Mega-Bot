@@ -1,6 +1,7 @@
+from django.core.mail import send_mail,BadHeaderError
 from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 from django.core.mail import EmailMessage
-from django.core.mail import send_mail
 from django.utils import timezone
 from datetime import datetime
 
@@ -32,3 +33,27 @@ def Login_Trigger(name, email):
         return True, 'Login notification sent successfully.'
     except Exception as e:
         return False, f'Failed to send login notification email: {str(e)}'
+
+
+def send_email(request , otp , useremail):
+
+    subject = 'Welcome to Kaswa.Ai '
+    from_email = 'ahmadbilalssg@gmail.com'
+    to_email = useremail
+    text_content = f"Hi Sir! Your OTP is: {otp}"
+    # html_content = render_to_string('email_template.html', {'otp': otp})
+
+    try:
+        # Create the email with both plaintext and HTML versions
+        email = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+        # email.attach_alternative(html_content, "text/html")
+        email.send()
+
+        message = "Email sent successfully"
+        print("send successfully")
+        return message
+
+    except Exception as e:
+        message = f"Error occurred while sending the email: {e}"
+        print("fail to send")
+        return message

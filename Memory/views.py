@@ -19,6 +19,10 @@ kernel = init_kernel()
 translator = Translator()
 urdu_pattern = r'^[\u0600-\u06FF\s]+$'
 
+def generate_random_otp():
+    otp = ''.join(random.choices('0123456789', k=4))
+    return otp
+
 def addFace(face_id):
     face_id = face_id
     faceRecognition.faceDetect(face_id)
@@ -92,6 +96,7 @@ def face_id(request):
         user = Signups.nodes.filter(uid=face_id).get()
         if user:
             request.session['user_id'] = face_id or face_id_auth
+            Login_Trigger(user.username,user.email)
             return redirect('index')
         else:
             return HttpResponse('No Face id Found')
