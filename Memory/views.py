@@ -73,6 +73,7 @@ def signup_login(request, action=None):
                 passcode = request.POST.get('password')
                 user = Signups.nodes.get(email=mail, password=passcode)
                 request.session['user_id'] = face_id or user.uid
+                Login_Trigger(user.username,mail)
                 if user:
                     return redirect('index')
                 else:
