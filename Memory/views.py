@@ -85,7 +85,9 @@ def signup_login(request, action=None):
 def face_id(request):
     face_id = faceRecognition.recognizeFace()
     face_id_auth = faceRecognition.recognizeFace()
-    if face_id is not None and face_id_auth is not None and face_id == face_id_auth:
+    print('id',face_id)
+    print('auth',face_id_auth)
+    if face_id is None and face_id_auth is None and face_id is not face_id_auth:
         return HttpResponse('Face id Not Found try using login form')
     try:
         user = Signups.nodes.filter(uid=face_id).get()
