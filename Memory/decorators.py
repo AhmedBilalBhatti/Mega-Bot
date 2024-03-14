@@ -1,8 +1,8 @@
 # from functools import wraps
 from django.shortcuts import redirect
 from .models import *
-from app.session import *
-from app.urls import *
+from .session import *
+from .urls import *
 from django.http import JsonResponse,HttpResponse
 
 

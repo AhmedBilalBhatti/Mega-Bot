@@ -6,11 +6,13 @@ from django.contrib import messages
 from googletrans import Translator
 from datetime import datetime
 from Memory.models import *
+from .decorators import *
 from .web_scrap import *
 from .Emails import *
 from .models import *
 from .Speech import *
 from .aiml import *
+from .OTP import *
 from .ML import *
 import re
 
@@ -18,10 +20,6 @@ faceRecognition = FaceRecognition()
 kernel = init_kernel()
 translator = Translator()
 urdu_pattern = r'^[\u0600-\u06FF\s]+$'
-
-def generate_random_otp():
-    otp = ''.join(random.choices('0123456789', k=4))
-    return otp
 
 def addFace(face_id):
     face_id = face_id

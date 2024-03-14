@@ -1,7 +1,10 @@
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
 from .views import *
+from .decorators import *
 
-
+def generate_random_otp():
+    otp = ''.join(random.choices('0123456789', k=4))
+    return otp
 
 def forgot1(request):
     if request.method == 'POST':
@@ -20,7 +23,7 @@ def forgot1(request):
         except Exception as e:
             return JsonResponse({'status': 'An unexpected error occurred'}, status=500)
 
-    return render(request, 'Staff/forgot-password.html')
+    return render(request, 'reset-password.html')
 
 @requires_forgot1
 def otpverifcation(request):
