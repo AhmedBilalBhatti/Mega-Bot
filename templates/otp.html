@@ -8,8 +8,8 @@
     <meta name="description" content="megabot">
     <meta name="keywords" content="megabot">
     <meta name="author" content="megabot">
-    <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon" />
-    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png'%}" type="image/x-icon" />
     <title>Megabot</title>
 
     <!--Google font-->
@@ -60,9 +60,10 @@
                         <h2><span>Verification code</span></h2>
                         <p>Enter the OTP send to ka****@gmail.com</p>
                         <form class="auth-form" method="post">
+                            {% csrf_token %}
                             <div class="mb-3">
                                 <label for="otp" class="form-label">OTP</label>
-                                <input type="number" name="otp" max="6" placeholder="Enter 6 digit code" class="form-control"
+                                <input type="number" name="otp" min="6" placeholder="Enter 6 digit code" class="form-control"
                                     >
                             </div>
 <button type="submit" class="btn-solid btn-absolute text-center mt-3">Submit</button>

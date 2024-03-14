@@ -54,26 +54,21 @@ def otpverifcation(request):
 @requires_otp_verification
 def forgot3(request):
     if request.method == 'POST':
-        new_p = request.POST['new_password']
+        new_password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
         email = get_session_with_expiry(request, 'email')
 
-        if email and new_p is not None:
+        if email and new_password and confirm_password and new_password == confirm_password:
             try:
-                r = Register_Staff.objects.get(email=email)
-                if r:
-                    r.password = new_p
-                    r.save()
-                    return redirect('login')
-            except:
-                try:
-                    r = Admin_register.objects.get(email=email)
-                    if r:
-                        r.password = new_p
-                        r.save()
-                        return redirect('admin-login')
-                except Admin_register.DoesNotExist:
-                    return HttpResponse('There was a error while processing your request')
+                staff_member = Signups.nodes.get(email=email)
+                staff_member.password = new_password
+                staff_member.save()
+                return redirect('login')
+            except Signups.DoesNotExist:
+                return HttpResponse('User not found. Please try again.')
+            except Exception as e:
+                return HttpResponse(f'An error occurred: {str(e)}')
         else:
-            return HttpResponse('There was a error while processing your request')
+            return HttpResponse('Passwords do not match. Please try again.')
 
-    return render(request, 'Staff/New password.html')
+    return render(request, 'new_password.html')
