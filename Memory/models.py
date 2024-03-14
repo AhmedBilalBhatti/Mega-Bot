@@ -12,7 +12,6 @@ class Signups(StructuredNode):
     face_id = StringProperty(upload_to='profile_image', blank=True)
 
 
-
 class User_Chat(StructuredNode):
     email = StringProperty(unique_index=True)
     name = StringProperty()
