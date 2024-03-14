@@ -36,7 +36,7 @@ def Login_Trigger(name, email):
 
 
 def send_otp(request, otp, email, name):
-    subject = 'Thank You for Signing Up'
+    subject = 'Password Reset OTP'
     email_context = {'otp': otp, 'name': name}
     html_message = render_to_string('otp_mail.html', email_context)    
     recipient_list = [email]

@@ -1,8 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/otp.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:36 GMT -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,24 +18,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
 
     <!-- bootstrap css -->
-    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap.css">
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css'%}">
 
     <!-- remixicon css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/remixicon.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/remixicon.css'%}">
 
     <!-- iconsax css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/iconsax.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/iconsax.css'%}" />
 
     <!-- animation css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/aos.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css'%}">
 
     <!-- swiper slider css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/vendors/swiper-bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/swiper-bundle.min.css'%}" />
 
     <!-- style css -->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-
-
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
 
 </head>
 
@@ -63,14 +59,14 @@
                     <div>
                         <h2><span>Verification code</span></h2>
                         <p>Enter the OTP send to ka****@gmail.com</p>
-                        <form class="auth-form">
+                        <form class="auth-form" method="post">
                             <div class="mb-3">
                                 <label for="otp" class="form-label">OTP</label>
-                                <input type="number" max="6" placeholder="Enter 6 digit code" class="form-control"
-                                    id="otp">
+                                <input type="number" name="otp" max="6" placeholder="Enter 6 digit code" class="form-control"
+                                    >
                             </div>
-                            <a href="index.html" data-cursor="pointer"
-                                class="btn-solid btn-absolute text-center mt-3">Submit</a>
+<button type="submit" class="btn-solid btn-absolute text-center mt-3">Submit</button>
+
                         </form>
                     </div>
                 </div>
@@ -87,27 +83,24 @@
 
 
     <!-- Bootstrap js-->
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
 
     <!-- slider js-->
-    <script src="../assets/js/swiper-bundle.min.js"></script>
-    <script src="../assets/js/custom-slider.js"></script>
+    <script src="{% static 'assets/js/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'assets/js/custom-slider.js'%}"></script>
 
     <!-- custom cursor -->
-    <script src="../assets/js/custom-cursor.js"></script>
+    <script src="{% static 'assets/js/custom-cursor.js'%}"></script>
 
     <!-- aos animation -->
-    <script src="../assets/js/aos.js"></script>
-    <script src="../assets/js/custom-aos.js"></script>
+    <script src="{% static 'assets/js/aos.js'%}"></script>
+    <script src="{% static 'assets/js/custom-aos.js'%}"></script>
 
     <!-- iconsax js -->
-    <script src="../assets/js/iconsax.js"></script>
+    <script src="{% static 'assets/js/iconsax.js'%}"></script>
 
     <!-- Theme js-->
-    <script src="../assets/js/script.js"></script>
+    <script src="{% static 'assets/js/script.js'%}"></script>
 
 </body>
-
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/otp.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:36 GMT -->
 </html>
