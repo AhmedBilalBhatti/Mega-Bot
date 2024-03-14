@@ -1,27 +1,31 @@
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
+from django.shortcuts import render,redirect
 from .views import *
 from .decorators import *
+from .session import *
+from .models import *
 
 def generate_random_otp():
-    otp = ''.join(random.choices('0123456789', k=4))
+    otp = ''.join(random.choices('0123456789', k=6))
     return otp
 
 def forgot1(request):
     if request.method == 'POST':
-        try:
-            email_user = request.POST.get('email')
-            if not email_user:
-                return JsonResponse({'message': 'Email is required'}, status=400)
-
+        email_user = request.POST['email']
+        print(email_user)
+        if not email_user:
+            return JsonResponse({'message': 'Email is required'}, status=400)
+        # try:
             otppassword = generate_random_otp()
             useremail = "ahmadbilalssg@gmail.com"  
             set_session(request, "userOTP", otppassword)
             set_session(request, "email", email_user)
-            send_email(request, otppassword, useremail)
-
+            a = Signups.nodes.filter(email = email_user).first()
+            send_otp(request, otppassword, useremail,a.username)
             return redirect('otpverifcation')
-        except Exception as e:
-            return JsonResponse({'status': 'An unexpected error occurred'}, status=500)
+
+        # except Exception as e:
+        #     return JsonResponse({'status': 'An unexpected error occurred'}, status=500)
 
     return render(request, 'reset-password.html')
 
@@ -46,7 +50,7 @@ def otpverifcation(request):
         except Exception as e:
             print("3 pass 3")
 
-    return render(request, 'Staff/otp.html')
+    return render(request, 'otp.html')
 
 @requires_otp_verification
 def forgot3(request):

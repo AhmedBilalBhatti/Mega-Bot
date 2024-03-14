@@ -11,4 +11,5 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('speech_to_text', views.speech_to_text, name='speech_to_text'),
     path('forgot1', views.forgot1, name='forgot1'),
+    path('otpverifcation',views.otpverifcation,name='otpverifcation'),
 ]

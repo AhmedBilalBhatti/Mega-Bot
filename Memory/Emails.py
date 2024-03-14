@@ -35,26 +35,26 @@ def Login_Trigger(name, email):
         return False, f'Failed to send login notification email: {str(e)}'
 
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-
-def send_otp(request, otp, useremail):
-    subject = 'Password Reset'
-    from_email = 'ahmadbilalssg@gmail.com'
-    to_email = useremail
-    text_content = f"Hi Sir! Your OTP is: {otp}"
-    
-    html_content = render_to_string('otp_mail.html', {'otp': otp, 'name': 'User'})
-    
+def send_otp(request, otp, email, name):
+    subject = 'Thank You for Signing Up'
+    email_context = {'otp': otp, 'name': name}
+    html_message = render_to_string('otp_mail.html', email_context)    
+    recipient_list = [email]
     try:
-        # Create the email with both plaintext and HTML versions
-        email = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
-        email.attach_alternative(html_content, "text/html")
-        email.send()
-
-        message = "Email sent successfully"
-        return message
-
+        send_mail(subject, '', 'ahmadbilalssg@gmail.com', recipient_list, html_message=html_message, fail_silently=True)
+        return True, 'Your message has been submitted successfully.'
     except Exception as e:
-        message = f"Error occurred while sending the email: {e}"
-        return message
+        return False, f'Failed to send confirmation email: {str(e)}'
+
+
+    # try:
+    #     email = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+    #     email.attach_alternative(html_content, "text/html")
+    #     email.send()
+
+    #     message = "Email sent successfully"
+    #     return message
+
+    # except Exception as e:
+    #     message = f"Error occurred while sending the email: {e}"
+    #     return message
