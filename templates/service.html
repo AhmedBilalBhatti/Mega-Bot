@@ -152,10 +152,9 @@
     <section class="feature-section pb-0">
         <div class="container pb-md-5 pb-0">
             <div class="title-basic fs-sm">
-                <h2 class="text-white">A Wide Range of
-                    Functionality to Support Any Use Case</h2>
+                <h2 class="text-white">Comprehensive Functionality to Address Every Requirement</h2>
             </div>
-            <ul class="tab-section">
+<!--             <ul class="tab-section">
                 <li class="active"><a href="#">Quick service</a></li>
                 <li><a href="#">Social media</a></li>
                 <li><a href="#">Email generator</a></li>
@@ -163,8 +162,55 @@
                 <li><a href="#">Ecommerce</a></li>
                 <li><a href="#">Ads & marketing</a></li>
                 <li><a href="#">ASO expert</a></li>
-            </ul>
+            </ul> -->
             <div class="row g-xxl-5 g-4">
+
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="feature-box">
+            <div class="feature-top">
+                <div class="feature-icon">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message.svg" class="img-fluid outline-icon" alt="">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message-bold.svg" class="img-fluid bold-icon" alt="">
+                </div>
+                <h3>Ask anything</h3>
+            </div>
+            <h4>Unlock the power of curiosity. Ask anything and let our AI unravel the answers for you!</h4>
+            <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                        data-icon="arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="feature-box">
+            <div class="feature-top">
+                <div class="feature-icon">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/face-detection.svg" class="img-fluid outline-icon" alt="">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/face-detection-bold.svg" class="img-fluid bold-icon" alt="">
+                </div>
+                <h3>Face Detection</h3>
+            </div>
+            <h4>Experience face detection capabilities integrated seamlessly into our chatbot.</h4>
+            <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                        data-icon="arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="feature-box">
+            <div class="feature-top">
+                <div class="feature-icon">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/speech-to-text.svg" class="img-fluid outline-icon" alt="">
+                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/speech-to-text-bold.svg" class="img-fluid bold-icon" alt="">
+                </div>
+                <h3>Speech to Text</h3>
+            </div>
+            <h4>Utilize speech-to-text functionality for seamless communication with our chatbot.</h4>
+            <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                        data-icon="arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+                
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
@@ -299,7 +345,7 @@
 
 
     <!-- contact us start -->
-    <section class="info-section section-b-space">
+<!--     <section class="info-section section-b-space">
         <div class="container">
             <div class="info-box" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="100">
                 <div class="hand-effect d-md-block d-none">
@@ -323,25 +369,25 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- contact us end -->
 
 
     <!-- footer section start-->
-    <footer>
+<footer>
         <div class="container">
             <div class="footer-row">
                 <div class="footer-main">
-                    <a href="#" class="footer-logo"><img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid" alt=""></a>
-                    <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
-                    <form>
+                  <a href="#" class="footer-logo"><img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid" alt=""></a>  
+                    <h3>Follow me on Social Media</h3>
+              <!--         <form>
                         <div class="input-group">
                             <input type="email" class="form-control" id="exampleFormControlInput1"
                                 placeholder="Enter your mail">
                             <a href="#" data-cursor="pointer" class="btn-basic">Subscribe</a>
                         </div>
                     </form>
-                    <ul class="social-links">
+ -->                    <ul class="social-links">
                         <li><a data-cursor="pointer" href="https://www.facebook.com/"><img
                                     src="https://themes.pixelstrap.net/mega_bot/assets/svg/social/fb.svg" class="img-fluid" alt="facebook"></a></li>
                         <li><a data-cursor="pointer" href="https://in.linkedin.com/"><img
@@ -359,44 +405,44 @@
                     </div>
                     <div class="footer-content">
                         <ul>
-                            <li><a data-cursor="pointer" href="index.html">Home</a></li>
-                            <li><a data-cursor="pointer" href="service.html">Service</a></li>
-                            <li><a data-cursor="pointer" href="pricing.html">Pricing</a></li>
-                            <li><a data-cursor="pointer" href="contact-us.html">Contact us</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'index' %}">Home</a></li>
+<!--                             <li><a data-cursor="pointer" href="service.html">Service</a></li>
+                            <li><a data-cursor="pointer" href="pricing.html">Pricing</a></li> -->
+                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">Contact us</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="link-section">
                     <div class="footer-title">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/star.svg" class="img-fluid" alt="star">
-                        Our service
+                        Explore
                     </div>
                     <div class="footer-content">
                         <ul>
-                            <li><a data-cursor="pointer" href="chat.html">Generate</a></li>
-                            <li><a data-cursor="pointer" href="chat.html">Find Image</a></li>
-                            <li><a data-cursor="pointer" href="chat.html">Email writer</a></li>
-                            <li><a data-cursor="pointer" href="chat.html">Social media</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">chat</a></li>
+                            <li><a data-cursor="pointer" href="https://portfolio0.pythonanywhere.com/">Developer</a></li>
+<!--                             <li><a data-cursor="pointer" href="chat.html">Email writer</a></li>
+                            <li><a data-cursor="pointer" href="chat.html">Social media</a></li> -->
                         </ul>
                     </div>
                 </div>
                 <div class="link-section">
                     <div class="footer-title">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/star.svg" class="img-fluid" alt="star">
-                        Our company
+                        Access
                     </div>
                     <div class="footer-content">
                         <ul>
-                            <li><a data-cursor="pointer" href="login.html">Login</a></li>
-                            <li><a data-cursor="pointer" href="blog-listing.html">Blog listing</a></li>
-                            <li><a data-cursor="pointer" href="blog-grid.html">Blog Grid</a></li>
-                            <li><a data-cursor="pointer" href="blog-details.html">Blog Details</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'login' %}">Login</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">Reset Password</a></li>
+<!--                             <li><a data-cursor="pointer" href="blog-grid.html">Blog Grid</a></li>
+                            <li><a data-cursor="pointer" href="blog-details.html">Blog Details</a></li> -->
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-copyright">
-                <h4>@2023 All the Copyright Reserved.</h4>
+                <h4>Made with <span style="color: red;">❤️</span> by <a href="https://portfolio0.pythonanywhere.com/">Ahmed Bilal Bhatti</a></h4>
                 <ul class="footer-links">
                     <li><a href="terms.html">Privacy Policy </a></li>
                     <li><a href="terms.html">Terms & Condition </a></li>
