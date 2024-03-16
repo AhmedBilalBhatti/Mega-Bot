@@ -62,6 +62,7 @@ def signup_login(request, action=None):
             else:
                 face_id = user_element_id[-2:]
             user.uid = face_id
+            user.face_id = True
             user.save()
             print("Id===", face_id)
             if has_webcam:
@@ -122,8 +123,9 @@ def contact(request):
         message = request.POST['message']
         try:
             if session:
-                contact_message = ContactMessage(name=name, email=email, phone_number=phone_number, message=message)
-                contact_message.save()
+                contact = Contact(name=name, email=email, phone_number=phone_number, message=message)
+                contact.save()
+                messages.success(request, 'Your message has been submitted successfully!')
                 return redirect('index')
             else:
                 return redirect('login')

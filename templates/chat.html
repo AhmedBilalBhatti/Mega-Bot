@@ -49,7 +49,7 @@
                     <button data-bs-toggle="collapse" data-bs-target="#mainnavbarNav"
                         class="mainnav-close d-block d-md-none"><i class="iconsax" data-icon="close-circle"></i>
                     </button>
-                    <a href="index.html" class="logo-icon d-none d-md-flex">
+                    <a href="{% url 'index' %}" class="logo-icon d-none d-md-flex">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/logo-icon.svg" class="img-fluid">
                     </a>
                     <ul class="nav nav-tabs menu-wrapper" id="myTab" role="tablist">
@@ -67,18 +67,18 @@
                                     data-icon="refresh-circle"></i>
                                 <span>History</span> </button>
                         </li>
-                        {% comment %} <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Subscription"
+<!--                         <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Subscription"
                             class="nav-item" role="presentation">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#subscription" type="button"
                                 role="tab" aria-controls="subscription" aria-selected="false"><i class="iconsax"
                                     data-icon="crown-2"></i> <span>Subscription</span></button>
-                        </li> {% endcomment %}
-                        <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Help" class="nav-item"
+                        </li> -->
+<!--                         <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Help" class="nav-item"
                             role="presentation">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#help" type="button"
                                 role="tab" aria-controls="help" aria-selected="false"><i class="iconsax" data-icon="question-message
                                 "></i> <span>Help</span> </button>
-                        </li>
+                        </li> -->
                         <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Ratings" class="nav-item"
                             role="presentation">
                             <button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal"
@@ -146,13 +146,13 @@
                             </a>
                             <h3 id="targetDiv">Ask anything</h3>
                         </div>
-                        {% comment %} <div class="header-option">
+                        <!--<div class="header-option">
                             <a class="del-btn" data-cursor="pointer" href="#"><i class="iconsax"
                                     data-icon="trash"></i></a>
                             <a class="premium-btn" id="subscriptionBtn" data-cursor="pointer" href="#!"><i
                                     class="iconsax" data-icon="crown-2"></i> Get
                                 <span>premium</span></a>
-                        </div> {% endcomment %}
+                        </div>-->
                     </div>
                     <div class="main-chat">
                         <div class="no-chat">
@@ -195,10 +195,11 @@
                             </a>
                             <h3>History</h3>
                         </div>
-                        <a class="premium-btn" data-cursor="pointer" href="#"><i class="iconsax" data-icon="crown-2"></i>
+<!--                         <a class="premium-btn" data-cursor="pointer" href="#"><i class="iconsax" data-icon="crown-2"></i>
                             Get
-                            <span>premium</span></a>
+                            <span>premium</span></a> -->
                     </div>
+
                     <div class="main-section">
                         <div class="container card p-0">
                             <div class="card-header">
@@ -227,7 +228,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    <li class="history-main">
+<!--                                     <li class="history-main">
                                         <div class="history-detail text-truncate">
                                             <i class="iconsax" data-icon="message-text"></i>
                                             <div>
@@ -332,13 +333,14 @@
                                                 <li>23 Mar, 2023</li>
                                             </ul>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
 
                             </div>
 
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="tab-pane fade" id="subscription" role="tabpanel" aria-labelledby="subscription" tabindex="0">
@@ -453,7 +455,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help" tabindex="0">
+<!--             <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help" tabindex="0">
                 <div class="main-wrapper p-0">
                     <div class="fixed-header">
                         <div class="d-flex align-items-center gap-2">
@@ -471,7 +473,7 @@
                             Get
                             <span>premium</span></a>
                     </div>
-                    <div class="faq-section main-section">
+                     <div class="faq-section main-section">
                         <div class="container card p-0">
                             <div class="card-header">
                                 <h3 class="text-white title-basic aos-init aos-animate" data-aos="fade-up"
@@ -652,7 +654,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  -->
             <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings" tabindex="0">
                 <div class="main-wrapper p-0">
                     <div class="fixed-header">
@@ -667,9 +669,9 @@
                             </a>
                             <h3>Settings</h3>
                         </div>
-                        <a class="premium-btn" data-cursor="pointer" href="#"><i class="iconsax" data-icon="crown-2"></i>
+<!--                         <a class="premium-btn" data-cursor="pointer" href="#"><i class="iconsax" data-icon="crown-2"></i>
                             Get
-                            <span>premium</span></a>
+                            <span>premium</span></a> -->
                     </div>
                     <div class="main-section d-flex gap-4 flex-column">
                         <div class="container card p-0">

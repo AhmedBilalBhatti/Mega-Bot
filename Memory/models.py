@@ -9,8 +9,10 @@ class Signups(StructuredNode):
     password = StringProperty(required=True)
     dob = DateProperty()
     gender = StringProperty(required=True)
-    face_id = StringProperty(upload_to='profile_image', blank=True)
+    face_id = BooleanProperty(default=False)
 
+    # Define relationship
+    chat = RelationshipTo('User_Chat', 'HAS_CHAT')
 
 class User_Chat(StructuredNode):
     email = StringProperty(unique_index=True)
@@ -24,7 +26,6 @@ class User_Chat(StructuredNode):
 
         self.chat.append(message_content)
         self.save()
-
 
 # =================================================================================================
 
