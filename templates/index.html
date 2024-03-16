@@ -44,7 +44,7 @@
                 <i class="iconsax" data-icon="text-align-justify"></i>
             </span>
         </button>
-        <a href="index.html">
+        <a href="{% url 'index' %}">
             <img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid" alt="logo">
         </a>
         <nav class="header-nav-middle">
@@ -61,9 +61,9 @@
                                 <a class="nav-link" href="index.html">Home</a>
                             </li>
 
-                            {% comment %} <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link" href="chat.html">Chat</a>
-                            </li> {% endcomment %}
+                            </li> -->
 
 <!--                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
@@ -102,7 +102,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="pricing.html">About</a>
+                                <a class="nav-link" href="{% url 'about' %}">About</a>
                             </li>
 
                             <li class="nav-item">

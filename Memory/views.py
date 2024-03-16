@@ -136,3 +136,7 @@ def chat(request):
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')
+
+
+def about(request):
+    return render(request,'service.html')
