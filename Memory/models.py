@@ -12,21 +12,26 @@ class Signups(StructuredNode):
     face_id = BooleanProperty(default=False)
     profile_image = StringProperty()
 
-    chat = RelationshipTo('User_Chat', 'HAS_CHAT')
+    chat = RelationshipTo('History_Chat', 'HAS_HISTORY')
 
-class User_Chat(StructuredNode):
+class History_Chat(StructuredNode):
     user_id = IntegerProperty(unique_index=True)
     name = StringProperty()
     chat = ArrayProperty(StringProperty())
     created_at = DateTimeProperty(default_now=True)
+    start_session = DateTimeProperty(default_now=True)
+    end_session = DateTimeProperty()
+    # sentiments = StringProperty()
+    memory_list = ArrayProperty(StringProperty())
 
-    def save_message(self, message_content):
-        if self.chat is None:
-            self.chat = []
+    def save_message(self, message_type, message_content):
+        if self.memory_list is None:
+            self.memory_list = []
 
-        self.chat.append(message_content)
+        message = f"{message_type}: {message_content}"
+        self.memory_list.append(message)
         self.save()
-
+        
 # =================================================================================================
 
 class Contact(models.Model):

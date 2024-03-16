@@ -137,22 +137,23 @@ def contact(request):
 
 # =======================================================================================================
 
-# def generate_bot_response(request, user, bot):
-#     user_mail2 = request.session.get('mail')
-#     mem = Memory.nodes.filter(email=user_mail2, name="Episodic Memory").first()
+# def maintain_history(request, user, bot):
+#     user_id = request.session.get('user_id')
+#     mem = History_Chat.nodes.filter(user_id=user_id, name="History").first()
 
 #     if not mem:
-#         mem = Memory(email=user_mail2, name="Episodic Memory").save()
+#         mem = History_Chat(user_id=user_id, name="History").save()
 
 #     memory_store = mem.rel.single()
+
 #     if not memory_store:
-#         memory_store = MemoryStore(email=user_mail2).save()
-#         mem.rel.connect(memory_store)
+#         memory_store = MemoryStore().save()
+#         mem.chat.connect(memory_store)
 
 #     if memory_store:
 #         name = memory_store.name
 #         if name is None:
-#             name = "Episode 1"
+#             name = "History"
 #             memory_store.name = name
 #             name_updated = True
 #         else:
@@ -160,11 +161,11 @@ def contact(request):
 #             current_date = datetime.today().date()
 
 #             if current_date > last_session_date:
-#                 episode_number = int(name.split("Episode ")[1])
+#                 episode_number = int(name.split("History ")[1])
 #                 next_episode_number = episode_number + 1
-#                 name = "Episode " + str(next_episode_number)
-#                 new_memory_store = MemoryStore(email=user_mail2, name=name).save()
-#                 mem.rel.connect(new_memory_store)
+#                 name = "History " + str(next_episode_number)
+#                 new_memory_store = MemoryStore(name=name).save()
+#                 mem.chat.connect(new_memory_store)
 #                 memory_store = new_memory_store
 #                 name_updated = True
 #             else:
@@ -205,6 +206,7 @@ def chat(request):
                 bot_response = kernel.respond(message)
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
+            maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')
