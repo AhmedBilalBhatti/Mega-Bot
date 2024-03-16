@@ -44,5 +44,8 @@ class FAQS(models.Model):
     answer = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = "FAQ"
+
     def __str__(self):
-        return self.email
+        return self.question

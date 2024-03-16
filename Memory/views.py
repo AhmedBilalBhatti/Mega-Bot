@@ -29,7 +29,8 @@ def addFace(face_id):
 
 def index(request):
     session = request.session.get('user_id')
-    return render(request,'index.html',{'session':session})
+    faq = FAQS.objects.all()
+    return render(request,'index.html',{'session':session,'faq':faq})
 
 def login(request):
     return render(request, 'login.html')   

@@ -867,51 +867,70 @@
 
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
-<script>
-    function startSpeechRecognition() {
-        const recognition = new webkitSpeechRecognition();
-        recognition.lang = 'en-IN';
-        recognition.interimResults = true;
+    <script>
+        function startSpeechRecognition() {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-IN';
+            recognition.interimResults = true;
 
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            $('#userInput').val(transcript); 
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                $('#userInput').val(transcript); 
+            }
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+            }
+
+            recognition.onend = function() {
+                $('#mic-listen i').removeClass('fas fa-microphone-alt-slash').addClass('iconsax').attr('data-icon', 'mic-2');
+            }
+
+            $('#mic-listen i').removeClass('iconsax').addClass('fas fa-microphone-alt-slash');
+            recognition.start();
         }
 
-        recognition.onerror = function(event) {
-            console.error('Speech recognition error:', event.error);
-        }
+        $(document).ready(function() {
+            $('#mic-listen').click(function(e) {
+                e.preventDefault();
+                startSpeechRecognition();
+            });
 
-        recognition.onend = function() {
-            $('#mic-listen i').removeClass('fas fa-microphone-alt-slash').addClass('iconsax').attr('data-icon', 'mic-2');
-        }
-
-        $('#mic-listen i').removeClass('iconsax').addClass('fas fa-microphone-alt-slash');
-        recognition.start();
-    }
-
-    $(document).ready(function() {
-        $('#mic-listen').click(function(e) {
-            e.preventDefault();
-            startSpeechRecognition();
-        });
-
-        $('#speechForm').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: '{% url "speech_to_text" %}',
-                data: $(this).serialize(),
-                success: function(response) {
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
+            $('#speechForm').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "speech_to_text" %}',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
+    <script>
+        document.onkeydown = (e) => {
+    if (e.key == 123) {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'U') {
+        e.preventDefault();
+    }
+    };
+    </script>
 
 </body>
 </html>

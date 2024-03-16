@@ -182,10 +182,27 @@
     <!-- Theme js-->
     <script src="../assets/js/script.js"></script>
 
+    <script>
+        document.onkeydown = (e) => {
+    if (e.key == 123) {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'U') {
+        e.preventDefault();
+    }
+    };
+    </script>
+
 
 
 </body>
-
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:36 GMT -->
 </html>
