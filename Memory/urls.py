@@ -14,4 +14,5 @@ urlpatterns = [
     path('otpverifcation',views.otpverifcation,name='otpverifcation'),
     path('forgot3',views.forgot3,name='forgot3'),
     path('about',views.about,name='about'),
+    path('contact',views.contact,name='contact'),
 ]

@@ -110,15 +110,20 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="contact-us.html">contact</a>
+                                <a class="nav-link" href="{% url 'contact' %}">contact</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
-        <a data-cursor="pointer" href="login.html" class="btn btn-theme d-sm-inline-block d-none"><span>Login
-                Now</span></a>
+        {% if session %}
+        <a data-cursor="pointer" href="{% url 'signout' %}" class="btn btn-theme d-sm-inline-block d-none">
+            <span>Logout</span></a>
+        {% else %}
+        <a data-cursor="pointer" href="{% url 'login' %}" class="btn btn-theme d-sm-inline-block d-none">
+            <span>Login Now</span></a>
+        {% endif %}
     </header>
     <!-- header end -->
 
@@ -166,68 +171,72 @@
             <div class="row g-xxl-5 g-4">
 
                     <div class="col-xl-3 col-lg-4 col-sm-6">
-        <div class="feature-box">
-            <div class="feature-top">
-                <div class="feature-icon">
-                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message.svg" class="img-fluid outline-icon" alt="">
-                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message-bold.svg" class="img-fluid bold-icon" alt="">
-                </div>
-                <h3>Ask anything</h3>
-            </div>
-            <h4>Unlock the power of curiosity. Ask anything and let our AI unravel the answers for you!</h4>
-            <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
-                        data-icon="arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-        <div class="feature-box">
-            <div class="feature-top">
-                <div class="feature-icon">
-                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/face-detection.svg" class="img-fluid outline-icon" alt="">
-                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/face-detection-bold.svg" class="img-fluid bold-icon" alt="">
-                </div>
-                <h3>Face Detection</h3>
-            </div>
-            <h4>Experience face detection capabilities integrated seamlessly into our chatbot.</h4>
-            <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
-                        data-icon="arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-4 col-sm-6">
-        <div class="feature-box">
-            <div class="feature-top">
-                <div class="feature-icon">
-                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/speech-to-text.svg" class="img-fluid outline-icon" alt="">
-                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/speech-to-text-bold.svg" class="img-fluid bold-icon" alt="">
-                </div>
-                <h3>Speech to Text</h3>
-            </div>
-            <h4>Utilize speech-to-text functionality for seamless communication with our chatbot.</h4>
-            <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
-                        data-icon="arrow-right"></i></a>
-            </div>
-        </div>
-    </div>
-                
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <div class="feature-box">
-                        <div class="feature-top">
-                            <div class="feature-icon">
-                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message.svg" class="img-fluid outline-icon" alt="">
-                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message-bold.svg" class="img-fluid bold-icon" alt="">
+                        <div class="feature-box">
+                            <div class="feature-top">
+                                <div class="feature-icon">
+                                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message.svg" class="img-fluid outline-icon" alt="">
+                                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/message-bold.svg" class="img-fluid bold-icon" alt="">
+                                </div>
+                                <h3>Ask anything</h3>
                             </div>
-                            <h3>Ask anything</h3>
-                        </div>
-                        <h4>Unlock the power of curiosity, Ask anything and let our AI unravel the answers
-                            for you!</h4>
-                        <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
-                                    data-icon="arrow-right"></i></a>
+                            <h4>Unlock the power of curiosity. Ask anything and let our AI unravel the answers for you!</h4>
+<!--                             <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                                        data-icon="arrow-right"></i></a>
+                            </div> -->
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="feature-box">
+                            <div class="feature-top">
+                            <div class="feature-icon">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/box.svg" class="img-fluid outline-icon" alt="">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/box-bold.svg" class="img-fluid bold-icon" alt="">
+                            </div>
+                                <h3>Face Detection</h3>
+                            </div>
+                            <h4>Experience face detection capabilities integrated seamlessly into our chatbot.</h4>
+<!--                             <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                                        data-icon="arrow-right"></i></a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="feature-box">
+                            <div class="feature-top">
+                            <div class="feature-icon">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/marketing.svg" class="img-fluid outline-icon" alt="">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/marketing-bold.svg" class="img-fluid bold-icon" alt="">
+                            </div>
+
+                                <h3>Speech to Text</h3>
+                            </div>
+                            <h4>Utilize speech-to-text functionality for seamless communication with our chatbot.</h4>
+<!--                             <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                                        data-icon="arrow-right"></i></a>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="feature-box">
+                            <div class="feature-top">
+                                <div class="feature-icon">
+                                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/code.svg" class="img-fluid outline-icon" alt="">
+                                    <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/code-bold.svg" class="img-fluid bold-icon" alt="">
+                                </div>
+                                <h3>Quick-Trig</h3>
+                            </div>
+                            <h4>Instantly trigger actions based on real-time events and interactions.
+                            </h4>
+<!--                             <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                                        data-icon="arrow-right"></i></a>
+                            </div> -->
+                        </div>
+                    </div>
+
+
+
+<!--                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
                             <div class="feature-icon">
@@ -242,8 +251,8 @@
                                     data-icon="arrow-right"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
+                </div> -->
+<!--                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
                             <div class="feature-icon">
@@ -258,7 +267,23 @@
                                     data-icon="arrow-right"></i></a>
                         </div>
                     </div>
+                </div> -->
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="feature-box">
+                        <div class="feature-top">
+                            <div class="feature-icon">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/play.svg" class="img-fluid outline-icon" alt="">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/play-bold.svg" class="img-fluid bold-icon" alt="">
+                            </div>
+                            <h3>Graph Database</h3>
+                        </div>
+                        <h4>Utilize the power of a graph database to enhance data relationships and insights.</h4>
+<!--                         <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                                    data-icon="arrow-right"></i></a>
+                        </div>
+ -->                </div>
                 </div>
+
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
@@ -269,9 +294,9 @@
                             <h3>Insta caption</h3>
                         </div>
                         <h4>One caption at a time, unveiling the endless potential of AI</h4>
-                        <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+<!--                         <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
                                     data-icon="arrow-right"></i></a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -285,12 +310,27 @@
                         </div>
                         <h4>Generating emails that captivates and expresses with brilliance.
                         </h4>
-                        <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+<!--                         <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
                                     data-icon="arrow-right"></i></a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="feature-box">
+                        <div class="feature-top">
+                            <div class="feature-icon">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/hashtag.svg" class="img-fluid outline-icon" alt="">
+                                <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/feature/hashtag-bold.svg" class="img-fluid bold-icon" alt="">
+                            </div>
+                            <h3>Web Scraping</h3>
+                        </div>
+                        <h4>Extract valuable data from websites effortlessly with built-in web scraping capabilities.</h4>
+<!--                         <div data-cursor="pointer" class="link-overflow"><a>Read more <i class="iconsax"
+                                    data-icon="arrow-right"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+<!--                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
                             <div class="feature-icon">
@@ -305,8 +345,8 @@
                                     data-icon="arrow-right"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
+                </div> -->
+<!--                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
                             <div class="feature-icon">
@@ -321,8 +361,9 @@
                                     data-icon="arrow-right"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
+                </div> -->
+
+<!--                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="feature-box">
                         <div class="feature-top">
                             <div class="feature-icon">
@@ -337,7 +378,7 @@
                                     data-icon="arrow-right"></i></a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>

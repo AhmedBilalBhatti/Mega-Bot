@@ -139,4 +139,10 @@ def chat(request):
 
 
 def about(request):
-    return render(request,'service.html')
+    session = request.session.get('user_id')
+    return render(request,'service.html',{'session':session})
+
+
+def contact(request):
+    session = request.session.get('user_id')
+    return render(request,'contact-us.html',{'session':session})    

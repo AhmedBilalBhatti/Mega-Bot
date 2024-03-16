@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,7 +49,7 @@
                 <i class="iconsax" data-icon="text-align-justify"></i>
             </span>
         </button>
-        <a href="index.html">
+        <a href="{% url 'index' %}">
             <img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid" alt="logo">
         </a>
         <nav class="header-nav-middle">
@@ -64,12 +63,12 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
+                                <a class="nav-link" href="{% url 'index' %}">Home</a>
                             </li>
 
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link" href="chat.html">Chat</a>
-                            </li>
+                            </li> -->
 
 <!--                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
@@ -104,23 +103,28 @@
                             </li> -->
 
                             <li class="nav-item">
-                                <a class="nav-link" href="service.html">service</a>
+                                <a class="nav-link" href="https://portfolio0.pythonanywhere.com/">Developer</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="pricing.html">pricing</a>
+                                <a class="nav-link" href="{% url 'about' %}">About</a>
                             </li>
 
                             <li class="nav-item active">
-                                <a class="nav-link" href="contact-us.html">contact</a>
+                                <a class="nav-link" href="{% url 'contact' %}">contact</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
-        <a data-cursor="pointer" href="login.html" class="btn btn-theme d-sm-inline-block d-none"><span>Login
-                Now</span></a>
+        {% if session %}
+        <a data-cursor="pointer" href="{% url 'signout' %}" class="btn btn-theme d-sm-inline-block d-none">
+            <span>Logout</span></a>
+        {% else %}
+        <a data-cursor="pointer" href="{% url 'login' %}" class="btn btn-theme d-sm-inline-block d-none">
+            <span>Login Now</span></a>
+        {% endif %}
     </header>
     <!-- header end -->
 
@@ -132,7 +136,7 @@
                 <div class="col-lg-6">
                     <div class="breadcrumb-content">
                         <div>
-                            <h2><img src="../assets/images/breadcrumb-title.png" class="img-fluid"
+                            <h2><img src="{% static 'assets/images/breadcrumb-title.png'%}" class="img-fluid"
                                     alt="title-effect">Contact us
                             </h2>
                             <p><i class="ri-subtract-line"></i>Email us with any questions, we would be happy to answer
@@ -229,7 +233,7 @@
 
 
     <!-- contact us start -->
-    <section class="info-section section-b-space">
+<!--     <section class="info-section section-b-space">
         <div class="container">
             <div class="info-box" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="100">
                 <div class="hand-effect d-md-block d-none">
@@ -253,7 +257,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- contact us end -->
 
 
@@ -262,16 +266,16 @@
         <div class="container">
             <div class="footer-row">
                 <div class="footer-main">
-                    <a href="#" class="footer-logo"><img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid" alt=""></a>
-                    <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
-                    <form>
+                  <a href="#" class="footer-logo"><img src="https://themes.pixelstrap.net/mega_bot/assets/images/logo.svg" class="img-fluid" alt=""></a>  
+                    <h3>Follow me on Social Media</h3>
+              <!--         <form>
                         <div class="input-group">
                             <input type="email" class="form-control" id="exampleFormControlInput1"
                                 placeholder="Enter your mail">
                             <a href="#" data-cursor="pointer" class="btn-basic">Subscribe</a>
                         </div>
                     </form>
-                    <ul class="social-links">
+ -->                    <ul class="social-links">
                         <li><a data-cursor="pointer" href="https://www.facebook.com/"><img
                                     src="https://themes.pixelstrap.net/mega_bot/assets/svg/social/fb.svg" class="img-fluid" alt="facebook"></a></li>
                         <li><a data-cursor="pointer" href="https://in.linkedin.com/"><img
@@ -289,44 +293,44 @@
                     </div>
                     <div class="footer-content">
                         <ul>
-                            <li><a data-cursor="pointer" href="index.html">Home</a></li>
-                            <li><a data-cursor="pointer" href="service.html">Service</a></li>
-                            <li><a data-cursor="pointer" href="pricing.html">Pricing</a></li>
-                            <li><a data-cursor="pointer" href="contact-us.html">Contact us</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'index' %}">Home</a></li>
+<!--                             <li><a data-cursor="pointer" href="service.html">Service</a></li>
+                            <li><a data-cursor="pointer" href="pricing.html">Pricing</a></li> -->
+                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">Contact us</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="link-section">
                     <div class="footer-title">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/star.svg" class="img-fluid" alt="star">
-                        Our service
+                        Explore
                     </div>
                     <div class="footer-content">
                         <ul>
-                            <li><a data-cursor="pointer" href="chat.html">Generate</a></li>
-                            <li><a data-cursor="pointer" href="chat.html">Find Image</a></li>
-                            <li><a data-cursor="pointer" href="chat.html">Email writer</a></li>
-                            <li><a data-cursor="pointer" href="chat.html">Social media</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">chat</a></li>
+                            <li><a data-cursor="pointer" href="https://portfolio0.pythonanywhere.com/">Developer</a></li>
+<!--                             <li><a data-cursor="pointer" href="chat.html">Email writer</a></li>
+                            <li><a data-cursor="pointer" href="chat.html">Social media</a></li> -->
                         </ul>
                     </div>
                 </div>
                 <div class="link-section">
                     <div class="footer-title">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/star.svg" class="img-fluid" alt="star">
-                        Our company
+                        Access
                     </div>
                     <div class="footer-content">
                         <ul>
-                            <li><a data-cursor="pointer" href="login.html">Login</a></li>
-                            <li><a data-cursor="pointer" href="blog-listing.html">Blog listing</a></li>
-                            <li><a data-cursor="pointer" href="blog-grid.html">Blog Grid</a></li>
-                            <li><a data-cursor="pointer" href="blog-details.html">Blog Details</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'login' %}">Login</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">Reset Password</a></li>
+<!--                             <li><a data-cursor="pointer" href="blog-grid.html">Blog Grid</a></li>
+                            <li><a data-cursor="pointer" href="blog-details.html">Blog Details</a></li> -->
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="footer-copyright">
-                <h4>@2023 All the Copyright Reserved.</h4>
+                <h4>Made with <span style="color: red;">❤️</span> by <a href="https://portfolio0.pythonanywhere.com/">Ahmed Bilal Bhatti</a></h4>
                 <ul class="footer-links">
                     <li><a href="terms.html">Privacy Policy </a></li>
                     <li><a href="terms.html">Terms & Condition </a></li>
@@ -374,7 +378,4 @@
     <script src="{% static 'assets/js/script.js'%}"></script>
 
 </body>
-
-
-<!-- Mirrored from themes.pixelstrap.net/mega_bot/html/contact-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Mar 2024 20:04:39 GMT -->
 </html>
