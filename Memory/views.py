@@ -136,14 +136,46 @@ def contact(request):
 
 # =======================================================================================================
 
-# def chat_store(request, message):
-#     user_id = request.session.get('user_id')
-#     chat_store_node = User_Chat.nodes.filter(user_id=user_id).first()
-#     if chat_store_node:
-#         chat_store_node.save_message(message)
-#     else:
-#         chat_store_node = User_Chat(user_id=user_id, name="Chats")
-#         chat_store_node.save_message(message)
+# def generate_bot_response(request, user, bot):
+#     user_mail2 = request.session.get('mail')
+#     mem = Memory.nodes.filter(email=user_mail2, name="Episodic Memory").first()
+
+#     if not mem:
+#         mem = Memory(email=user_mail2, name="Episodic Memory").save()
+
+#     memory_store = mem.rel.single()
+#     if not memory_store:
+#         memory_store = MemoryStore(email=user_mail2).save()
+#         mem.rel.connect(memory_store)
+
+#     if memory_store:
+#         name = memory_store.name
+#         if name is None:
+#             name = "Episode 1"
+#             memory_store.name = name
+#             name_updated = True
+#         else:
+#             last_session_date = memory_store.end_session.date()
+#             current_date = datetime.today().date()
+
+#             if current_date > last_session_date:
+#                 episode_number = int(name.split("Episode ")[1])
+#                 next_episode_number = episode_number + 1
+#                 name = "Episode " + str(next_episode_number)
+#                 new_memory_store = MemoryStore(email=user_mail2, name=name).save()
+#                 mem.rel.connect(new_memory_store)
+#                 memory_store = new_memory_store
+#                 name_updated = True
+#             else:
+#                 name_updated = False
+
+#     if not memory_store.start_session:
+#         memory_store.start_session = datetime.now()
+
+#     memory_store.end_session = datetime.now()
+#     memory_store.sentiments = sentiment(request)
+#     memory_store.save_message("User", user)
+#     memory_store.save_message("Bot", bot)
 
 # ========================================================================================================
     
