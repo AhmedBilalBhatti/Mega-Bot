@@ -132,7 +132,20 @@ def contact(request):
         except Exception as e:
             return HttpResponse('An error occurred while processing your request.')
 
-    return render(request,'contact-us.html',{'session':session})    
+    return render(request,'contact-us.html',{'session':session})
+
+# =======================================================================================================
+
+# def chat_store(request, message):
+#     user_id = request.session.get('user_id')
+#     chat_store_node = User_Chat.nodes.filter(user_id=user_id).first()
+#     if chat_store_node:
+#         chat_store_node.save_message(message)
+#     else:
+#         chat_store_node = User_Chat(user_id=user_id, name="Chats")
+#         chat_store_node.save_message(message)
+
+# ========================================================================================================
     
 def chat(request):
     session = request.session.get('user_id')

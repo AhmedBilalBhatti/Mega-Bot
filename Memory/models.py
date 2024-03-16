@@ -1,4 +1,4 @@
-from neomodel import StructuredNode, StringProperty, IntegerProperty,UniqueIdProperty, RelationshipTo, RelationshipFrom,DateProperty,DateTimeProperty,ArrayProperty
+from neomodel import StructuredNode, StringProperty,BooleanProperty,IntegerProperty,UniqueIdProperty, RelationshipTo, RelationshipFrom,DateProperty,DateTimeProperty,ArrayProperty
 from django.conf import settings
 from django.db import models
 
@@ -10,12 +10,12 @@ class Signups(StructuredNode):
     dob = DateProperty()
     gender = StringProperty(required=True)
     face_id = BooleanProperty(default=False)
+    profile_image = StringProperty()
 
-    # Define relationship
     chat = RelationshipTo('User_Chat', 'HAS_CHAT')
 
 class User_Chat(StructuredNode):
-    email = StringProperty(unique_index=True)
+    user_id = IntegerProperty(unique_index=True)
     name = StringProperty()
     chat = ArrayProperty(StringProperty())
     created_at = DateTimeProperty(default_now=True)
