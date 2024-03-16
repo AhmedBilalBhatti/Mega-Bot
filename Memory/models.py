@@ -24,3 +24,15 @@ class User_Chat(StructuredNode):
 
         self.chat.append(message_content)
         self.save()
+
+
+# =================================================================================================
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.email

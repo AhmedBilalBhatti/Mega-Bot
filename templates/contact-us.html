@@ -164,26 +164,23 @@
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/contact/message.svg" class="img-fluid" alt="message">
                     </div>
                     <h3>Mail id</h3>
-                    <h4>contact@megabot.com</h4>
-                    <h4>inquiry@megabot.com</h4>
+                    <h4>f2021376088@umt.edu.pk</h4>
                 </li>
                 <li>
                     <div class="contact-icon">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/contact/contact.svg" class="img-fluid" alt="message">
                     </div>
                     <h3>Contact no.</h3>
-                    <h4>(406) 555-0120</h4>
-                    <h4>(684) 555-0102</h4>
+                    <h4>+92 300 1234567</h4>
                 </li>
                 <li>
                     <div class="contact-icon">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/contact/route.svg" class="img-fluid" alt="message">
                     </div>
-                    <h3>Address 1</h3>
-                    <h4>2118 Thornridge Cir.</h4>
-                    <h4>Syracuse, Connecticut 35624</h4>
+                    <h3>Address</h3>
+                    <h4>UMT Johar Town, Lhr</h4>
                 </li>
-                <li>
+<!--                 <li>
                     <div class="contact-icon">
                         <img src="https://themes.pixelstrap.net/mega_bot/assets/svg/contact/address.svg" class="img-fluid" alt="message">
                     </div>
@@ -191,38 +188,40 @@
                     <h4>2972 Westheimer Rd. Santa </h4>
                     <h4>Ana, Illinois 85486 </h4>
                 </li>
-            </ul>
+ -->            </ul>
             <div class="contact-details">
                 <div class="row g-lg-5 g-4">
                     <div class="col-xl-7 col-lg-6">
-                        <form class="auth-form">
+
+                        <form class="auth-form" method="post" action="{% url 'contact' %}">
+                            {% csrf_token %}
                             <div class="row g-4">
                                 <div class="col-sm-6">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="email" class="form-control" id="name">
+                                    <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                                 <div class="col-12">
                                     <label for="phoneNumber" class="form-label">Phone number</label>
-                                    <input type="email" class="form-control" id="phoneNumber">
+                                    <input type="tel" class="form-control" id="phoneNumber" name="phone_number" required>
                                 </div>
                                 <div class="col-12">
                                     <label for="message" class="form-label">Additional Message</label>
-                                    <textarea class="form-control" id="message" rows="3"></textarea>
+                                    <textarea class="form-control" id="message" rows="3" name="message" required></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <a href="#" data-cursor="pointer" class="btn-solid">Send message</a>
+                                    <button type="submit" class="btn-solid">Send message</button>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                     <div class="col-xl-5 col-lg-6">
                         <div class="map-sec">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d79567.57700797812!2d-112.12049328183899!3d33.42503734906143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b12ed50a179cb%3A0x8c69c7f8354a1bac!2sPhoenix%2C%20AZ%2C%20USA!5e0!3m2!1sen!2sin!4v1683867729748!5m2!1sen!2sin"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1789.161206422079!2d74.29110918886897!3d31.451099517736974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190143e0e99feb%3A0xf39379efff4dd86!2sUniversity%20of%20Management%20%26%20Technology!5e0!3m2!1sen!2s!4v1710615147894!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>
@@ -296,7 +295,7 @@
                             <li><a data-cursor="pointer" href="{% url 'index' %}">Home</a></li>
 <!--                             <li><a data-cursor="pointer" href="service.html">Service</a></li>
                             <li><a data-cursor="pointer" href="pricing.html">Pricing</a></li> -->
-                            <li><a data-cursor="pointer" href="{% url 'forgot1' %}">Contact us</a></li>
+                            <li><a data-cursor="pointer" href="{% url 'contact' %}">Contact us</a></li>
                         </ul>
                     </div>
                 </div>

@@ -107,6 +107,30 @@ def contact(request):
 def signout(request):
     logout(request)
     return redirect('index')
+
+def about(request):
+    session = request.session.get('user_id')
+    return render(request,'service.html',{'session':session})
+
+
+def contact(request):
+    session = request.session.get('user_id')
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone_number = request.POST['phone_number']
+        message = request.POST['message']
+        try:
+            if session:
+                contact_message = ContactMessage(name=name, email=email, phone_number=phone_number, message=message)
+                contact_message.save()
+                return redirect('index')
+            else:
+                return redirect('login')
+        except Exception as e:
+            return HttpResponse('An error occurred while processing your request.')
+
+    return render(request,'contact-us.html',{'session':session})    
     
 def chat(request):
     session = request.session.get('user_id')
@@ -136,13 +160,3 @@ def chat(request):
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')
-
-
-def about(request):
-    session = request.session.get('user_id')
-    return render(request,'service.html',{'session':session})
-
-
-def contact(request):
-    session = request.session.get('user_id')
-    return render(request,'contact-us.html',{'session':session})    
