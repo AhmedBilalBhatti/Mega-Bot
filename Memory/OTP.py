@@ -63,6 +63,7 @@ def forgot3(request):
                 staff_member = Signups.nodes.get(email=email)
                 staff_member.password = new_password
                 staff_member.save()
+                send_success(request,staff_member.email,staff_member.username)
                 return redirect('login')
             except Signups.DoesNotExist:
                 return HttpResponse('User not found. Please try again.')

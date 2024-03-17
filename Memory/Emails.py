@@ -58,3 +58,29 @@ def send_otp(request, otp, email, name):
     # except Exception as e:
     #     message = f"Error occurred while sending the email: {e}"
     #     return message
+
+
+def send_success(request, email, name):
+    subject = 'Password Updated Successfully'
+    email_context = {'name': name}
+    html_message = render_to_string('pass_update_successful.html', email_context)    
+    recipient_list = [email]
+    try:
+        send_mail(subject, '', 'ahmadbilalssg@gmail.com', recipient_list, html_message=html_message, fail_silently=True)
+        return True, 'Your message has been submitted successfully.'
+    except Exception as e:
+        return False, f'Failed to send confirmation email: {str(e)}'
+
+
+
+
+def send_success_contact(request, email, name, message_summary):
+    subject = 'Contact Form Submission Received'
+    email_context = {'name': name, 'message_summary': message_summary}
+    html_message = render_to_string('contact_successful.html', email_context)
+    recipient_list = [email]
+    try:
+        send_mail(subject, '', 'ahmadbilalssg@gmail.com', recipient_list, html_message=html_message, fail_silently=True)
+        return True, 'Your message has been submitted successfully.'
+    except Exception as e:
+        return False, f'Failed to send confirmation email: {str(e)}'

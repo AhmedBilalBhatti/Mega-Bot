@@ -127,6 +127,7 @@ def contact(request):
                 contact = Contact(name=name, email=email, phone_number=phone_number, message=message)
                 contact.save()
                 messages.success(request, 'Your message has been submitted successfully!')
+                send_success_contact(request,email,name,message)
                 return redirect('index')
             else:
                 return redirect('login')
