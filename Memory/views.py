@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from googletrans import Translator
 from datetime import datetime
+from .Update_Store import *
 from Memory.models import *
 from .decorators import *
 from .web_scrap import *
@@ -135,34 +136,6 @@ def contact(request):
             return HttpResponse('An error occurred while processing your request.')
 
     return render(request,'contact-us.html',{'session':session})
-
-
-
-def upload_profile_pic(request):
-    session = request.session.get('user_id')
-    if request.method == 'POST' and request.FILES.get('profile_picture'):
-        profile_picture = request.FILES['profile_picture']
-
-        try:
-            user = Signups.nodes.get(uid=face_id)
-            file_extension = os.path.splitext(profile_picture.name)[1]
-            new_file_name = f"profile_{session}{file_extension}"
-            profile_dir = os.path.join(settings.MEDIA_ROOT, 'profile')
-            if not os.path.exists(profile_dir):
-                os.makedirs(profile_dir)
-            # Save the file to the profile directory with the new file name
-            file_path = os.path.join(profile_dir, new_file_name)
-            with open(file_path, 'wb') as f:
-                for chunk in profile_picture.chunks():
-                    f.write(chunk)
-            # Update the profile_image field with the path to the saved image
-            user.profile_image = os.path.join(settings.MEDIA_URL, 'profile', new_file_name)
-            user.save()
-            return redirect('chat')  # Redirect to appropriate URL after saving
-        except Signups.DoesNotExist:
-            return HttpResponse('User not found.')
-        
-    return HttpResponse('No file selected or invalid request.')
 
 # =======================================================================================================
 
