@@ -207,7 +207,7 @@ def chat(request):
                 bot_response = kernel.respond(message)
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
-            maintain_history(request, message, bot_response)
+            # maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html')

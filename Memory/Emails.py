@@ -18,7 +18,6 @@ def Signup_Thanks(name, email, message):
     except Exception as e:
         return False, f'Failed to send confirmation email: {str(e)}'
 
-
 def Login_Trigger(name, email):
     subject = 'Login Notification'
     login_datetime = timezone.now()
@@ -33,7 +32,6 @@ def Login_Trigger(name, email):
         return True, 'Login notification sent successfully.'
     except Exception as e:
         return False, f'Failed to send login notification email: {str(e)}'
-
 
 def send_otp(request, otp, email, name):
     subject = 'Password Reset OTP'
@@ -70,9 +68,6 @@ def send_success(request, email, name):
         return True, 'Your message has been submitted successfully.'
     except Exception as e:
         return False, f'Failed to send confirmation email: {str(e)}'
-
-
-
 
 def send_success_contact(request, email, name, message_summary):
     subject = 'Contact Form Submission Received'
