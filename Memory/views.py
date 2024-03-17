@@ -136,6 +136,28 @@ def contact(request):
 
     return render(request,'contact-us.html',{'session':session})
 
+
+def upload_profile_pic(request):
+    session = request.session.get('user_id')
+    if request.method == 'POST' and request.FILES.get('profile_picture'):
+        profile_picture = request.FILES['profile_picture']
+        
+        # Assuming you have stored face_id in the session
+        face_id = request.session.get('face_id')
+        
+        # Fetch user by face_id from the Neo4j database
+        try:
+            user = Signups.nodes.get(uid=face_id)
+            user.profile_image = profile_picture
+            user.save()
+            return redirect('chat')  # Redirect to appropriate URL after saving
+        except Signups.DoesNotExist:
+            return HttpResponse('User not found.')
+        
+    return HttpResponse('No file selected or invalid request.')
+
+
+
 # =======================================================================================================
 
 # def maintain_history(request, user, bot):
@@ -184,6 +206,7 @@ def contact(request):
     
 def chat(request):
     session = request.session.get('user_id')
+    current_user = Signups.nodes.filter(uid = session).first()
     try:
         if session:
             user = Signups.nodes.filter(uid=session).get()
@@ -210,4 +233,4 @@ def chat(request):
             # maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
                 
-    return render(request, 'chat.html')
+    return render(request, 'chat.html',{'current_user':current_user})

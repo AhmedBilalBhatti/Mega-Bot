@@ -682,10 +682,25 @@
                                 <div class="my-account">
                                     <div class="user-detail"></div>
                                     <div class="user-main">
-                                        <div class="user-profile">
-                                            <img src="{% static 'assets/images/user/4.jpg'%}" class="img-fluid">
-                                            <i class="iconsax" data-icon="camera"></i>
-                                        </div>
+
+
+<form id="profile-upload-form" action="{% url 'upload-profile-pic' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="user-profile">
+        {% if current_user.profile_image %}
+            <img id="profile-pic" src="{{ current_user.profile_image.url }}" class="img-fluid">
+        {% else %}
+            <img id="profile-pic" src="{% static 'default.png' %}" class="img-fluid">
+        {% endif %}
+        <label for="profile-upload" class="camera-icon">
+            <i class="iconsax" data-icon="camera"></i>
+        </label>
+        <input type="file" id="profile-upload" name="profile_picture" style="display: none;" onchange="submitForm()">
+    </div>
+</form>
+
+
+
                                         <div class="user-option">
                                             <h4>Shanaya John</h4>
                                             <p>shanayajohn@gmail.com</p>
@@ -930,6 +945,12 @@
         e.preventDefault();
     }
     };
+    </script>
+
+    <script>
+        function submitForm() {
+            document.getElementById('profile-upload-form').submit();
+        }
     </script>
 
 </body>
