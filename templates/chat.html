@@ -688,7 +688,7 @@
     {% csrf_token %}
     <div class="user-profile">
         {% if current_user.profile_image %}
-            <img id="profile-pic" src="{{ current_user.profile_image.url }}" class="img-fluid">
+            <img id="profile-pic" src="{{ current_user.profile_image }}" class="img-fluid">
         {% else %}
             <img id="profile-pic" src="{% static 'default.png' %}" class="img-fluid">
         {% endif %}
@@ -698,6 +698,7 @@
         <input type="file" id="profile-upload" name="profile_picture" style="display: none;" onchange="submitForm()">
     </div>
 </form>
+
 
 
 

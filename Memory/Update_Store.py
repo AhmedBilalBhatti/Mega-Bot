@@ -1,9 +1,9 @@
-from django.core.files.storage import default_storage
-from django.urls import reverse
+from django.conf import settings
+from django.shortcuts import redirect
 from django.http import HttpResponseNotFound
+from django.core.files.storage import default_storage
 from .models import *
 import os
-
 
 def upload_profile_pic(request):
     session = request.session.get('user_id')
@@ -21,14 +21,19 @@ def upload_profile_pic(request):
                 except FileNotFoundError:
                     pass
 
-            file_path = os.path.join(settings.MEDIA_ROOT, 'Profile', new_file_name)
-            with open(file_path, 'wb') as f:
+            # Define the file path within the media directory
+            file_path = os.path.join('Profile', new_file_name)
+
+            # Save the file to the media directory
+            with default_storage.open(file_path, 'wb') as f:
                 for chunk in profile_picture.chunks():
                     f.write(chunk)
 
-            user.profile_image = os.path.join(settings.MEDIA_URL, 'Profile', new_file_name)
+            # Update the user's profile_image property with the correct URL format
+            user.profile_image = os.path.join(settings.MEDIA_URL, file_path.replace('\\', '/'))
             user.save()
 
+            # Redirect to the chat page after successful upload
             return redirect('chat')
         except Signups.DoesNotExist:
             return HttpResponseNotFound('User not found.')
