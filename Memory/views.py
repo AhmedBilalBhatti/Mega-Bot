@@ -137,26 +137,32 @@ def contact(request):
     return render(request,'contact-us.html',{'session':session})
 
 
+
 def upload_profile_pic(request):
     session = request.session.get('user_id')
     if request.method == 'POST' and request.FILES.get('profile_picture'):
         profile_picture = request.FILES['profile_picture']
-        
-        # Assuming you have stored face_id in the session
-        face_id = request.session.get('face_id')
-        
-        # Fetch user by face_id from the Neo4j database
+
         try:
             user = Signups.nodes.get(uid=face_id)
-            user.profile_image = profile_picture
+            file_extension = os.path.splitext(profile_picture.name)[1]
+            new_file_name = f"profile_{session}{file_extension}"
+            profile_dir = os.path.join(settings.MEDIA_ROOT, 'profile')
+            if not os.path.exists(profile_dir):
+                os.makedirs(profile_dir)
+            # Save the file to the profile directory with the new file name
+            file_path = os.path.join(profile_dir, new_file_name)
+            with open(file_path, 'wb') as f:
+                for chunk in profile_picture.chunks():
+                    f.write(chunk)
+            # Update the profile_image field with the path to the saved image
+            user.profile_image = os.path.join(settings.MEDIA_URL, 'profile', new_file_name)
             user.save()
             return redirect('chat')  # Redirect to appropriate URL after saving
         except Signups.DoesNotExist:
             return HttpResponse('User not found.')
         
     return HttpResponse('No file selected or invalid request.')
-
-
 
 # =======================================================================================================
 
