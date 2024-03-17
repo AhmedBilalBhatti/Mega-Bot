@@ -21,7 +21,7 @@ def upload_profile_pic(request):
                     os.remove(file_path)
                 except FileNotFoundError:
                     pass
-                    
+
             file_path = os.path.join('Profile', new_file_name)
 
             with default_storage.open(file_path, 'wb') as f:
@@ -36,3 +36,20 @@ def upload_profile_pic(request):
             return HttpResponseNotFound('User not found.')
 
     return HttpResponse('No file selected or invalid request.')
+
+def upload_data(request):
+    if request.method == 'POST':
+        current_user = request.user
+        if current_user:
+            new_name = request.POST.get('firstname')
+            new_gender = request.POST.get('gender')
+            new_email = request.POST.get('emailid')
+
+            current_user.username = new_name
+            current_user.gender = new_gender
+            current_user.email = new_email
+            current_user.save()
+
+            return redirect('chat')
+
+    return HttpResponseBadRequest("Invalid request")

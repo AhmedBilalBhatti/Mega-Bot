@@ -16,4 +16,5 @@ urlpatterns = [
     path('about',views.about,name='about'),
     path('contact',views.contact,name='contact'),
     path('upload-profile-pic/', views.upload_profile_pic, name='upload-profile-pic'),
+    path('upload-data', views.upload_data, name='upload-data'),
 ]
