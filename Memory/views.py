@@ -57,21 +57,18 @@ def signup_login(request, action=None):
             user = Signups(username=name, email=email, password=password, dob=dob, gender=gen)
             user.save()
             msg = "We are delighted to welcome you to our community! Your registration is confirmed, and we are excited to have you on board."
-            Signup_Thanks(name,email,msg)
             user_element_id = user.element_id
-            if user_element_id[-2] == ":":
-                face_id = user_element_id[-1:]
-            else:
-                face_id = user_element_id[-2:]
+            split_element_id = user_element_id.split(":")
+            face_id = split_element_id[-1]
             user.uid = face_id
             user.face_id = True
             user.save()
+            Signup_Thanks(name,email,msg)
             print("Id===", face_id)
             if has_webcam:
                 addFace(face_id)
             request.session['user_id'] = face_id or user.uid
             return redirect('index')
-
         else:
             if action == 'login':
                 mail = request.POST.get('emailid')
