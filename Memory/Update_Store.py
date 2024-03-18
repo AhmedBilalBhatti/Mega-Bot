@@ -37,6 +37,7 @@ def upload_profile_pic(request):
 
     return HttpResponse('No file selected or invalid request.')
 
+
 def upload_data(request):
     if request.method == 'POST':
         current_user = request.user
