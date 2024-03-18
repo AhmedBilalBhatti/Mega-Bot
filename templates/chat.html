@@ -676,6 +676,14 @@
                     <div class="main-section d-flex gap-4 flex-column">
 
 
+
+
+
+
+
+
+
+
                         <div class="container card p-0">
                             <div class="card-header">
                                 <h3 class="text-white">My Account</h3>
@@ -706,7 +714,7 @@
                                         {% endif %}
                                     </div>
 
-                                    <form class="msger-inputarea mb-0" method="post" url="{% url 'upload-data' %}">
+                                    <form class="msger-inputarea mb-0" method="post">
                                         {% csrf_token %}
                                         <div class="row">
                                             {% if current_user %}
@@ -739,10 +747,17 @@
                             <div class="card-footer">
                                 <div class="setting-btn">
                                     <button class="select-plan" value="submit">Update</button>
-                                    <button class="no-select-plan select-plan" value="submit">Cancel</button>
+                                    <!-- <button class="no-select-plan select-plan" value="submit">Cancel</button> -->
                                 </div>
                             </div>
                         </div>
+
+
+
+
+
+
+
 
 
                         <div class="container card p-0">
@@ -925,7 +940,7 @@
         });
     </script>
 
-    <script>
+<!--     <script>
         document.onkeydown = (e) => {
     if (e.key == 123) {
         e.preventDefault();
@@ -943,7 +958,7 @@
         e.preventDefault();
     }
     };
-    </script>
+    </script> -->
 
     <script>
         function submitForm() {
