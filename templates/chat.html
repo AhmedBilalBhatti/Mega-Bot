@@ -676,73 +676,73 @@
                     <div class="main-section d-flex gap-4 flex-column">
 
 
-<div class="container card p-0">
-    <div class="card-header">
-        <h3 class="text-white">My Account</h3>
-    </div>
-    <div class="card-body px-sm-4 px-3">
-        <div class="my-account">
-            <div class="user-detail"></div>
-            <div class="user-main">
-                <form id="profile-upload-form" action="{% url 'upload-profile-pic' %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="user-profile">
-                        {% if current_user.profile_image %}
-                        <img id="profile-pic" src="{{ current_user.profile_image }}" class="img-fluid">
-                        {% else %}
-                        <img id="profile-pic" src="{% static 'default.png' %}" class="img-fluid">
-                        {% endif %}
-                        <label for="profile-upload" class="camera-icon">
-                            <i class="iconsax" data-icon="camera"></i>
-                        </label>
-                        <input type="file" id="profile-upload" name="profile_picture" style="display: none;" onchange="submitForm()">
-                    </div>
-                </form>
-                {% if current_user %}
-                <div class="user-option">
-                    <h4>{{current_user.username}}</h4>
-                    <p>{{current_user.email}}</p>
-                </div>
-                <form class="msger-inputarea mb-0" method="post" action="{% url 'upload-data' %}">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-sm-6 col-12">
-                            <div class="mb-3">
-                                <label for="firstname" class="form-label">Name</label>
-                                <input type="text" class="msger-input" name="firstname" placeholder="{{current_user.username}}">
+                        <div class="container card p-0">
+                            <div class="card-header">
+                                <h3 class="text-white">My Account</h3>
                             </div>
-                        </div>
-                        <div class="col-sm-6 col-12">
-                            <div class="mb-3">
-                                <label for="lastname" class="form-label">Gender</label>
-                                <input type="text" class="msger-input" name="gender" placeholder="{{current_user.gender}}">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-12">
-                            <div class="mb-3">
-                                <label for="emailid" class="form-label">Email address</label>
-                                <input type="email" class="msger-input" name="emailid" placeholder="{{current_user.email}}">
-                            </div>
-                        </div>
-                    </div>
+                            <div class="card-body px-sm-4 px-3">
+                                <div class="my-account">
+                                    <div class="user-detail"></div>
+                                    <div class="user-main">
+                                        <form id="profile-upload-form" action="{% url 'upload-profile-pic' %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="user-profile">
+                                                {% if current_user.profile_image %}
+                                                    <img id="profile-pic" src="{{ current_user.profile_image }}" class="img-fluid">
+                                                {% else %}
+                                                    <img id="profile-pic" src="{% static 'default.png' %}" class="img-fluid">
+                                                {% endif %}
+                                                <label for="profile-upload" class="camera-icon">
+                                                    <i class="iconsax" data-icon="camera"></i>
+                                                </label>
+                                                <input type="file" id="profile-upload" name="profile_picture" style="display: none;" onchange="submitForm()">
+                                            </div>
+                                        </form>
+                                        {% if current_user %}
+                                        <div class="user-option">
+                                            <h4>{{current_user.username}}</h4>
+                                            <p>{{current_user.email}}</p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
 
-                    <div class="setting-btn card-footer">
-                        <button class="select-plan" value="submit">Update</button>
-                        <button class="no-select-plan select-plan" value="submit">Cancel</button>
-                    </div>
-                </form>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-<!--     <div class="card-footer">
-        <div class="setting-btn">
-            <button class="select-plan" value="submit">Update</button>
-            <button class="no-select-plan select-plan" value="submit">Cancel</button>
-        </div>
-    </div> -->
-</div>
-
+                                    <form class="msger-inputarea mb-0" method="post" url="{% url 'upload-data' %}">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            {% if current_user %}
+                                            <div class="col-sm-6 col-12">
+                                                <div class="mb-3">
+                                                    <label for="firstname" class="form-label">Name</label>
+                                                    <input type="text" class="msger-input" name ="firstname"
+                                                        placeholder="{{current_user.username}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="mb-3">
+                                                    <label for="lastname" class="form-label">Gender</label>
+                                                    <input type="text" class="msger-input" name= "gender"
+                                                        placeholder="{{current_user.gender}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="mb-3">
+                                                    <label for="emailid" class="form-label">Email address</label>
+                                                    <input type="email" class="msger-input" name="emailid"
+                                                        placeholder="{{current_user.email}}" >
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="setting-btn">
+                                    <button class="select-plan" value="submit">Update</button>
+                                    <button class="no-select-plan select-plan" value="submit">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div class="container card p-0">
@@ -757,7 +757,7 @@
                                                 <div class="mb-3">
                                                     <label for="firstname" class="form-label">Current Password</label>
                                                     <input type="email" class="msger-input" id="firstname"
-                                                        placeholder="*************" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                                                        placeholder="*************" >
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-12">
@@ -925,7 +925,7 @@
         });
     </script>
 
-<!--     <script>
+    <script>
         document.onkeydown = (e) => {
     if (e.key == 123) {
         e.preventDefault();
@@ -943,7 +943,7 @@
         e.preventDefault();
     }
     };
-    </script> -->
+    </script>
 
     <script>
         function submitForm() {

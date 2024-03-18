@@ -39,10 +39,13 @@ def upload_profile_pic(request):
 
 
 
+from django.shortcuts import redirect
+from django.http import HttpResponseBadRequest
+
 def upload_data(request):
     if request.method == 'POST':
         current_user = request.user
-        if current_user:
+        if current_user.is_authenticated:
             new_name = request.POST.get('firstname')
             new_gender = request.POST.get('gender')
             new_email = request.POST.get('emailid')
@@ -54,7 +57,7 @@ def upload_data(request):
             current_user.save()
 
             # Redirect to the appropriate page after successful update
-            return redirect('chat')
+            return redirect('chat')  # Replace 'chat' with the appropriate URL name
 
     # If the request method is not POST or the user is not authenticated, return a bad request response
     return HttpResponseBadRequest("Invalid request")
