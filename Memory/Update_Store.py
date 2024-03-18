@@ -38,6 +38,7 @@ def upload_profile_pic(request):
     return HttpResponse('No file selected or invalid request.')
 
 
+
 def upload_data(request):
     if request.method == 'POST':
         current_user = request.user
@@ -46,11 +47,14 @@ def upload_data(request):
             new_gender = request.POST.get('gender')
             new_email = request.POST.get('emailid')
 
+            # Update user's data
             current_user.username = new_name
             current_user.gender = new_gender
             current_user.email = new_email
             current_user.save()
 
+            # Redirect to the appropriate page after successful update
             return redirect('chat')
 
+    # If the request method is not POST or the user is not authenticated, return a bad request response
     return HttpResponseBadRequest("Invalid request")
