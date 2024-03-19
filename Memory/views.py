@@ -136,7 +136,6 @@ def contact(request):
 
 # =======================================================================================================
 
-
 def maintain_history(request, user, bot):
     user_id = request.session.get('user_id')
     user_node = Signups.nodes.filter(uid=user_id).first()
