@@ -1,6 +1,9 @@
 from neomodel import StructuredNode, StringProperty,BooleanProperty,IntegerProperty,UniqueIdProperty, RelationshipTo, RelationshipFrom,DateProperty,DateTimeProperty,ArrayProperty
 from django.conf import settings
+from datetime import datetime
 from django.db import models
+
+
 
 class Signups(StructuredNode):
     uid = StringProperty()
@@ -12,26 +15,33 @@ class Signups(StructuredNode):
     face_id = BooleanProperty(default=False)
     profile_image = StringProperty()
 
-    chat = RelationshipTo('History_Chat', 'HAS_HISTORY')
+    chat = RelationshipTo('History_Chat', 'HAS')
 
 class History_Chat(StructuredNode):
-    user_id = IntegerProperty(unique_index=True)
+    uid = StringProperty()
     name = StringProperty()
     chat = ArrayProperty(StringProperty())
     created_at = DateTimeProperty(default_now=True)
-    start_session = DateTimeProperty(default_now=True)
-    end_session = DateTimeProperty()
     # sentiments = StringProperty()
+    memory_list = ArrayProperty(StringProperty())
+
+    history = RelationshipTo('Session_History', 'HAS')
+
+class Session_History(StructuredNode):
+    uid = StringProperty()
+    name = StringProperty()
+    start_session = DateTimeProperty(default_now=True)
     memory_list = ArrayProperty(StringProperty())
 
     def save_message(self, message_type, message_content):
         if self.memory_list is None:
             self.memory_list = []
 
-        message = f"{message_type}: {message_content}"
-        self.memory_list.append(message)
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        formatted_message = f"{timestamp} - {message_type}: {message_content}"
+        self.memory_list.append(formatted_message)
         self.save()
-        
+
 # =================================================================================================
 
 class Contact(models.Model):

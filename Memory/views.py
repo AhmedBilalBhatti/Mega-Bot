@@ -2,9 +2,9 @@ from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
 from django.shortcuts import render,redirect
 from Memory.face_id import FaceRecognition
 from django.contrib.auth import logout
+from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
-from datetime import datetime
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -136,53 +136,41 @@ def contact(request):
 
 # =======================================================================================================
 
-# def maintain_history(request, user, bot):
-#     user_id = request.session.get('user_id')
-#     mem = History_Chat.nodes.filter(user_id=user_id, name="History").first()
 
-#     if not mem:
-#         mem = History_Chat(user_id=user_id, name="History").save()
+def maintain_history(request, user, bot):
+    user_id = request.session.get('user_id')
+    user_node = Signups.nodes.filter(uid=user_id).first()
+    
+    try:
+        history_chat_node = History_Chat.nodes.filter(uid=user_id).first()
+    except:
+        history_chat_node = History_Chat(uid=user_id, name="History").save()
+        user_node.chat.connect(history_chat_node)
 
-#     memory_store = mem.rel.single()
+    session_history_node = None
+    
+    if history_chat_node:
+        start_session = datetime.combine(date.today(), datetime.min.time())
+        try:
+            name = f"Session - {start_session.strftime('%Y-%m-%d')}" 
+            session_history_node = Session_History.nodes.filter(uid=user_id, name=name).first()
+        except:
+            name = f"Session - {start_session.strftime('%Y-%m-%d')}" 
+            session_history_node = Session_History(uid=user_id, name=name).save()
+            history_chat_node.history.connect(session_history_node)
 
-#     if not memory_store:
-#         memory_store = MemoryStore().save()
-#         mem.chat.connect(memory_store)
-
-#     if memory_store:
-#         name = memory_store.name
-#         if name is None:
-#             name = "History"
-#             memory_store.name = name
-#             name_updated = True
-#         else:
-#             last_session_date = memory_store.end_session.date()
-#             current_date = datetime.today().date()
-
-#             if current_date > last_session_date:
-#                 episode_number = int(name.split("History ")[1])
-#                 next_episode_number = episode_number + 1
-#                 name = "History " + str(next_episode_number)
-#                 new_memory_store = MemoryStore(name=name).save()
-#                 mem.chat.connect(new_memory_store)
-#                 memory_store = new_memory_store
-#                 name_updated = True
-#             else:
-#                 name_updated = False
-
-#     if not memory_store.start_session:
-#         memory_store.start_session = datetime.now()
-
-#     memory_store.end_session = datetime.now()
-#     memory_store.sentiments = sentiment(request)
-#     memory_store.save_message("User", user)
-#     memory_store.save_message("Bot", bot)
+    if session_history_node:
+        session_history_node.save_message("User", user)
+        session_history_node.save_message("Bot", bot)
 
 # ========================================================================================================
+
+
     
 def chat(request):
     session = request.session.get('user_id')
     current_user = Signups.nodes.filter(uid = session).first()
+    Session_History.nodes.filter(uid = session)
     try:
         if session:
             user = Signups.nodes.filter(uid=session).get()
@@ -206,7 +194,7 @@ def chat(request):
                 bot_response = kernel.respond(message)
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
-            # maintain_history(request, message, bot_response)
+            maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
                 
     return render(request, 'chat.html',{'current_user':current_user})
