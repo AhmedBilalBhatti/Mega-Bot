@@ -1,8 +1,8 @@
 $(document).ready(function () {
     var chatStarted = false;
-    var isBotResponding = false; // Flag to track if the bot is responding
-    var currentTypingEffect; // To store the current typing effect interval
-    var currentBotResponse; // To store the current bot response element
+    var isBotResponding = false; 
+    var currentTypingEffect;
+    var currentBotResponse;
 
     $('form').on('submit', function (event) {
         event.preventDefault();
@@ -10,14 +10,11 @@ $(document).ready(function () {
         var chatlogContainer = $('#chatlog');
         var userMessage = messageInput.val().trim();
 
-        if (userMessage === '' || isBotResponding) { // Check if user input is empty or bot is responding
+        if (userMessage === '' || isBotResponding) {
             return;
         }
 
-        // Clear input field
         messageInput.val('');
-
-        // Disable input during bot response
         messageInput.prop('disabled', true);
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
@@ -50,17 +47,15 @@ $(document).ready(function () {
                     currentTypingEffect = typeWriter(currentBotResponse, data.bot_response, function () {
                         chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
 
-                        // Enable input after bot response
                         messageInput.prop('disabled', false);
                         isBotResponding = false;
                     });
 
-                    // Handle play/pause button click
                     botResponse.find('.gg-play-button-o').on('click', function () {
-                        clearInterval(currentTypingEffect); // Stop typewriter effect
-                        $(this).remove(); // Remove the play/pause button
-                        isBotResponding = false; // Reset flag
-                        messageInput.prop('disabled', false); // Enable input
+                        clearInterval(currentTypingEffect);
+                        $(this).remove();
+                        isBotResponding = false;
+                        messageInput.prop('disabled', false); 
                     });
                 }
             },
@@ -71,7 +66,6 @@ $(document).ready(function () {
                 isBotResponding = false;
             },
             beforeSend: function () {
-                // Set flag to indicate bot is responding
                 isBotResponding = true;
             }
         });
