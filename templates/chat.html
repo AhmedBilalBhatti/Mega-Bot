@@ -756,33 +756,27 @@
 
 
 
-
-
-
-
-
                                     <form class="msger-inputarea mb-0" method="post" action="{% url 'upload-data' %}">
-
                                         {% csrf_token %}
                                         <div class="row">
                                             {% if current_user %}
                                             <div class="col-sm-6 col-12">
                                                 <div class="mb-3">
-                                                    <label for="firstname" class="form-label">Name</label>
-                                                    <input type="email" class="msger-input" name ="firstname"
+                                                    <label class="form-label">Name</label>
+                                                    <input type="text" class="msger-input" name ="firstname"
                                                         placeholder="{{current_user.username}}">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-12">
                                                 <div class="mb-3">
-                                                    <label for="lastname" class="form-label">Gender</label>
-                                                    <input type="email" class="msger-input" name= "gender"
+                                                    <label class="form-label">Gender</label>
+                                                    <input type="text" class="msger-input" name= "gender"
                                                         placeholder="{{current_user.gender}}">
                                                 </div>
-                                            </div>s
+                                            </div>
                                             <div class="col-sm-6 col-12">
                                                 <div class="mb-3">
-                                                    <label for="emailid" class="form-label">Email address</label>
+                                                    <label class="form-label">Email address</label>
                                                     <input type="email" class="msger-input" name="emailid"
                                                         placeholder="{{current_user.email}}">
                                                 </div>
@@ -817,15 +811,15 @@
                                             <div class="col-sm-6 col-12">
                                                 <div class="mb-3">
                                                     <label for="firstname" class="form-label">Current Password</label>
-                                                    <input type="email" class="msger-input" id="firstname"
+                                                    <input type="email" class="msger-input"
                                                         placeholder="*************">
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-12">
                                                 <div class="mb-3">
                                                     <label for="lastname" class="form-label">New password</label>
-                                                    <input type="email" class="msger-input" id="lastname"
-                                                        placeholder="lastname@example.com">
+                                                    <input type="email" class="msger-input"
+                                                        placeholder="*************">
                                                 </div>
                                             </div>
                                         </div>
@@ -842,43 +836,47 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <div class="modal rating-modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Your Rating</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="iconsax" data-icon="close-square"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="auth-form">
-                        <div class="form-group">
-                            <label for="comment" class="form-label text-white">Type Something</label>
-                            <textarea type="search" class="form-control" placeholder="Write your review here"
-                                id="comment"></textarea>
-                        </div>
-                    </form>
-                    <ul data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="star-rating">
-                        <li><i class="ri-star-fill"></i></li>
-                        <li><i class="ri-star-fill"></i></li>
-                        <li><i class="ri-star-fill"></i></li>
-                        <li><i class="ri-star-fill"></i></li>
-                        <li><i class="ri-star-fill"></i></li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="modal-submit m-0" data-bs-dismiss="modal">Send</button>
-                </div>
+<div class="modal rating-modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Your Rating</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="iconsax" data-icon="close-square"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="comment" class="form-label text-white">Type Something</label>
+                        <textarea type="search" class="form-control" placeholder="Write your review here"
+                            id="comment"></textarea>
+                    </div>
+                </form>
+                <ul data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="star-rating">
+                    <li><i class="ri-star-fill"></i></li>
+                    <li><i class="ri-star-fill"></i></li>
+                    <li><i class="ri-star-fill"></i></li>
+                    <li><i class="ri-star-fill"></i></li>
+                    <li><i class="ri-star-fill"></i></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-submit m-0" data-bs-dismiss="modal">Send</button>
             </div>
         </div>
     </div>
+</div>
+
 
     <!--custom cursor start  -->
     <div id="cursor"></div>

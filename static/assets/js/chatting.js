@@ -46,13 +46,13 @@ $(document).ready(function () {
                 typingElement.closest('.msg.left-msg').remove();
 
                 if (data.bot_response) {
-                    // Add bot response
-                    var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>Dexter:</strong> <span class="typewriter"></span></p><button class="gg-play-button-o"></button></div></div>');
+                    var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>MegaBot:</strong> <span class="typewriter"></span></p><button class="gg-play-button-o"></button></div></div>');
                     chatlogContainer.append(botResponse);
                     currentBotResponse = botResponse.find('.typewriter');
 
                     currentTypingEffect = typeWriter(currentBotResponse, data.bot_response, function () {
-                        chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+                        // Scroll to the bottom of the chat log container
+                        chatlogContainer.animate({ scrollTop: chatlogContainer.prop("scrollHeight") });
 
                         messageInput.prop('disabled', false);
                         isBotResponding = false;
@@ -103,11 +103,12 @@ $(document).ready(function () {
 });
 
 function typingAnimation() {
-    return `<p><strong>Dexter:</strong> 
+    return `<p><strong>MegaBot:</strong> 
             <span class="typing-animation"></span>
             <span class="typing-animation"></span>
             <span class="typing-animation"></span></p>`;
 }
+
 
 
 // Utils

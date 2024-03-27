@@ -151,10 +151,10 @@ def maintain_history(request, user, bot):
     if history_chat_node:
         start_session = datetime.combine(date.today(), datetime.min.time())
         try:
-            name = f"Session - {start_session.strftime('%Y-%m-%d')}" 
+            name = f"Episode - {start_session.strftime('%Y-%m-%d')}" 
             session_history_node = Session_History.nodes.filter(uid=user_id, name=name).first()
         except:
-            name = f"Session - {start_session.strftime('%Y-%m-%d')}" 
+            name = f"Episode - {start_session.strftime('%Y-%m-%d')}" 
             session_history_node = Session_History(uid=user_id, name=name).save()
             history_chat_node.history.connect(session_history_node)
 
