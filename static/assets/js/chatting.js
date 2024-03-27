@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var chatStarted = false;
-    var isBotResponding = false;
+    var isBotResponding = false; // Flag to track if the bot is responding
+    var currentTypingEffect; // To store the current typing effect interval
+    var currentBotResponse; // To store the current bot response element
 
     $('form').on('submit', function (event) {
         event.preventDefault();
@@ -8,10 +10,14 @@ $(document).ready(function () {
         var chatlogContainer = $('#chatlog');
         var userMessage = messageInput.val().trim();
 
-        if (userMessage === '' || isBotResponding) {
+        if (userMessage === '' || isBotResponding) { // Check if user input is empty or bot is responding
             return;
         }
 
+        // Clear input field
+        messageInput.val('');
+
+        // Disable input during bot response
         messageInput.prop('disabled', true);
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
@@ -37,15 +43,24 @@ $(document).ready(function () {
                 chatlogContainer.find('.botchat.typing').remove();
 
                 if (data.bot_response) {
-                    var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>Dexter:</strong> <span class="typewriter">' + data.bot_response + '</span></p></div></div>');
+                    var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>Dexter:</strong> <span class="typewriter"></span></p><button class="gg-play-button-o"></button></div></div>');
                     chatlogContainer.append(botResponse);
+                    currentBotResponse = botResponse.find('.typewriter');
 
-                    typeWriter(botResponse.find('.typewriter'), function () {
-                        messageInput.val('');
+                    currentTypingEffect = typeWriter(currentBotResponse, data.bot_response, function () {
                         chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
 
+                        // Enable input after bot response
                         messageInput.prop('disabled', false);
                         isBotResponding = false;
+                    });
+
+                    // Handle play/pause button click
+                    botResponse.find('.gg-play-button-o').on('click', function () {
+                        clearInterval(currentTypingEffect); // Stop typewriter effect
+                        $(this).remove(); // Remove the play/pause button
+                        isBotResponding = false; // Reset flag
+                        messageInput.prop('disabled', false); // Enable input
                     });
                 }
             },
@@ -56,21 +71,20 @@ $(document).ready(function () {
                 isBotResponding = false;
             },
             beforeSend: function () {
+                // Set flag to indicate bot is responding
                 isBotResponding = true;
             }
         });
     });
 
-    function typeWriter(element, callback) {
-        var text = element.text();
-        element.empty();
+    function typeWriter(element, text, callback) {
         var i = 0;
-        var typingEffect = setInterval(function () {
+        return setInterval(function () {
             if (i < text.length) {
-                element.append(text.charAt(i));
+                element.text(element.text() + text.charAt(i));
                 i++;
             } else {
-                clearInterval(typingEffect);
+                clearInterval(currentTypingEffect);
                 if (callback) callback();
             }
         }, 70);

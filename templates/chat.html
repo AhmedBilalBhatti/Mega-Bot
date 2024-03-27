@@ -35,6 +35,34 @@
 <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
 
 </head>
+<style>
+.gg-play-button-o {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 22px;
+    height: 22px;
+    border: 2px solid #252525; /* Adjusted border color */
+    color: #252525;
+    border-radius: 20px;
+}
+
+.gg-play-button-o::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 0;
+    height: 10px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 6px solid;
+    top: 4px;
+    left: 7px;
+}
+
+</style>
 
 <body>
     <section class="chatting-wrapper pt-0">
