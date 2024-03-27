@@ -44,20 +44,16 @@ from django.http import HttpResponseBadRequest
 
 def upload_data(request):
     if request.method == 'POST':
-        current_user = request.user
-        if current_user.is_authenticated:
-            new_name = request.POST.get('firstname')
-            new_gender = request.POST.get('gender')
-            new_email = request.POST.get('emailid')
-
+        # Extracting form data
+        first_name = request.POST.get('firstname')
+        gender = request.POST.get('gender')
+        email = request.POST.get('emailid')
+        print(first_name)
             # Update user's data
-            current_user.username = new_name
-            current_user.gender = new_gender
-            current_user.email = new_email
-            current_user.save()
-
-            # Redirect to the appropriate page after successful update
-            return redirect('chat')  # Replace 'chat' with the appropriate URL name
+            # current_user.username = new_name
+            # current_user.gender = new_gender
+            # current_user.email = new_email
+            # current_user.save()
 
     # If the request method is not POST or the user is not authenticated, return a bad request response
     return HttpResponseBadRequest("Invalid request")

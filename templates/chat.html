@@ -83,8 +83,6 @@
     transform: translateY(0px);
   }
 }
-
-
 </style>
 
 <body>
@@ -223,8 +221,7 @@
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
                             <!-- <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a> -->
 
-<a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
-
+                            <a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
 
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
@@ -757,7 +754,15 @@
                                         {% endif %}
                                     </div>
 
-                                    <form class="msger-inputarea mb-0" method="post" url="{% url 'upload-data' %}">
+
+
+
+
+
+
+
+                                    <form class="msger-inputarea mb-0" method="post" action="{% url 'upload-data' %}">
+
                                         {% csrf_token %}
                                         <div class="row">
                                             {% if current_user %}
@@ -785,7 +790,6 @@
                                             {% endif %}
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -795,6 +799,11 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
+
 
 
                         <div class="container card p-0">
