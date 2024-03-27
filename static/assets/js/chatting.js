@@ -19,7 +19,6 @@ $(document).ready(function () {
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
         chatlogContainer.append(userMessageHtml);
-        chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat typing"><p><strong>Dexter:</strong><span class="typewriter glow">Thinking<span class="dots"></span></span></p></div></div>`);
 
         if (!chatStarted) {
             $('.no-chat').addClass('d-none');
@@ -27,6 +26,11 @@ $(document).ready(function () {
             $('.chat-header').css('background-color', '#0a0e17');
             chatStarted = true;
         }
+
+        // Add loading animation
+        var typingElement = chatlogContainer.find('.typing-animation');
+        typingElement.closest('.msg.left-msg').remove();
+        chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat">${typingAnimation()}</div></div>`);
 
         $.ajax({
             type: 'POST',
@@ -37,9 +41,12 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
-                chatlogContainer.find('.botchat.typing').remove();
+                var typingElement = chatlogContainer.find('.typing-animation');
+
+                typingElement.closest('.msg.left-msg').remove();
 
                 if (data.bot_response) {
+                    // Add bot response
                     var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>Dexter:</strong> <span class="typewriter"></span></p><button class="gg-play-button-o"></button></div></div>');
                     chatlogContainer.append(botResponse);
                     currentBotResponse = botResponse.find('.typewriter');
@@ -49,6 +56,7 @@ $(document).ready(function () {
 
                         messageInput.prop('disabled', false);
                         isBotResponding = false;
+                        botResponse.find('.gg-play-button-o').remove();
                     });
 
                     botResponse.find('.gg-play-button-o').on('click', function () {
@@ -61,7 +69,6 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
-                // Enable input in case of error
                 messageInput.prop('disabled', false);
                 isBotResponding = false;
             },
@@ -94,6 +101,13 @@ $(document).ready(function () {
 
     setInterval(toggleDots, 300);
 });
+
+function typingAnimation() {
+    return `<p><strong>Dexter:</strong> 
+            <span class="typing-animation"></span>
+            <span class="typing-animation"></span>
+            <span class="typing-animation"></span></p>`;
+}
 
 
 // Utils

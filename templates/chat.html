@@ -62,6 +62,29 @@
     left: 7px;
 }
 
+.typing-animation {
+  width: 10px;
+  height: 10px;
+  background-color: rgb(var(--theme-color));
+  display: inline-block;
+  margin: 1px;
+  border-radius: 50%;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
 </style>
 
 <body>
@@ -944,7 +967,7 @@
         });
     </script>
 
-<!--     <script>
+    <script>
         document.onkeydown = (e) => {
     if (e.key == 123) {
         e.preventDefault();
@@ -962,7 +985,13 @@
         e.preventDefault();
     }
     };
-    </script> -->
+    </script>
+    <script>
+    document.addEventListener('contextmenu', function(event) {
+    event.preventDefault(); // Prevent the default context menu behavior
+    });
+
+    </script>
 
     <script>
         function submitForm() {
