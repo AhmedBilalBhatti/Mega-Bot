@@ -168,7 +168,10 @@ def maintain_history(request, user, bot):
     
 def chat(request):
     session = request.session.get('user_id')
-    current_user = Signups.nodes.filter(uid = session).first()
+    try:
+        current_user = Signups.nodes.filter(uid = session).first()
+    except:
+        return redirect('index')
     Session_History.nodes.filter(uid = session)
     try:
         if session:
