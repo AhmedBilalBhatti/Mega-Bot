@@ -51,8 +51,7 @@ $(document).ready(function () {
                     currentBotResponse = botResponse.find('.typewriter');
 
                     currentTypingEffect = typeWriter(currentBotResponse, data.bot_response, function () {
-                        // Scroll to the bottom of the chat log container
-                        chatlogContainer.animate({ scrollTop: chatlogContainer.prop("scrollHeight") });
+                        chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
 
                         messageInput.prop('disabled', false);
                         isBotResponding = false;
@@ -108,7 +107,6 @@ function typingAnimation() {
             <span class="typing-animation"></span>
             <span class="typing-animation"></span></p>`;
 }
-
 
 
 // Utils
