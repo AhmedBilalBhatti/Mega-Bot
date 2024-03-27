@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var chatStarted = false;
+    var isBotResponding = false;
 
     $('form').on('submit', function (event) {
         event.preventDefault();
@@ -7,9 +8,11 @@ $(document).ready(function () {
         var chatlogContainer = $('#chatlog');
         var userMessage = messageInput.val().trim();
 
-        if (userMessage === '') {
+        if (userMessage === '' || isBotResponding) {
             return;
         }
+
+        messageInput.prop('disabled', true);
 
         var userMessageHtml = `<div class="msg right-msg"><div class="msg-bubble"><div class="msg-text"><strong>You:</strong> ${userMessage}</div></div></div>`;
         chatlogContainer.append(userMessageHtml);
@@ -17,7 +20,7 @@ $(document).ready(function () {
 
         if (!chatStarted) {
             $('.no-chat').addClass('d-none');
-            $('.main-chat').css('background-color', '#0a0e17'); 
+            $('.main-chat').css('background-color', '#0a0e17');
             $('.chat-header').css('background-color', '#0a0e17');
             chatStarted = true;
         }
@@ -40,11 +43,20 @@ $(document).ready(function () {
                     typeWriter(botResponse.find('.typewriter'), function () {
                         messageInput.val('');
                         chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+
+                        messageInput.prop('disabled', false);
+                        isBotResponding = false;
                     });
                 }
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText); 
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                // Enable input in case of error
+                messageInput.prop('disabled', false);
+                isBotResponding = false;
+            },
+            beforeSend: function () {
+                isBotResponding = true;
             }
         });
     });
@@ -63,6 +75,7 @@ $(document).ready(function () {
             }
         }, 70);
     }
+
     function toggleDots() {
         var dots = $('.dots');
         dots.text(dots.text() + '.');
@@ -70,9 +83,8 @@ $(document).ready(function () {
             dots.text('');
         }
     }
-    setInterval(toggleDots, 300);
 
-    
+    setInterval(toggleDots, 300);
 });
 
 
