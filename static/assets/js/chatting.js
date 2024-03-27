@@ -39,7 +39,7 @@ $(document).ready(function () {
 
                     typeWriter(botResponse.find('.typewriter'), function () {
                         messageInput.val('');
-                        chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+                        scrollToBottom(chatlogContainer); // Scroll to bottom after adding the message
                     });
                 }
             },
@@ -63,6 +63,7 @@ $(document).ready(function () {
             }
         }, 70);
     }
+
     function toggleDots() {
         var dots = $('.dots');
         dots.text(dots.text() + '.');
@@ -70,8 +71,15 @@ $(document).ready(function () {
             dots.text('');
         }
     }
+
+    function scrollToBottom(element) {
+        element.scrollTop(element.prop("scrollHeight"));
+    }
+
     setInterval(toggleDots, 300);
+
 });
+
 
 // Utils
 function get(selector, root = document) {
