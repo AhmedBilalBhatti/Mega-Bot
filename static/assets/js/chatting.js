@@ -26,8 +26,7 @@ $(document).ready(function () {
             $('.chat-header').css('background-color', '#0a0e17');
             chatStarted = true;
         }
-
-        // Add loading animation
+        
         var typingElement = chatlogContainer.find('.typing-animation');
         typingElement.closest('.msg.left-msg').remove();
         chatlogContainer.append(`<div class="msg left-msg"><div class="msg-bubble botchat">${typingAnimation()}</div></div>`);
