@@ -17,6 +17,10 @@ class Signups(StructuredNode):
 
     chat = RelationshipTo('History_Chat', 'HAS')
 
+
+    class Meta:
+        labels = ["Signups","Person"]
+
 class History_Chat(StructuredNode):
     uid = StringProperty()
     name = StringProperty()
