@@ -219,10 +219,8 @@
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
-                            <a href="#" class="scan-icon"><i class="iconsax" data-icon="scan-1"></i></a>
-
-                            <a href="#" id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
-
+                            <input type="file" id="prolog_file" style="display: none;" accept=".pl"><span class="scan-icon" onclick="triggerFileSelectionAndUpload()" style="cursor: pointer;"><i class="iconsax" data-icon="scan-2"></i></span>
+                            <a id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
                         </form>
@@ -994,7 +992,7 @@
     </script>
     <script>
     document.addEventListener('contextmenu', function(event) {
-    event.preventDefault(); // Prevent the default context menu behavior
+    event.preventDefault();
     });
 
     </script>
@@ -1004,6 +1002,72 @@
             document.getElementById('profile-upload-form').submit();
         }
     </script>
+
+<script>
+function triggerFileSelectionAndUpload() {
+  const fileInput = document.getElementById("prolog_file");
+  fileInput.click();
+  fileInput.addEventListener("change", function () {
+    const formData = new FormData();
+    formData.append("prolog_file", this.files[0]);
+    formData.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+    $.ajax({
+      url: "{% url 'prolog_handling' %}",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        console.log(response);
+        // Handle successful file upload (e.g., display success message)
+        if (response.success) {
+          // Ask user a question after successful upload (replace with your question)
+          const userConfirmation = confirm("File uploaded successfully. Would you like to continue with the chat?");
+          if (userConfirmation) {
+            // User confirms, continue with chat functionality
+          }
+        }
+      },
+      error: function (error) {
+        console.error(error);
+        // Handle upload errors (e.g., display error message)
+      }
+    });
+  });
+}
+
+// Existing Chat Bot Functionality (unchanged)
+
+$(document).ready(function () {
+  // ... existing chat bot code
+});
+
+function typingAnimation() {
+  return `<p><strong>MegaBot:</strong> 
+      <span class="typing-animation"></span>
+      <span class="typing-animation"></span>
+      <span class="typing-animation"></span></p>`;
+}
+
+// Utils
+function get(selector, root = document) {
+  return root.querySelector(selector);
+}
+
+function formatDate(date) {
+  const h = "0" + date.getHours();
+  const m = "0" + date.getMinutes();
+
+  return `${h.slice(-2)}:${m.slice(-2)}`;
+}
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+</script>
+
+
+
 
 </body>
 </html>

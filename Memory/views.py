@@ -9,6 +9,7 @@ from .Update_Store import *
 from Memory.models import *
 from .decorators import *
 from .web_scrap import *
+from .prolog import *
 from .Emails import *
 from .models import *
 from .Speech import *
