@@ -14,6 +14,7 @@ $(document).ready(function () {
             return;
         }
 
+
         messageInput.val('');
         messageInput.prop('disabled', true);
 

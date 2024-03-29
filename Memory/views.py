@@ -167,7 +167,7 @@ def maintain_history(request, user, bot):
 
 
     
-def chat(request):
+def chat(request):    
     session = request.session.get('user_id')
     try:
         current_user = Signups.nodes.filter(uid = session).first()
@@ -199,5 +199,5 @@ def chat(request):
                     bot_response = web_scraping(message)
             maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
-                
+
     return render(request, 'chat.html',{'current_user':current_user})
