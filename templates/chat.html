@@ -219,7 +219,8 @@
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
                             <input type="text" class="msger-input" id="userInput" placeholder="Ask any question here..." />
-                            <input type="file" id="prolog_file" style="display: none;" accept=".pl"><span class="scan-icon" onclick="triggerFileSelectionAndUpload()" style="cursor: pointer;"><i class="iconsax" data-icon="scan-2"></i></span>
+                            <input type="file" id="prolog_file" style="display: none;" accept=".pl"  data-max-size="2097152">
+                            <span class="scan-icon" onclick="triggerFileSelectionAndUpload()" style="cursor: pointer;"><i class="iconsax" data-icon="scan-2"></i></span>
                             <a id="mic-listen" class="mic-icon"><i class="iconsax" data-icon="mic-2"></i></a>
                             <button type="submit" value="Send" class="msger-send-btn" id="send-btn">
                                 <i class="iconsax" data-icon="send-1"></i></button>
@@ -1053,6 +1054,18 @@
             }
         }, 70);
     }
+
+    </script>
+    <script>
+    const prologFileInput = document.getElementById('prolog_file');
+
+    prologFileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file && file.size > 2097152) {
+        alert('Error: File size exceeds the maximum limit of 2 MB.');
+        prologFileInput.value = '';
+      }
+    });
 
     </script>
 
