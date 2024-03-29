@@ -1003,56 +1003,58 @@
         }
     </script>
 
-<script>
-function triggerFileSelectionAndUpload() {
-    const fileInput = document.getElementById("prolog_file");
-    fileInput.click();
-    fileInput.addEventListener("change", function () {
-        const formData = new FormData();
-        formData.append("prolog_file", this.files[0]);
-        formData.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+    <script>
+        function triggerFileSelectionAndUpload() {
+        const fileInput = document.getElementById("prolog_file");
+        fileInput.click();
+        fileInput.addEventListener("change", function () {
+            const formData = new FormData();
+            formData.append("prolog_file", this.files[0]);
+            formData.append("csrfmiddlewaretoken", '{{ csrf_token }}');
 
-        $.ajax({
-            url: "{% url 'prolog_handling' %}",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                console.log(response);
-                var chatlogContainer = $('#chatlog');
+            $.ajax({
+                url: "{% url 'prolog_handling' %}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                    var chatlogContainer = $('#chatlog');
 
-                // Use typeWriter to animate the bot's response
-                typeWriter(chatlogContainer, "MegaBot: This is a prolog file I have read. What do you want to know?", function () {
-                    chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+                    var botMessage = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>MegaBot:</strong> <span id="botResponse"></span></p></div></div>');
+
+                    chatlogContainer.append(botMessage);
+
+                    typeWriter($('#botResponse'), response.bot_response, function () {
+                        chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+                        messageInput.prop('disabled', false);
+                        isBotResponding = false;
+                    });
+                },
+                error: function (error) {
+                    console.error(error);
                     messageInput.prop('disabled', false);
                     isBotResponding = false;
-                });
-            },
-            error: function (error) {
-                console.error(error);
-                messageInput.prop('disabled', false);
-                isBotResponding = false;
-            }
+                }
+            });
         });
-    });
-}
+    }
 
-// Assuming typingAnimation() function is defined elsewhere
+    function typeWriter(element, text, callback) {
+        var i = 0;
+        var interval = setInterval(function () {
+            if (i < text.length) {
+                element.append(text.charAt(i));
+                i++;
+            } else {
+                clearInterval(interval);
+                if (callback) callback();
+            }
+        }, 70);
+    }
 
-function typeWriter(element, text, callback) {
-    var i = 0;
-    var interval = setInterval(function () {
-        if (i < text.length) {
-            element.append(text.charAt(i));
-            i++;
-        } else {
-            clearInterval(interval);
-            if (callback) callback();
-        }
-    }, 70); // Adjust speed here (currently 70 milliseconds)
-}
-</script>
+    </script>
 
 </body>
 </html>
