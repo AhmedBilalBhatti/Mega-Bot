@@ -1004,36 +1004,51 @@
     </script>
 
     <script>
-        function triggerFileSelectionAndUpload() {
-            const fileInput = document.getElementById("prolog_file");
-            fileInput.click();
-            fileInput.addEventListener("change", function () {
-                const formData = new FormData();
-                formData.append("prolog_file", this.files[0]);
-                formData.append("csrfmiddlewaretoken", '{{ csrf_token }}'); 
-                $.ajax({
-                    url: "{% url 'prolog_handling' %}",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        console.log(response);
-                        var chatlogContainer = $('#chatlog');
-                        var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>MegaBot:</strong> ' + response.bot_response + '</p></div></div>');
-                        chatlogContainer.append(botResponse);
-                        chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
-                        messageInput.prop('disabled', false);
-                        isBotResponding = false;
-                    },
-                    error: function (error) {
-                        console.error(error);
-                        messageInput.prop('disabled', false);
-                        isBotResponding = false;
-                    }
-                });
-            });
+function triggerFileSelectionAndUpload() {
+    const fileInput = document.getElementById("prolog_file");
+    fileInput.click();
+    fileInput.addEventListener("change", function () {
+        const formData = new FormData();
+        formData.append("prolog_file", this.files[0]);
+        formData.append("csrfmiddlewaretoken", '{{ csrf_token }}'); 
+        $.ajax({
+            url: "{% url 'prolog_handling' %}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log(response);
+                var chatlogContainer = $('#chatlog');
+                var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>MegaBot:</strong> </p></div></div>');
+                chatlogContainer.append(botResponse);
+                chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+                messageInput.prop('disabled', false);
+                isBotResponding = false;
+                typeWriter(botResponse.find('p'), response.bot_response);
+            },
+            error: function (error) {
+                console.error(error);
+                messageInput.prop('disabled', false);
+                isBotResponding = false;
+            }
+        });
+    });
+}
+
+function typeWriter(element, text, callback) {
+    var i = 0;
+    var typingEffect = setInterval(function() {
+        if (i < text.length) {
+            element.append(text.charAt(i));
+            i++;
+        } else {
+            clearInterval(typingEffect);
+            if (callback) callback();
         }
+    }, 70); // Adjust speed here (currently 70 milliseconds)
+}
+
     </script>
 
 </body>
