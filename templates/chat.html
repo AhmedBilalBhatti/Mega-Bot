@@ -1003,14 +1003,15 @@
         }
     </script>
 
-    <script>
+<script>
 function triggerFileSelectionAndUpload() {
     const fileInput = document.getElementById("prolog_file");
     fileInput.click();
     fileInput.addEventListener("change", function () {
         const formData = new FormData();
         formData.append("prolog_file", this.files[0]);
-        formData.append("csrfmiddlewaretoken", '{{ csrf_token }}'); 
+        formData.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+
         $.ajax({
             url: "{% url 'prolog_handling' %}",
             type: "POST",
@@ -1020,12 +1021,13 @@ function triggerFileSelectionAndUpload() {
             success: function (response) {
                 console.log(response);
                 var chatlogContainer = $('#chatlog');
-                var botResponse = $('<div class="msg left-msg"><div class="msg-bubble botchat"><p><strong>MegaBot:</strong> </p></div></div>');
-                chatlogContainer.append(botResponse);
-                chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
-                messageInput.prop('disabled', false);
-                isBotResponding = false;
-                typeWriter(botResponse.find('p'), response.bot_response);
+
+                // Use typeWriter to animate the bot's response
+                typeWriter(chatlogContainer, "MegaBot: This is a prolog file I have read. What do you want to know?", function () {
+                    chatlogContainer.animate({ scrollTop: chatlogContainer[0].scrollHeight });
+                    messageInput.prop('disabled', false);
+                    isBotResponding = false;
+                });
             },
             error: function (error) {
                 console.error(error);
@@ -1036,20 +1038,21 @@ function triggerFileSelectionAndUpload() {
     });
 }
 
+// Assuming typingAnimation() function is defined elsewhere
+
 function typeWriter(element, text, callback) {
     var i = 0;
-    var typingEffect = setInterval(function() {
+    var interval = setInterval(function () {
         if (i < text.length) {
             element.append(text.charAt(i));
             i++;
         } else {
-            clearInterval(typingEffect);
+            clearInterval(interval);
             if (callback) callback();
         }
     }, 70); // Adjust speed here (currently 70 milliseconds)
 }
-
-    </script>
+</script>
 
 </body>
 </html>
