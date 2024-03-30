@@ -25,11 +25,13 @@ def prolog_handling(request):
             new_kb.clear_cache()
             new_kb.from_file(temp_file_path)
 
-            parent_query_result = new_kb.query(pl.Expr("Parent(Ahmed,Ali)"))
-            child_query_result = new_kb.query(pl.Expr("Child(Alia, Nadia)"))
+            splited = prolog_contents.split('.')
+            print(splited)
 
-            print(parent_query_result[0] if parent_query_result else "No result")
-            print(child_query_result[0] if child_query_result else "No result")
+
+            # print(parent_query_result = new_kb.query(pl.Expr("Parent(Ahmed,Ali)")))
+            # print(child_query_result = new_kb.query(pl.Expr("Child(Alia, Nadia)")))
+
 
             return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
 
