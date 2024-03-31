@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.conf import settings
 import pytholog as pl
+from .models import *
 from .views import *
 import os
 
@@ -56,3 +57,16 @@ def extract_facts(prolog_contents):
             person = parts[1].split(',')[0]
             facts.append((predicate, person))
     return facts
+
+
+ 
+
+
+def make_graph(node1 ,node1_gender=None, rel , node2,node2_gender=None):
+    session = request.session.get('user_id')
+    node_1 = Prolog_Members(uid = session , name = node1, gender=node1_gender)
+    node_1.save()
+
+    node_2 = Prolog_Members(uid = session , name = node2, gender=node2_gender)
+    node_2.save()
+
