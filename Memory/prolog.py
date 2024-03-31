@@ -28,16 +28,37 @@ def prolog_handling(request):
 
 
 
+
+
+            facts = extract_facts(prolog_contents)
             true_facts = []
 
-            for fact in extract_facts(prolog_contents):
-                predicate, person = fact
+            # Test each possible query and collect true facts with person
+            for predicate, person in facts:
                 result = new_kb.query(pl.Expr(predicate))
                 if result:
                     true_facts.append((predicate, person))
 
-            print(true_facts)
+            # Extract relationships from the true facts
+            relationships = []
+            for fact in true_facts:
+                predicate, person = fact
+                # Check if the predicate implies a relationship
+                if 'Parent' in predicate:
+                    # Ensure the predicate contains '(' before splitting
+                    if '(' in predicate:
+                        try:
+                            subject, object_ = predicate.split('(')[1].split(',')
+                            relationships.append(f"{subject.strip()} is a {predicate.split('(')[0].strip()} of {object_.strip()}")
+                        except IndexError:
+                            # Handle the case where splitting fails
+                            print(f"Failed to extract relationship from predicate: {predicate}")
+                    else:
+                        # Handle cases where '(' is not found in the predicate
+                        print(f"Predicate does not contain '(': {predicate}")
 
+            print(true_facts)
+            print(relationships)
             # print(parent_query_result = new_kb.query(pl.Expr("Parent(Ahmed,Ali)")))
             # print(child_query_result = new_kb.query(pl.Expr("Child(Alia, Nadia)")))
 
@@ -60,3 +81,9 @@ def extract_facts(prolog_contents):
             person = parts[1].split(',')[0].strip()[:-1]  # Extract the person without the closing parenthesis
             facts.append((predicate, person))
     return facts
+
+
+
+
+def make_graph():
+    pass

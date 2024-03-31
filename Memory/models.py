@@ -49,16 +49,15 @@ class Session_History(StructuredNode):
 
 
 
-# class Prolog_Members(StructuredNode):
-#     uid = StringProperty(blank=True)
-#     name = StringProperty(blank=True)
-#     gender = StringProperty(blank=True)
-#     created_at = DateTimeProperty(default_now=True)
+class Prolog_Members(StructuredNode):
+    uid = StringProperty(blank=True)
+    name = StringProperty(blank=True)
+    gender = StringProperty(blank=True)
+    created_at = DateTimeProperty(default_now=True)
 
-#     relation = RelationshipTo('Other_Relation',{rel})
-
-#     def add_relationship(self, other_node, relationship_type):
-#         self.relation.connect(other_node, {'type': relationship_type})
+    def add_relationship(self, other_node, relationship_type):
+        rel = RelationshipTo('Other_Relation', relationship_type)
+        self.relation.connect(other_node, rel)
 
 
 # class Other_Relation(StructuredNode):
