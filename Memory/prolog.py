@@ -26,24 +26,18 @@ def prolog_handling(request):
             with default_storage.open(temp_file_path, 'w') as temp_file:
                 temp_file.write(prolog_contents)
 
-
-
             new_kb = pl.KnowledgeBase("family")
             new_kb.clear_cache()
             new_kb.from_file(temp_file_path)
 
-            for fact in extract_facts(prolog_contents):
-                predicate, person = fact
-                result = new_kb.query(pl.Expr(predicate))
-                if result:
-                    true_facts.append((predicate, person))
+            true_facts = extract_facts(prolog_contents)
 
             print('\n')
             print('\n')
             print(true_facts)
             print('\n')
             print('\n')
-            result = extract_prolog_info()
+            result = extract_prolog_info(true_facts)
             print(result)
             return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
 
@@ -63,7 +57,6 @@ def extract_facts(prolog_contents):
     return facts
 
 
-
 def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gender):
     node_1 = Prolog_Members(uid=session, name=node1, gender=node1_gender)
     node_1.save()
@@ -74,9 +67,3 @@ def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gen
     node_1.add_relationship(node_2, relationship_type)
 
 
-
-def extract_prolog_info():
-    prolog_info = []
-    for fact in true_facts:
-        prolog_info.append(''.join(fact))
-    return prolog_info
