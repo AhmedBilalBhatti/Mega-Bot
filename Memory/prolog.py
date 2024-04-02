@@ -57,6 +57,39 @@ def extract_facts(prolog_contents):
     return facts
 
 
+
+def extract_prolog_info(true_facts):
+    prolog_info = []
+    for fact in true_facts:
+        relationship, individuals = fact
+        individual_names = []
+
+        # Check if individuals is a string or a tuple
+        if isinstance(individuals, str):
+            # Extract individual name from the string
+            individual_name = individuals.rstrip(').').split()[-1]
+            individual_names.append(individual_name)
+        elif isinstance(individuals, tuple):
+            # Extract individual names from the tuple
+            for individual in individuals:
+                individual_name = individual.rstrip(').').split()[-1]
+                individual_names.append(individual_name)
+
+        # Append the other individual names if they exist
+        other_individual_names = [name for name in individual_names if name != individual_name]
+
+        # Format the relationship and individual names into a string
+        formatted_fact = f"{relationship}:{','.join(individual_names)}"
+
+        # If other individual names exist, append them to the formatted fact
+        if other_individual_names:
+            formatted_fact += f",Other:{','.join(other_individual_names)}"
+
+        # Append the formatted fact to the prolog_info list
+        prolog_info.append(formatted_fact)
+
+    return prolog_info
+
 def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gender):
     node_1 = Prolog_Members(uid=session, name=node1, gender=node1_gender)
     node_1.save()
