@@ -172,7 +172,7 @@ def chat(request):
     try:
         current_user = Signups.nodes.filter(uid = session).first()
     except:
-        return redirect('index')
+        return redirect('login')
     Session_History.nodes.filter(uid = session)
     try:
         if session:

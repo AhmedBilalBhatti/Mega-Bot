@@ -78,6 +78,5 @@ def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gen
 def extract_prolog_info():
     prolog_info = []
     for fact in true_facts:
-        # Convert the tuple to a string and join its elements
         prolog_info.append(''.join(fact))
     return prolog_info
