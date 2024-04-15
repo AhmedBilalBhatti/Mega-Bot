@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from django.conf import settings
 import pytholog as pl
 from .models import *
@@ -40,19 +41,30 @@ def prolog_handling(request):
                 predicate = count_commas_in_parentheses(fact)
                 att = extract_predicate(fact)
                 names = extract_arguments(fact)
+                print(names)
 
                 if predicate == 0:
-                    if len(names) > 0:
-                        Prolog_Members(uid=session, attribute=att, name=names[0]).save()
+                    if names:
+                        Prolog_Members(uid=session, attribute=att, full_name=names).save()
+
                 elif predicate == 1:
-                    if len(names) > 1:
-                        node_1 = Prolog_Members(uid=session, name=names[0]).save()
-                        node_2 = Prolog_Members(uid=session, name=names[1]).save()
-                        node_1.add_relationship(node_2)  # Connect node_1 to node_2
+                    node_1 = Prolog_Members(uid=session, full_name=names[0]).save()
+                    node_2 = Prolog_Members(uid=session, full_name=names[1]).save()
+                    node_1.related_to.connect(node_2)
+
                 elif predicate > 1:
-                    nodes = [Prolog_Members(uid=session, name=name).save() for name in names]
-                    for i in range(len(nodes) - 1):
-                        nodes[i].add_relationship(nodes[i + 1])
+                    # Create nodes for each name in names list
+                    nodes = []
+                    for name in names:
+                        nodes.append(Prolog_Members(uid=session, full_name=name).save())
+                    
+                    # Connect nodes using the ZeroOrMore relationship
+                    node_1 = nodes[0]
+                    for node in nodes[1:]:
+                        node_1.related_to.connect(node)
+                        node_1 = node  # Update the current node for next iteration
+
+
 
             new_kb = pl.KnowledgeBase("family")
             new_kb.clear_cache()

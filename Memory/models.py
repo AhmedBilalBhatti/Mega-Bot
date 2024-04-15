@@ -50,22 +50,20 @@ class Session_History(StructuredNode):
 
 class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
-    name = StringProperty(blank=True)
+    full_name = StringProperty(blank=True)  # Store the full name as a single entity
     attribute = StringProperty(blank=True)
-    created_at = DateTimeProperty(default=datetime.now)
+    created_at = StringProperty(default=str(datetime.now()))  # Store datetime as string
 
     # Define the relationship to connect to other Prolog_Members nodes
     related_to = RelationshipTo('Prolog_Members', 'RELATED_TO')
 
     def add_relationship(self, other_node):
-        # Get the relationship type dynamically at runtime
-        relationship_type = self.__class__.related_to.definition.relationship_type
+        # Get the relationship field based on the 'RELATED_TO' string
+        rel_field = getattr(self.__class__, self.related_to.rel_type)
 
-        # Connect self to other_node using the retrieved relationship type
-        getattr(self, relationship_type).connect(other_node)
-
-# class Other_Relation(StructuredNode):
-    
+        # Connect self to other_node using the retrieved relationship field
+        rel = rel_field(other_node)
+        rel.save()
 
 # =================================================================================================
 
