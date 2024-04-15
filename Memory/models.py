@@ -52,12 +52,17 @@ class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     name = StringProperty(blank=True)
     attribute = StringProperty(blank=True)
-    created_at = DateTimeProperty(default_now=True)
+    created_at = DateTimeProperty(default=datetime.now)
 
-    def add_relationship(self, other_node, relationship_type):
-        rel = RelationshipTo('Other_Relation', relationship_type)
-        self.relation.connect(other_node, rel)
+    # Define the relationship to connect to other Prolog_Members nodes
+    related_to = RelationshipTo('Prolog_Members', 'RELATED_TO')
 
+    def add_relationship(self, other_node):
+        # Get the relationship type dynamically at runtime
+        relationship_type = self.__class__.related_to.definition.relationship_type
+
+        # Connect self to other_node using the retrieved relationship type
+        getattr(self, relationship_type).connect(other_node)
 
 # class Other_Relation(StructuredNode):
     
