@@ -5,12 +5,40 @@ from .models import *
 from .views import *
 import os
 
-true_facts = []
+
+def read_prolog_file(file):
+    statements = []
+    
+    for line in file:
+        line = line.strip()
+        if line and not line.startswith('%'):
+            statements.append(line)
+    
+    return statements
+
+def classify_statements(statements):
+    facts = []
+    rules = []
+    
+    for statement in statements:
+        statement = statement.strip()
+        
+        if statement.endswith('.'):
+            statement = statement[:-1].strip()
+        
+        if statement and ':-' in statement:
+            rules.append(statement)
+        elif statement:
+            facts.append(statement)
+    
+    return facts, rules
 
 def prolog_handling(request):
     session = request.session.get('user_id')
+    
     if request.method == 'POST' and request.FILES.get('prolog_file'):
         prolog_file = request.FILES['prolog_file']
+        
         if prolog_file:
             prolog_contents = prolog_file.read().decode('utf-8')
             print(prolog_contents)
@@ -18,77 +46,36 @@ def prolog_handling(request):
             media_folder = settings.MEDIA_ROOT
             temp_file_path = os.path.join(media_folder, f"prolog/temp_prolog_file_{session}.pl")
 
-            # Remove the previous file if it exists
             if default_storage.exists(temp_file_path):
                 default_storage.delete(temp_file_path)
 
-            # Save the uploaded file
             with default_storage.open(temp_file_path, 'w') as temp_file:
                 temp_file.write(prolog_contents)
 
-            new_kb = pl.KnowledgeBase("family")
+            new_kb = pl.KnowledgeBase("custom_kb")
             new_kb.clear_cache()
-            new_kb.from_file(temp_file_path)
+            
+            # Read and process Prolog statements from the uploaded file
+            with open(temp_file_path, 'r') as prolog_file:
+                prolog_statements = read_prolog_file(prolog_file)
+            
+            # Classify Prolog statements into facts and rules
+            facts, rules = classify_statements(prolog_statements)
+            
+            # Load classified statements into the KnowledgeBase
+            for fact in facts:
+                new_kb(fact)  # Assert each fact into the KnowledgeBase
+            
+            for rule in rules:
+                new_kb(rule)  # Assert each rule into the KnowledgeBase
 
-            true_facts = extract_facts(prolog_contents)
-
-            print('\n')
-            print('\n')
-            print(true_facts)
-            print('\n')
-            print('\n')
-            result = extract_prolog_info(true_facts)
-            print(result)
-            return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
+            return JsonResponse({'bot_response': 'Prolog file processed successfully.'})
 
     return JsonResponse({'bot_response': 'No file received.'})
 
 
-def extract_facts(prolog_contents):
-    facts = []
-    lines = prolog_contents.split('\n')
-    for line in lines:
-        line = line.strip()
-        if line and line[0].isalpha(): 
-            parts = line.split('(')
-            predicate = parts[0]
-            person = parts[1].split(',')[0]
-            facts.append((predicate, person))
-    return facts
 
 
-
-def extract_prolog_info(true_facts):
-    prolog_info = []
-    for fact in true_facts:
-        relationship, individuals = fact
-        individual_names = []
-
-        # Check if individuals is a string or a tuple
-        if isinstance(individuals, str):
-            # Extract individual name from the string
-            individual_name = individuals.rstrip(').').split()[-1]
-            individual_names.append(individual_name)
-        elif isinstance(individuals, tuple):
-            # Extract individual names from the tuple
-            for individual in individuals:
-                individual_name = individual.rstrip(').').split()[-1]
-                individual_names.append(individual_name)
-
-        # Append the other individual names if they exist
-        other_individual_names = [name for name in individual_names if name != individual_name]
-
-        # Format the relationship and individual names into a string
-        formatted_fact = f"{relationship}:{','.join(individual_names)}"
-
-        # If other individual names exist, append them to the formatted fact
-        if other_individual_names:
-            formatted_fact += f",Other:{','.join(other_individual_names)}"
-
-        # Append the formatted fact to the prolog_info list
-        prolog_info.append(formatted_fact)
-
-    return prolog_info
 
 def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gender):
     node_1 = Prolog_Members(uid=session, name=node1, gender=node1_gender)

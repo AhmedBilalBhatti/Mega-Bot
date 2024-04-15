@@ -4,7 +4,6 @@ from datetime import datetime
 from django.db import models
 
 
-
 class Signups(StructuredNode):
     uid = StringProperty()
     username = StringProperty(required=True)
