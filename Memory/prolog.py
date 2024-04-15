@@ -5,40 +5,12 @@ from .models import *
 from .views import *
 import os
 
-
-def read_prolog_file(file):
-    statements = []
-    
-    for line in file:
-        line = line.strip()
-        if line and not line.startswith('%'):
-            statements.append(line)
-    
-    return statements
-
-def classify_statements(statements):
-    facts = []
-    rules = []
-    
-    for statement in statements:
-        statement = statement.strip()
-        
-        if statement.endswith('.'):
-            statement = statement[:-1].strip()
-        
-        if statement and ':-' in statement:
-            rules.append(statement)
-        elif statement:
-            facts.append(statement)
-    
-    return facts, rules
+true_facts = []
 
 def prolog_handling(request):
     session = request.session.get('user_id')
-    
     if request.method == 'POST' and request.FILES.get('prolog_file'):
         prolog_file = request.FILES['prolog_file']
-        
         if prolog_file:
             prolog_contents = prolog_file.read().decode('utf-8')
             print(prolog_contents)
@@ -51,31 +23,41 @@ def prolog_handling(request):
 
             with default_storage.open(temp_file_path, 'w') as temp_file:
                 temp_file.write(prolog_contents)
+                print('as',temp_file)
 
-            new_kb = pl.KnowledgeBase("custom_kb")
-            new_kb.clear_cache()
+            statements = read_prolog_file(temp_file_path)
+            facts, rules = classify_statements(statements)
             
-            # Read and process Prolog statements from the uploaded file
-            with open(temp_file_path, 'r') as prolog_file:
-                prolog_statements = read_prolog_file(prolog_file)
-            
-            # Classify Prolog statements into facts and rules
-            facts, rules = classify_statements(prolog_statements)
-            
-            # Load classified statements into the KnowledgeBase
+            print("Facts:")
             for fact in facts:
-                new_kb(fact)  # Assert each fact into the KnowledgeBase
-            
-            for rule in rules:
-                new_kb(rule)  # Assert each rule into the KnowledgeBase
+                print(fact)
 
-            return JsonResponse({'bot_response': 'Prolog file processed successfully.'})
+            print("\nRules:")
+            for rule in rules:
+                print(rule)
+
+
+            new_kb = pl.KnowledgeBase("family")
+            new_kb.clear_cache()
+            new_kb.from_file(temp_file_path)
+
+
+            return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
 
     return JsonResponse({'bot_response': 'No file received.'})
 
 
 
+def read_prolog_file(file_path):
+    statements = []
 
+    with open(file_path, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if line and not line.startswith('%'):
+                statements.append(line)
+
+    return statements
 
 def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gender):
     node_1 = Prolog_Members(uid=session, name=node1, gender=node1_gender)
@@ -85,5 +67,22 @@ def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gen
     node_2.save()
 
     node_1.add_relationship(node_2, relationship_type)
+
+
+
+def classify_statements(statements):
+    facts = []
+    rules = []
+
+    for statement in statements:
+        statement = statement.strip()
+        
+        if statement.endswith('.'):
+            statement = statement[:-1].strip()
+        if statement and ':-' in statement:
+            rules.append(statement)
+        elif statement:
+            facts.append(statement)
+    return facts, rules
 
 

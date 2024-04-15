@@ -51,7 +51,7 @@ class Session_History(StructuredNode):
 class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     name = StringProperty(blank=True)
-    gender = StringProperty(blank=True)
+    attribute = StringProperty(blank=True)
     created_at = DateTimeProperty(default_now=True)
 
     def add_relationship(self, other_node, relationship_type):
