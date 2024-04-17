@@ -41,16 +41,18 @@ def prolog_handling(request):
                 predicate = count_commas_in_parentheses(fact)
                 att = extract_predicate(fact)
                 names = extract_arguments(fact)
-                print(names)
+                # print(names)
 
                 if predicate == 0:
                     if names:
-                        Prolog_Members(uid=session, attribute=att, full_name=names).save()
-
+                        # Prolog_Members(uid=session, attribute=att, full_name=names).save()
+                        print('dfbf===================================')
                 elif predicate == 1:
-                    node_1 = Prolog_Members(uid=session, full_name=names[0]).save()
-                    node_2 = Prolog_Members(uid=session, full_name=names[1]).save()
-                    node_1.related_to.connect(node_2)
+                    print(names[0],'22222222222222222222')
+                    print(names[1],'111111111111111111')
+                    # node_1 = Prolog_Members(uid=session, full_name=names[0]).save()
+                    # node_2 = Prolog_Members(uid=session, full_name=names[1]).save()
+                    # node_1.related_to.connect(node_2)
 
                 elif predicate > 1:
                     # Create nodes for each name in names list
