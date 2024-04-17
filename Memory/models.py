@@ -49,11 +49,10 @@ class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)  # Store the full name as a single entity
     attribute = StringProperty(blank=True)
-    created_at = StringProperty(auto_now_add=True)  # Store datetime as string
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))  # Store datetime as string
 
-    def add_relationship(self, other_node, relationship_type):
-        relationship = RelationshipTo(self, relationship_type, other_node)
-        relationship.save()
+    parent = RelationshipTo('Prolog_Members','IS_PARENT_OF')
+
 
 # =================================================================================================
 

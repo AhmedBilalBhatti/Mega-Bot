@@ -41,38 +41,36 @@ def prolog_handling(request):
                 att = extract_predicate(fact)
                 names = extract_arguments(fact)
 
-                # print("Fact:", fact)
-                # print("Predicate:", predicate)
-                # print("Attribute:", att)
-                # print("Names:", names)
 
-            if predicate == 0:
-                if names:
-                    print(names)
 
-                    Prolog_Members(uid=session, full_name=names,attribute=att).save()
+                if predicate == 0:
+                    if names:
+                        created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
+                        node.save()
 
-            elif predicate == 1:
-                created_at_threshold = datetime.now() - timedelta(seconds=10)
-                name1, name2 = names.split(',')
-                name1 = name1.strip()
-                name2 = name2.strip()
-                
-                existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
-                existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
-                
-                if existing_node1 and existing_node2:
-                    existing_node1.add_relationship(existing_node2, att)
+                elif predicate == 1:
+                    created_at_threshold = datetime.now() - timedelta(seconds=10)
+                    name1, name2 = names.split(',')
+                    name1 = name1.strip()
+                    name2 = name2.strip()
 
-                elif predicate > 1:
-                    nodes = []
-                    for name in names:
-                        nodes.append(Prolog_Members(uid=session, full_name=name).save())
-                    
-                    node_1 = nodes[0]
-                    for node in nodes[1:]:
-                        node_1.related_to.connect(node)
-                        node_1 = node 
+                    existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
+                    existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+
+                    if existing_node1 and existing_node2:
+                        relationship_type = 'related_to'  # Specify the relationship type dynamically
+                        existing_node1.add_relationship(existing_node2, relationship_type)
+
+                    elif predicate > 1:
+                        nodes = []
+                        for name in names:
+                            nodes.append(Prolog_Members(uid=session, full_name=name).save())
+                        
+                        node_1 = nodes[0]
+                        for node in nodes[1:]:
+                            node_1.related_to.connect(node)
+                            node_1 = node 
 
             new_kb = pl.KnowledgeBase("family")
             new_kb.clear_cache()
