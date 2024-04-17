@@ -67,6 +67,9 @@ def prolog_handling(request):
                         existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
                         existing_node2.save()
 
+                    if existing_node1 and existing_node2:
+                        existing_node1.parent.connect(existing_node2)
+
                 elif predicate > 1:
                     nodes = []
                     for name in names:
