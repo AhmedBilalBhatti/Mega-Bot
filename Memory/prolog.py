@@ -48,8 +48,10 @@ def prolog_handling(request):
                         # Prolog_Members(uid=session, attribute=att, full_name=names).save()
                         print('dfbf===================================')
                 elif predicate == 1:
-                    print(names[0],'22222222222222222222')
-                    print(names[1],'111111111111111111')
+                    print(names,'22222222222222222222')
+                    name1 , name2 = names.split(',')
+                    print(name1.strip(),'----')
+                    print(name2.strip(),'---')
                     # node_1 = Prolog_Members(uid=session, full_name=names[0]).save()
                     # node_2 = Prolog_Members(uid=session, full_name=names[1]).save()
                     # node_1.related_to.connect(node_2)
