@@ -1,13 +1,12 @@
-from django.http import JsonResponse
-from datetime import datetime, timedelta
 from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
+from datetime import datetime, timedelta
+from django.http import JsonResponse
 from django.conf import settings
 import pytholog as pl
 from .models import *
 from .views import *
 import os
 
-true_facts = []
 
 def prolog_handling(request):
     session = request.session.get('user_id')
@@ -37,17 +36,22 @@ def prolog_handling(request):
             for rule in rules:
                 print(rule)
 
-
             for fact in facts:
                 predicate = count_commas_in_parentheses(fact)
                 att = extract_predicate(fact)
                 names = extract_arguments(fact)
-                # print(names)
+
+                # print("Fact:", fact)
+                # print("Predicate:", predicate)
+                # print("Attribute:", att)
+                # print("Names:", names)
 
             if predicate == 0:
                 if names:
-                    created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    neo = Prolog_Members.nodes.create(uid=session, full_name=names,attribute=att, created_at=created_at).save()
+                    print(names)
+
+                    Prolog_Members(uid=session, full_name=names,attribute=att).save()
+
             elif predicate == 1:
                 created_at_threshold = datetime.now() - timedelta(seconds=10)
                 name1, name2 = names.split(',')

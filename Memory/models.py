@@ -45,14 +45,11 @@ class Session_History(StructuredNode):
         self.memory_list.append(formatted_message)
         self.save()
 
-
-
-
 class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)  # Store the full name as a single entity
     attribute = StringProperty(blank=True)
-    created_at = StringProperty()  # Store datetime as string
+    created_at = StringProperty(auto_now_add=True)  # Store datetime as string
 
     def add_relationship(self, other_node, relationship_type):
         relationship = RelationshipTo(self, relationship_type, other_node)
