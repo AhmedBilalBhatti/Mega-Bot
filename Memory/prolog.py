@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from datetime import datetime, timedelta
 from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationship
 from django.conf import settings
 import pytholog as pl
@@ -43,18 +44,24 @@ def prolog_handling(request):
                 names = extract_arguments(fact)
                 # print(names)
 
-                if predicate == 0:
-                    if names:
-                        # Prolog_Members(uid=session, attribute=att, full_name=names).save()
-                        print('dfbf===================================')
-                elif predicate == 1:
-                    print(names,'22222222222222222222')
-                    name1 , name2 = names.split(',')
-                    print(name1.strip(),'----')
-                    print(name2.strip(),'---')
-                    # node_1 = Prolog_Members(uid=session, full_name=names[0]).save()
-                    # node_2 = Prolog_Members(uid=session, full_name=names[1]).save()
-                    # node_1.related_to.connect(node_2)
+            if predicate == 0:
+                if names:
+                    created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    Prolog_Members(uid=session, full_name=names, created_at=created_at).save()
+            
+            elif predicate == 1:
+                created_at_threshold = datetime.now() - timedelta(seconds=10)
+                name1, name2 = names.split(',')
+                name1 = name1.strip()
+                name2 = name2.strip()
+                
+                # Find existing nodes created within the last 10 seconds
+                existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
+                existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+                
+                if existing_node1 and existing_node2:
+                    # Connect existing_node1 to existing_node2
+                    existing_node1.add_relationship(existing_node2)
 
                 elif predicate > 1:
                     # Create nodes for each name in names list

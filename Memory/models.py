@@ -52,18 +52,11 @@ class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)  # Store the full name as a single entity
     attribute = StringProperty(blank=True)
-    created_at = StringProperty(default=str(datetime.now()))  # Store datetime as string
+    created_at = StringProperty()  # Store datetime as string
 
-    # Define the relationship to connect to other Prolog_Members nodes
-    related_to = RelationshipTo('Prolog_Members', 'RELATED_TO')
-
-    def add_relationship(self, other_node):
-        # Get the relationship field based on the 'RELATED_TO' string
-        rel_field = getattr(self.__class__, self.related_to.rel_type)
-
-        # Connect self to other_node using the retrieved relationship field
-        rel = rel_field(other_node)
-        rel.save()
+    def add_relationship(self, other_node, relationship_type):
+        relationship = RelationshipTo(self, relationship_type, other_node)
+        relationship.save()
 
 # =================================================================================================
 
