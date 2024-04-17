@@ -47,40 +47,32 @@ def prolog_handling(request):
             if predicate == 0:
                 if names:
                     created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    Prolog_Members(uid=session, full_name=names, created_at=created_at).save()
-            
+                    neo = Prolog_Members.nodes.create(uid=session, full_name=names,attribute=att, created_at=created_at).save()
             elif predicate == 1:
                 created_at_threshold = datetime.now() - timedelta(seconds=10)
                 name1, name2 = names.split(',')
                 name1 = name1.strip()
                 name2 = name2.strip()
                 
-                # Find existing nodes created within the last 10 seconds
                 existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
                 existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
                 
                 if existing_node1 and existing_node2:
-                    # Connect existing_node1 to existing_node2
-                    existing_node1.add_relationship(existing_node2)
+                    existing_node1.add_relationship(existing_node2, att)
 
                 elif predicate > 1:
-                    # Create nodes for each name in names list
                     nodes = []
                     for name in names:
                         nodes.append(Prolog_Members(uid=session, full_name=name).save())
                     
-                    # Connect nodes using the ZeroOrMore relationship
                     node_1 = nodes[0]
                     for node in nodes[1:]:
                         node_1.related_to.connect(node)
-                        node_1 = node  # Update the current node for next iteration
-
-
+                        node_1 = node 
 
             new_kb = pl.KnowledgeBase("family")
             new_kb.clear_cache()
             new_kb.from_file(temp_file_path)
-
 
             return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
 
