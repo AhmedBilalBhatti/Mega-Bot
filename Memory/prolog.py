@@ -55,22 +55,29 @@ def prolog_handling(request):
                     name1 = name1.strip()
                     name2 = name2.strip()
 
-                    existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
-                    existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+                    try:
+                        existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
+                    except:
+                        existing_node1 = Prolog_Members(uid=session, full_name=name1, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
+                        existing_node1.save()
 
-                    if existing_node1 and existing_node2:
-                        relationship_type = 'related_to'  # Specify the relationship type dynamically
-                        existing_node1.add_relationship(existing_node2, relationship_type)
+                    try:
+                        existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+                    except:
+                        existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
+                        existing_node2.save()
 
-                    elif predicate > 1:
-                        nodes = []
-                        for name in names:
-                            nodes.append(Prolog_Members(uid=session, full_name=name).save())
+                elif predicate > 1:
+                    nodes = []
+                    for name in names:
+                        nodes.append(Prolog_Members(uid=session, full_name=name).save())
                         
                         node_1 = nodes[0]
                         for node in nodes[1:]:
                             node_1.related_to.connect(node)
                             node_1 = node 
+                else:
+                    continue
 
             new_kb = pl.KnowledgeBase("family")
             new_kb.clear_cache()
