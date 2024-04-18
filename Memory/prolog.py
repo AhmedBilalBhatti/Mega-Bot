@@ -28,6 +28,45 @@ def extract_relations_from_facts(facts):
             relations.append(relation)
     return relations
 
+
+
+
+
+
+def perform_replacements(rule, name):
+    rule = re.sub(r'\bX\b', name, rule)
+    rule = re.sub(r'\bY\b', 'X', rule)
+    return rule
+
+def execute_prolog_query(rule):
+    try:
+        new_kb = pl.KnowledgeBase("family")
+        new_kb.clear_cache()
+        result = new_kb.query(pl.Expr(rule))
+        return result
+    except Exception as e:
+        print(f"Error executing Prolog query for rule: {rule}")
+        return None
+
+def process_names_rules(names_rules, pure_rules):
+    for name in names_rules:
+        print(f"Processing name: {name}")
+        for rule in pure_rules:
+            replaced_rule = perform_replacements(rule, name)
+            print(f"Replacing placeholders in rule with name '{name}': {replaced_rule}")
+
+            result = execute_prolog_query(replaced_rule)
+            if result:
+                print(f"Prolog query result for name '{name}' and rule: {replaced_rule}: {result}")
+            else:
+                print(f"No result obtained for name '{name}' and rule: {replaced_rule}")
+
+
+
+
+
+
+
 def prolog_handling(request):
     session = request.session.get('user_id')
     if request.method == 'POST' and request.FILES.get('prolog_file'):
@@ -94,13 +133,9 @@ def prolog_handling(request):
                 else:
                     continue
 
-                new_kb = pl.KnowledgeBase("family")
-                new_kb.clear_cache()
-                new_kb.from_file(temp_file_path)
+                # print("".join(pure_rules))
 
-                # res = new_kb.query(pl.Expr("Brother(ali, X)"))
-
-                print("".join(pure_rules))
+                print(process_names_rules(names_rules, pure_rules))
 
             # ===================================================================
 
