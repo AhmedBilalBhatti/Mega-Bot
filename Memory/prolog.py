@@ -7,6 +7,7 @@ from .models import *
 from .views import *
 import os
 
+names_rules = []
 
 def prolog_handling(request):
     session = request.session.get('user_id')
@@ -41,13 +42,13 @@ def prolog_handling(request):
                 att = extract_predicate(fact)
                 names = extract_arguments(fact)
 
-
-
                 if predicate == 0:
                     if names:
-                        created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
-                        node.save()
+                        # created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        # node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
+                        # node.save()
+                        names_rules.append(names)
+                        print(names_rules)
 
                 elif predicate == 1:
                     created_at_threshold = datetime.now() - timedelta(seconds=10)
@@ -55,20 +56,20 @@ def prolog_handling(request):
                     name1 = name1.strip()
                     name2 = name2.strip()
 
-                    try:
-                        existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
-                    except:
-                        existing_node1 = Prolog_Members(uid=session, full_name=name1, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
-                        existing_node1.save()
+                    # try:
+                    #     existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
+                    # except:
+                    #     existing_node1 = Prolog_Members(uid=session, full_name=name1, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
+                    #     existing_node1.save()
 
-                    try:
-                        existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
-                    except:
-                        existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
-                        existing_node2.save()
+                    # try:
+                    #     existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+                    # except:
+                    #     existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
+                    #     existing_node2.save()
 
-                    if existing_node1 and existing_node2:
-                        existing_node1.parent.connect(existing_node2)
+                    # if existing_node1 and existing_node2:
+                    #     existing_node1.parent.connect(existing_node2)
 
                 elif predicate > 1:
                     nodes = []
@@ -85,6 +86,11 @@ def prolog_handling(request):
             new_kb = pl.KnowledgeBase("family")
             new_kb.clear_cache()
             new_kb.from_file(temp_file_path)
+
+
+
+            # ===================================================================
+
 
             return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
 
