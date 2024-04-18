@@ -6,8 +6,27 @@ import pytholog as pl
 from .models import *
 from .views import *
 import os
+import re
 
 names_rules = []
+pure_rules = []
+
+
+def extract_relation_from_fact(fact):
+    # Split the fact by ':-' and get the first part
+    parts = fact.split(':-')
+    if len(parts) > 0:
+        return parts[0].strip()  # Extract the first part and strip any extra spaces
+    else:
+        return None  # Return None if splitting did not yield any parts
+
+def extract_relations_from_facts(facts):
+    relations = []
+    for fact in facts:
+        relation = extract_relation_from_fact(fact)
+        if relation:
+            relations.append(relation)
+    return relations
 
 def prolog_handling(request):
     session = request.session.get('user_id')
@@ -28,15 +47,7 @@ def prolog_handling(request):
 
             statements = prolog_contents.splitlines()
             facts, rules = classify_statements(statements)
-
-            print("Facts:")
-            for fact in facts:
-                print(fact)
-
-            print("\nRules:")
-            for rule in rules:
-                print(rule)
-
+            pure_rules = extract_relations_from_facts(rules)
             for fact in facts:
                 predicate = count_commas_in_parentheses(fact)
                 att = extract_predicate(fact)
@@ -83,11 +94,13 @@ def prolog_handling(request):
                 else:
                     continue
 
-            new_kb = pl.KnowledgeBase("family")
-            new_kb.clear_cache()
-            new_kb.from_file(temp_file_path)
+                new_kb = pl.KnowledgeBase("family")
+                new_kb.clear_cache()
+                new_kb.from_file(temp_file_path)
 
+                # res = new_kb.query(pl.Expr("Brother(ali, X)"))
 
+                print("".join(pure_rules))
 
             # ===================================================================
 
@@ -158,6 +171,7 @@ def extract_arguments(prolog_fact):
     
     names = [name.strip() for name in arguments_string.split(',')]
     return ", ".join(names)
+
 
 def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gender):
     node_1 = Prolog_Members(uid=session, name=node1, gender=node1_gender)
