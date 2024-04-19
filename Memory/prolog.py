@@ -10,6 +10,7 @@ import re
 
 names_rules = []
 pure_rules = []
+path = None
 
 
 def extract_relation_from_fact(fact):
@@ -42,7 +43,9 @@ def execute_prolog_query(rule):
     try:
         new_kb = pl.KnowledgeBase("family")
         new_kb.clear_cache()
+        new_kb.from_file(path)
         result = new_kb.query(pl.Expr(rule))
+    
         return result
     except Exception as e:
         print(f"Error executing Prolog query for rule: {rule}")
@@ -57,7 +60,8 @@ def process_names_rules(names_rules, pure_rules):
 
             result = execute_prolog_query(replaced_rule)
             if result:
-                print(f"Prolog query result for name '{name}' and rule: {replaced_rule}: {result}")
+                names = [name_dict['X'] for name_dict in result if 'X' in name_dict]
+                print(names)
             else:
                 print(f"No result obtained for name '{name}' and rule: {replaced_rule}")
 
@@ -83,6 +87,8 @@ def prolog_handling(request):
             with default_storage.open(temp_file_path, 'w') as temp_file:
                 temp_file.write(prolog_contents)
                 print('as',temp_file)
+
+            path = temp_file_path
 
             statements = prolog_contents.splitlines()
             facts, rules = classify_statements(statements)
@@ -135,7 +141,7 @@ def prolog_handling(request):
 
                 # print("".join(pure_rules))
 
-                print(process_names_rules(names_rules, pure_rules))
+                process_names_rules(names_rules, pure_rules)
 
             # ===================================================================
 
