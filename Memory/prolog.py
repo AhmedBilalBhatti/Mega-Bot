@@ -12,14 +12,16 @@ names_rules = []
 pure_rules = []
 path = None
 
+x = "Knowledge"
+new_kb = pl.KnowledgeBase(x)
+new_kb.clear_cache()
 
 def extract_relation_from_fact(fact):
-    # Split the fact by ':-' and get the first part
     parts = fact.split(':-')
     if len(parts) > 0:
-        return parts[0].strip()  # Extract the first part and strip any extra spaces
+        return parts[0].strip() 
     else:
-        return None  # Return None if splitting did not yield any parts
+        return None  
 
 def extract_relations_from_facts(facts):
     relations = []
@@ -29,10 +31,13 @@ def extract_relations_from_facts(facts):
             relations.append(relation)
     return relations
 
-
-
-
-
+def extract_main_relation(rule):
+    match = re.search(r'^\s*([\w\s]+)\s*\(.*\)', rule)
+    if match:
+        main_relation = match.group(1).strip()
+        return main_relation
+    else:
+        return None
 
 def perform_replacements(rule, name):
     rule = re.sub(r'\bX\b', name, rule)
@@ -41,32 +46,27 @@ def perform_replacements(rule, name):
 
 def execute_prolog_query(rule):
     try:
-        new_kb = pl.KnowledgeBase("family")
-        new_kb.clear_cache()
-        new_kb.from_file(path)
         result = new_kb.query(pl.Expr(rule))
-    
         return result
     except Exception as e:
         print(f"Error executing Prolog query for rule: {rule}")
         return None
 
 def process_names_rules(names_rules, pure_rules):
+    result_tuples = []
     for name in names_rules:
-        print(f"Processing name: {name}")
         for rule in pure_rules:
             replaced_rule = perform_replacements(rule, name)
-            print(f"Replacing placeholders in rule with name '{name}': {replaced_rule}")
-
             result = execute_prolog_query(replaced_rule)
             if result:
                 names = [name_dict['X'] for name_dict in result if 'X' in name_dict]
-                print(names)
+                relation = extract_main_relation(rule)
+                if names:
+                    result_tuples.append((name, relation, names))
             else:
                 print(f"No result obtained for name '{name}' and rule: {replaced_rule}")
 
-
-
+    return result_tuples
 
 
 
@@ -88,7 +88,7 @@ def prolog_handling(request):
                 temp_file.write(prolog_contents)
                 print('as',temp_file)
 
-            path = temp_file_path
+            new_kb.from_file(temp_file_path)
 
             statements = prolog_contents.splitlines()
             facts, rules = classify_statements(statements)
@@ -139,9 +139,11 @@ def prolog_handling(request):
                 else:
                     continue
 
-                # print("".join(pure_rules))
 
-                process_names_rules(names_rules, pure_rules)
+                result_tuples = process_names_rules(names_rules, pure_rules)
+                if result_tuples:
+                    for name11, relation12, name22 in result_tuples:
+                        print(f"{name11} -> is {relation12} of -> {name22}")
 
             # ===================================================================
 
