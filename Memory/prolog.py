@@ -68,9 +68,6 @@ def process_names_rules(names_rules, pure_rules):
 
     return result_tuples
 
-
-
-
 def prolog_handling(request):
     session = request.session.get('user_id')
     if request.method == 'POST' and request.FILES.get('prolog_file'):
@@ -139,21 +136,25 @@ def prolog_handling(request):
                     continue
 
 
-            result_tuples = process_names_rules(names_rules, pure_rules)
-            if result_tuples:
-                for name11, relation12, name22 in result_tuples:
-                    print(f"- {name11} -> is {relation12} of -> {name22}")
-                    node1 = Prolog_Members(uid=session, full_name=name11)
-                    node2 = Prolog_Members(uid=session, full_name=name22)
-                    node1.save()
-                    node2.save()
-                    GLOBAL_RELATION = relation12
-                    node1.relation.connect(node2)
-            else:
-                print(None)
 
-            # ===================================================================
+                result_tuples = process_names_rules(names_rules, pure_rules)
+                if result_tuples:
+                    for name11, relation12, name22 in result_tuples:
+                        print(f"- {name11} -> is {relation12} of -> {name22}")
+                        node1 = Prolog_Members(uid=session, full_name=name11)
+                        node2 = Prolog_Members(uid=session, full_name=name22)
 
+                        
+                        custom_relation = Custom_Relation(relation=relation12)
+                        custom_relation.save()  # Save the custom relation node
+
+                        # Connect node1 to node2 using the custom relation
+                        node1.custom_relation.connect(custom_relation)
+                        node2.custom_relation.connect(custom_relation)
+
+
+                else:
+                    print(None)
 
             return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
 

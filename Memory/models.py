@@ -1,9 +1,7 @@
-from neomodel import StructuredNode, StringProperty,BooleanProperty,IntegerProperty,UniqueIdProperty, RelationshipTo, RelationshipFrom,DateProperty,DateTimeProperty,ArrayProperty
+from neomodel import StructuredNode, StringProperty,BooleanProperty,IntegerProperty,UniqueIdProperty, RelationshipTo, RelationshipFrom,DateProperty,DateTimeProperty,ArrayProperty, StructuredRel
 from django.conf import settings
 from datetime import datetime
 from django.db import models
-
-GLOBAL_RELATION = None
 
 class Signups(StructuredNode):
     uid = StringProperty()
@@ -46,6 +44,12 @@ class Session_History(StructuredNode):
         self.memory_list.append(formatted_message)
         self.save()
 
+
+
+
+class Custom_Relation(StructuredNode):
+    relation = StringProperty(required=True)
+
 class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)
@@ -53,7 +57,11 @@ class Prolog_Members(StructuredNode):
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     parent = RelationshipTo('Prolog_Members','IS_PARENT_OF')
-    relation = RelationshipTo('Prolog_Members',GLOBAL_RELATION)
+    custom_relation = RelationshipTo(Custom_Relation, 'Related')
+
+
+
+
 
 # =================================================================================================
 
