@@ -143,20 +143,28 @@ def prolog_handling(request):
                 if result_tuples:
                     for name11, relation12, name22 in result_tuples:
                         print(f"- {name11} -> is {relation12} of -> {name22}")
-                        node1 = Prolog_Members(uid=session, full_name=name11)
-                        node2 = Prolog_Members(uid=session, full_name=name22)
+                        # node1 = Prolog_Members(uid=session, full_name=name11)
+                        # node2 = Prolog_Members(uid=session, full_name=name22)
+                        # node1.save()
+                        # node2.save()
 
+                        # node1_id = node1.element_id
+                        # node2_id = node2.element_id
 
-                        node1_id = node1.element_id
-                        node2_id = node2.element_id
+                        params = {
+                            "name11": name11,
+                            "name22": name22,
+                            "relation":relation12
+                        }
 
                         query = db.cypher_query(
                             """
-                            MATCH (n1:Prolog_Members {elementId: $node1_id})
-                            MATCH (n2:Prolog_Members {elementId: $node2_id})
-                            CREATE (n1)-[:Father]->(n2)
-                            """, node1_id=node1_id,node2_id=node2_id,resolve_objects = True)
-
+                            CREATE (n1:Prolog_Members {full_name: $name11})
+                            CREATE (n2:Prolog_Members {full_name: $name22})
+                            CREATE (n1)-[relation:{relation}]->(n2)
+                            """,params
+                        )
+                        print(query)
 
                         # db.cypher_query("MATCH (n) return n ",resolve_objects = True)
 
