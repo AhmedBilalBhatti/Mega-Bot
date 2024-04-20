@@ -46,10 +46,6 @@ class Session_History(StructuredNode):
 
 
 
-
-class Custom_Relation(StructuredNode):
-    relation = StringProperty(required=True)
-
 class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)
@@ -57,7 +53,6 @@ class Prolog_Members(StructuredNode):
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     parent = RelationshipTo('Prolog_Members','IS_PARENT_OF')
-    custom_relation = RelationshipTo(Custom_Relation, 'Related')
 
 
 

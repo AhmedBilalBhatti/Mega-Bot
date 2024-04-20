@@ -2,6 +2,7 @@ from neomodel import StructuredNode, StringProperty, RelationshipTo, Relationshi
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from django.conf import settings
+from neomodel import db
 import pytholog as pl
 from .models import *
 from .views import *
@@ -67,6 +68,7 @@ def process_names_rules(names_rules, pure_rules):
                 print(f"No result obtained for name '{name}' and rule: {replaced_rule}")
 
     return result_tuples
+
 
 def prolog_handling(request):
     session = request.session.get('user_id')
@@ -144,13 +146,20 @@ def prolog_handling(request):
                         node1 = Prolog_Members(uid=session, full_name=name11)
                         node2 = Prolog_Members(uid=session, full_name=name22)
 
-                        
-                        custom_relation = Custom_Relation(relation=relation12)
-                        custom_relation.save()  # Save the custom relation node
 
-                        # Connect node1 to node2 using the custom relation
-                        node1.custom_relation.connect(custom_relation)
-                        node2.custom_relation.connect(custom_relation)
+                        node1_id = node1.element_id
+                        node2_id = node2.element_id
+
+                        query = db.cypher_query(
+                            """
+                            MATCH (n1:Prolog_Members {elementId: $node1_id})
+                            MATCH (n2:Prolog_Members {elementId: $node2_id})
+                            CREATE (n1)-[:Father]->(n2)
+                            """, node1_id=node1_id,node2_id=node2_id,resolve_objects = True)
+
+
+                        # db.cypher_query("MATCH (n) return n ",resolve_objects = True)
+
 
 
                 else:
