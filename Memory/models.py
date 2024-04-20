@@ -3,6 +3,7 @@ from django.conf import settings
 from datetime import datetime
 from django.db import models
 
+GLOBAL_RELATION = None
 
 class Signups(StructuredNode):
     uid = StringProperty()
@@ -52,24 +53,7 @@ class Prolog_Members(StructuredNode):
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     parent = RelationshipTo('Prolog_Members','IS_PARENT_OF')
-
-    def add_relation(self, relationship_type, other_node):
-        try:
-            if isinstance(other_node, Prolog_Members):
-                # Define a dynamic relationship class inheriting from StructuredRel
-                class DynamicRel(StructuredRel):
-                    pass
-
-                # Create a relationship instance with the dynamic class
-                rel = Relationship(self, relationship_type, other_node)
-                rel.__class__ = DynamicRel  # Assign the dynamic relationship class
-                rel.save()  # Save the relationship to the database
-
-                print(f"Successfully connected {self.full_name} to {other_node.full_name} with relationship '{relationship_type}'")
-            else:
-                raise ValueError("other_node must be an instance of Prolog_Members")
-        except Exception as e:
-            print(f"Error adding relationship: {e}")
+    relation = RelationshipTo('Prolog_Members',GLOBAL_RELATION)
 
 # =================================================================================================
 

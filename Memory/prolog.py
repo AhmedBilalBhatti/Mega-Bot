@@ -145,7 +145,10 @@ def prolog_handling(request):
                     print(f"- {name11} -> is {relation12} of -> {name22}")
                     node1 = Prolog_Members(uid=session, full_name=name11)
                     node2 = Prolog_Members(uid=session, full_name=name22)
-                    node1.add_relation(relation12,node2)
+                    node1.save()
+                    node2.save()
+                    GLOBAL_RELATION = relation12
+                    node1.relation.connect(node2)
             else:
                 print(None)
 
