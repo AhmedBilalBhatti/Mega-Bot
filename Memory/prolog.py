@@ -104,7 +104,6 @@ def prolog_handling(request):
                         # node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
                         # node.save()
                         names_rules.append(names)
-                        print(names_rules)
 
                 elif predicate == 1:
                     created_at_threshold = datetime.now() - timedelta(seconds=10)
@@ -140,10 +139,15 @@ def prolog_handling(request):
                     continue
 
 
-                result_tuples = process_names_rules(names_rules, pure_rules)
-                if result_tuples:
-                    for name11, relation12, name22 in result_tuples:
-                        print(f"{name11} -> is {relation12} of -> {name22}")
+            result_tuples = process_names_rules(names_rules, pure_rules)
+            if result_tuples:
+                for name11, relation12, name22 in result_tuples:
+                    print(f"- {name11} -> is {relation12} of -> {name22}")
+                    node1 = Prolog_Members(uid=session, full_name=name11)
+                    node2 = Prolog_Members(uid=session, full_name=name22)
+                    node1.add_relation(relation12,node2)
+            else:
+                print(None)
 
             # ===================================================================
 
