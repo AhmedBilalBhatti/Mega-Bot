@@ -151,19 +151,23 @@ def prolog_handling(request):
                         # node1_id = node1.element_id
                         # node2_id = node2.element_id
 
+                        relation = relation12
+
                         params = {
                             "name11": name11,
                             "name22": name22,
-                            "relation":relation12
+                            "RELATION_TYPE": relation
+                            
                         }
 
                         query = db.cypher_query(
                             """
                             CREATE (n1:Prolog_Members {full_name: $name11})
                             CREATE (n2:Prolog_Members {full_name: $name22})
-                            CREATE (n1)-[relation:{relation}]->(n2)
+                            CREATE (n1)-[r:'{RELATION_TYPE}']->(n2)
                             """,params
                         )
+
                         print(query)
 
                         # db.cypher_query("MATCH (n) return n ",resolve_objects = True)
