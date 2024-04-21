@@ -136,20 +136,40 @@ def prolog_handling(request):
                             CREATE (n1)-[r:`{att}`]->(n2)
                             RETURN r
                         """
-                        results, meta = db.cypher_query(cypher_query, params,resolve_objects = True)
-
-                        print(results,meta)
+                        results, meta = db.cypher_query(cypher_query, params)
 
                 elif predicate > 1:
+                    created_at_threshold = datetime.now() - timedelta(seconds=10)
                     nodes = []
                     for name in names:
-                        attribute = name[2]
-                        nodes.append(Prolog_Members(uid=session, full_name=name,attribute=attribute).save())
-                        
-                        node_1 = nodes[0]
-                        for node in nodes[1:]:
-                            node_1.related_to.connect(node)
-                            node_1 = node
+                        part1, part2, *z_values = name.split(',')
+                        x_name = part1.strip()
+                        y_name = part2.strip()
+                        z_values = [z.strip() for z in z_values]
+                        try:
+                            x_node = Prolog_Members.nodes.first(full_name=x_name, created_at__gte=str(created_at_threshold))
+
+                        except:
+                            x_node = Prolog_Members(uid=session, full_name=x_name, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S')).save()
+                            y_node = Prolog_Members(uid=session, full_name=y_name, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S')).save()
+
+                        for z_value in z_values:
+                            z_attribute_node = Attribute(uid=session, attribute=z_value).save()
+                            nodes.append(z_attribute_node)
+
+                            # Establish relationship between X and Z
+                            x_node.relation.connect(z_attribute_node)
+
+                            # Establish relationship between Y and Z
+                            y_node.relation.connect(z_attribute_node)
+
+
+
+
+
+
+
+
                 else:
                     continue
 
@@ -187,7 +207,7 @@ def prolog_handling(request):
                 else:
                     print(None)
 
-            return JsonResponse({'bot_response': 'Downloading =============================================== .This is a Prolog file I have read. What do you want to know?'})
+            return JsonResponse({'bot_response': 'Downloading =========================================== .This is a Prolog file I have read. What do you want to know?'})
 
     return JsonResponse({'bot_response': 'No file received.'})
 
