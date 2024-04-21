@@ -100,8 +100,11 @@ def prolog_handling(request):
                 if predicate == 0:
                     if names:
                         created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
+                        node = Prolog_Members(uid=session, full_name=names, created_at=created_at)
+                        attribute = Attribute(uid=session, attribute=att, created_at=created_at)
                         node.save()
+                        attribute.save()
+                        node.fact.connect(attribute)
                         names_rules.append(names)
 
                 elif predicate == 1:
@@ -109,31 +112,44 @@ def prolog_handling(request):
                     name1, name2 = names.split(',')
                     name1 = name1.strip()
                     name2 = name2.strip()
-
                     try:
-                        existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
+                        existing_node1 = Prolog_Members.nodes.first(full_name=name1, created_at__gte=str(created_at_threshold))
                     except:
                         existing_node1 = Prolog_Members(uid=session, full_name=name1, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
                         existing_node1.save()
 
                     try:
-                        existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+                        existing_node2 = Prolog_Members.nodes.first(full_name=name2, created_at__gte=str(created_at_threshold))
                     except:
                         existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
                         existing_node2.save()
 
                     if existing_node1 and existing_node2:
-                        existing_node1.parent.connect(existing_node2)
+                        params = {
+                                "name1": name1,
+                                "name2": name2,
+                                "att": att
+                            }
+                        cypher_query = f"""
+                            MATCH (n1:Prolog_Members {{full_name: $name1}})
+                            MATCH (n2:Prolog_Members {{full_name: $name2}})
+                            CREATE (n1)-[r:`{att}`]->(n2)
+                            RETURN r
+                        """
+                        results, meta = db.cypher_query(cypher_query, params,resolve_objects = True)
+
+                        print(results,meta)
 
                 elif predicate > 1:
                     nodes = []
                     for name in names:
-                        nodes.append(Prolog_Members(uid=session, full_name=name).save())
+                        attribute = name[2]
+                        nodes.append(Prolog_Members(uid=session, full_name=name,attribute=attribute).save())
                         
                         node_1 = nodes[0]
                         for node in nodes[1:]:
                             node_1.related_to.connect(node)
-                            node_1 = node 
+                            node_1 = node
                 else:
                     continue
 
@@ -144,36 +160,34 @@ def prolog_handling(request):
                     for name11, relation12, name22 in result_tuples:
                         print(f"- {name11} -> is {relation12} of -> {name22}")
 
-                        
+                    
+                        # node1 = Prolog_Members.nodes.get(uid=session, full_name=name11)
+                        # node2 = Prolog_Members.nodes.get(uid=session, full_name=name22)
 
-                            node1 = Prolog_Members.nodes.get(uid=session, full_name=name11)
-                            node2 = Prolog_Members.nodes.get(uid=session, full_name=name22)
+                        # nd1 = node1.full_name
+                        # nd2 = node2.full_name
 
-                            nd1 = node1.element_id
-                            nd2 = node2.element_id
+                        # params = {
+                        #         "nd1": nd1,
+                        #         "nd2": nd2,
+                        #         "relation12": relation12
+                            
+                        # }
 
-                            params = {
-                                    "nd1": nd1,
-                                    "nd2": nd2,
-                                    "relation12": relation12
-                                
-                            }
+                        # cypher_query = f"""
+                        #     MATCH (n1:Prolog_Members {{full_name: $nd1}})
+                        #     MATCH (n2:Prolog_Members {{full_name: $nd2}})
+                        #     CREATE (n1)-[r:`{relation12}`]->(n2)
+                        #     RETURN r
+                        # """
 
-
-                            cypher_query = f"""
-                                MATCH (n1:Prolog_Members {{element_id: $nd1}})
-                                MATCH (n2:Prolog_Members {{element_id: $nd2}})
-                                CREATE (n1)-[r:`{relation12}`]->(n2)
-                                RETURN r
-                            """
-
-                            results, meta = db.cypher_query(cypher_query, params,resolve_objects = True)
-                            print(results)
+                        # results, meta = db.cypher_query(cypher_query, params,resolve_objects = True)
+                        # print(results)
 
                 else:
                     print(None)
 
-            return JsonResponse({'bot_response': 'Downloading ========================================================== .This is a Prolog file I have read. What do you want to know?'})
+            return JsonResponse({'bot_response': 'Downloading =============================================== .This is a Prolog file I have read. What do you want to know?'})
 
     return JsonResponse({'bot_response': 'No file received.'})
 
