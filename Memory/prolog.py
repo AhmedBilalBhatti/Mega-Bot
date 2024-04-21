@@ -99,9 +99,9 @@ def prolog_handling(request):
 
                 if predicate == 0:
                     if names:
-                        # created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        # node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
-                        # node.save()
+                        created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                        node = Prolog_Members(uid=session, full_name=names, attribute=att, created_at=created_at)
+                        node.save()
                         names_rules.append(names)
 
                 elif predicate == 1:
@@ -110,20 +110,20 @@ def prolog_handling(request):
                     name1 = name1.strip()
                     name2 = name2.strip()
 
-                    # try:
-                    #     existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
-                    # except:
-                    #     existing_node1 = Prolog_Members(uid=session, full_name=name1, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
-                    #     existing_node1.save()
+                    try:
+                        existing_node1 = Prolog_Members.nodes.filter(full_name=name1, created_at__gte=str(created_at_threshold)).first()
+                    except:
+                        existing_node1 = Prolog_Members(uid=session, full_name=name1, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
+                        existing_node1.save()
 
-                    # try:
-                    #     existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
-                    # except:
-                    #     existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
-                    #     existing_node2.save()
+                    try:
+                        existing_node2 = Prolog_Members.nodes.filter(full_name=name2, created_at__gte=str(created_at_threshold)).first()
+                    except:
+                        existing_node2 = Prolog_Members(uid=session, full_name=name2, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S'))
+                        existing_node2.save()
 
-                    # if existing_node1 and existing_node2:
-                    #     existing_node1.parent.connect(existing_node2)
+                    if existing_node1 and existing_node2:
+                        existing_node1.parent.connect(existing_node2)
 
                 elif predicate > 1:
                     nodes = []
@@ -143,41 +143,37 @@ def prolog_handling(request):
                 if result_tuples:
                     for name11, relation12, name22 in result_tuples:
                         print(f"- {name11} -> is {relation12} of -> {name22}")
-                        # node1 = Prolog_Members(uid=session, full_name=name11)
-                        # node2 = Prolog_Members(uid=session, full_name=name22)
-                        # node1.save()
-                        # node2.save()
 
-                        # node1_id = node1.element_id
-                        # node2_id = node2.element_id
+                        
 
-                        relation = relation12
+                            node1 = Prolog_Members.nodes.get(uid=session, full_name=name11)
+                            node2 = Prolog_Members.nodes.get(uid=session, full_name=name22)
 
-                        params = {
-                            "name11": name11,
-                            "name22": name22,
-                            "RELATION_TYPE": relation
-                            
-                        }
+                            nd1 = node1.element_id
+                            nd2 = node2.element_id
 
-                        query = db.cypher_query(
+                            params = {
+                                    "nd1": nd1,
+                                    "nd2": nd2,
+                                    "relation12": relation12
+                                
+                            }
+
+
+                            cypher_query = f"""
+                                MATCH (n1:Prolog_Members {{element_id: $nd1}})
+                                MATCH (n2:Prolog_Members {{element_id: $nd2}})
+                                CREATE (n1)-[r:`{relation12}`]->(n2)
+                                RETURN r
                             """
-                            CREATE (n1:Prolog_Members {full_name: $name11})
-                            CREATE (n2:Prolog_Members {full_name: $name22})
-                            CREATE (n1)-[r:'{RELATION_TYPE}']->(n2)
-                            """,params
-                        )
 
-                        print(query)
-
-                        # db.cypher_query("MATCH (n) return n ",resolve_objects = True)
-
-
+                            results, meta = db.cypher_query(cypher_query, params,resolve_objects = True)
+                            print(results)
 
                 else:
                     print(None)
 
-            return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
+            return JsonResponse({'bot_response': 'Downloading ========================================================== .This is a Prolog file I have read. What do you want to know?'})
 
     return JsonResponse({'bot_response': 'No file received.'})
 
