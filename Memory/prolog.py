@@ -7,12 +7,20 @@ from neomodel import db
 import pytholog as pl
 from .models import *
 from .views import *
+import random
 import os
 import re
 
 names_rules = []
 pure_rules = []
 path = None
+
+responses = [
+    'This is a Prolog file I have read. What do you want to know?',
+    'I have processed the Prolog file. What would you like to inquire about?',
+    'Please specify your query based on the Prolog file you provided.',
+    'What specific information are you looking for in this Prolog file?'
+]
 
 x = "Knowledge"
 new_kb = pl.KnowledgeBase(x)
@@ -207,7 +215,7 @@ def prolog_handling(request):
                     """
                     existing_relationships, _ = db.cypher_query(cypher_query_check, params)
 
-                    if not existing_relationships:
+                    if not existing_relationships and name11 != name22:
                         cypher_query_create = f"""
                             MATCH (n1:Prolog_Members {{uid: $session, full_name: $name11}})
                             MATCH (n2:Prolog_Members {{uid: $session, full_name: $name22}})
@@ -220,12 +228,11 @@ def prolog_handling(request):
                         except Exception as e:
                             print(f"Error executing Cypher query: {e}")
 
-
-
-            return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
+            return JsonResponse({'bot_response': random.choice(responses)})
     return JsonResponse({'bot_response': 'No file received.'})
 
 
+# ====================================================================================================================================
 
 def read_prolog_file(file_path):
     statements = []
