@@ -118,41 +118,42 @@ def prolog_handling(request):
                     name1, name2 = names.split(',')
                     name1 = name1.strip()
                     name2 = name2.strip()
-                    try:
-                        existing_node1 = Prolog_Members.nodes.first(full_name=name1, created_at__gte=str(created_at_threshold))
-                    except:
-                        existing_node1 = Prolog_Members(uid=session, full_name=name1)
-                        existing_node1.save()
+                    # try:
+                    #     existing_node1 = Prolog_Members.nodes.first(full_name=name1, created_at__gte=str(created_at_threshold))
+                    # except:
+                    #     existing_node1 = Prolog_Members(uid=session, full_name=name1)
+                    #     existing_node1.save()
+                    # try:
+                    #     existing_node2 = Prolog_Members.nodes.first(full_name=name2, created_at__gte=str(created_at_threshold))
+                    # except:
+                    #     existing_node2 = Prolog_Members(uid=session, full_name=name2)
+                    #     existing_node2.save()
 
-                    try:
-                        existing_node2 = Prolog_Members.nodes.first(full_name=name2, created_at__gte=str(created_at_threshold))
-                    except:
-                        existing_node2 = Prolog_Members(uid=session, full_name=name2)
-                        existing_node2.save()
+                    # if existing_node1 and existing_node2:
+                    #     names1 = None
+                    #     names2 = None
+                    #     names1 = existing_node1.full_name
+                    #     names2 = existing_node2.full_name
 
-                    if existing_node1 and existing_node2:
-                        names1 = None
-                        names2 = None
-                        names1 = existing_node1.full_name
-                        names2 = existing_node2.full_name
+                    params = {
+                            "name1": name1,
+                            "name2": name2,
+                            "session":session,
+                            "att": att
+                        }
+                    if params:
+                        print(params)
+                        cypher_query = f"""
+                            MATCH (n1:Prolog_Members {{uid: $session, full_name: $name1}})
+                            MATCH (n2:Prolog_Members {{uid: $session, full_name: $name2}})
+                            CREATE (n1)-[r:`{att}`]->(n2)
+                            RETURN r
+                        """
+                        results, meta = db.cypher_query(cypher_query, params)
+                        print(results,meta)
 
-                        params = {
-                                "names1": names1,
-                                "names2": names2,
-                                "session":session,
-                                "att": att,
-                                "created_at_threshold": str(created_at_threshold)
-                            }
-                        if params:
-                            print(params)
-                            # cypher_query = f"""
-                            #     MATCH (n1:Prolog_Members {{uid: $session, full_name: $names1, created_at__gte: $created_at_threshold}})
-                            #     MATCH (n2:Prolog_Members {{uid: $session, full_name: $names2, created_at__gte: $created_at_threshold}})
-                            #     CREATE (n1)-[r:`{att}`]->(n2)
-                            #     RETURN r
-                            # """
-                            # results, meta = db.cypher_query(cypher_query, params)
-                            # print(results,meta)
+
+
 
                 elif predicate > 1:
                     created_at_threshold = datetime.now() - timedelta(seconds=10)
