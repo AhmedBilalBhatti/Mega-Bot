@@ -193,6 +193,11 @@ def chat(request):
                 english = translator.translate(message).text
                 response = kernel.respond(english)
                 bot_response = translator.translate(response, dest='ur').text
+
+
+
+
+                
             else:
                 bot_response = kernel.respond(message)
                 if bot_response == "I'm sorry, I didn't understand what you said.":
