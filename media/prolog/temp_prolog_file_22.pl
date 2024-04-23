@@ -27,8 +27,8 @@ parent(randy,blair).
 
 male(mel).
 male(teo).
-parent(melsr,mel).
-parent(melsr,teo).
+# parent(melsr,mel).
+# parent(melsr,teo).
 
 american(anne).
 american(X) :-  ancestor(X,anne).

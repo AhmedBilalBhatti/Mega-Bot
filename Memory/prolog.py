@@ -119,20 +119,11 @@ def prolog_handling(request):
                     name1, name2 = names.split(',')
                     name1 = name1.strip()
                     name2 = name2.strip()
-                    check = Prolog_Members.nodes.first(full_name=name1, created_at__gte=created_at_threshold)
+                    try:
+                        check = Prolog_Members.nodes.first(full_name=name1, created_at__gte=created_at_threshold)
+                    except:
+                        check = Prolog_Members(uid=session, full_name=name1).save()
                     if check:
-                        params = {"name1": name1,"name2": name2,"session":session,"att": att}
-                        if params:
-                            cypher_query = f"""
-                                MATCH (n1:Prolog_Members {{uid: $session, full_name: $name1}})
-                                MATCH (n2:Prolog_Members {{uid: $session, full_name: $name2}})
-                                CREATE (n1)-[r:`{att}`]->(n2)
-                                RETURN r
-                            """
-                            results, meta = db.cypher_query(cypher_query, params)
-                            print(results,meta)
-                    else:
-                        answ = Prolog_Members(uid=session, full_name=name1).save()
                         params = {"name1": name1,"name2": name2,"session":session,"att": att}
                         if params:
                             cypher_query = f"""
@@ -231,7 +222,7 @@ def prolog_handling(request):
 
 
 
-            return JsonResponse({'bot_response': 'Downloading ============================================ This is a Prolog file I have read. What do you want to know?'})
+            return JsonResponse({'bot_response': 'This is a Prolog file I have read. What do you want to know?'})
     return JsonResponse({'bot_response': 'No file received.'})
 
 
