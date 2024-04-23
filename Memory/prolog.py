@@ -19,7 +19,10 @@ responses = [
     'This is a Prolog file I have read. What do you want to know?',
     'I have processed the Prolog file. What would you like to inquire about?',
     'Please specify your query based on the Prolog file you provided.',
-    'What specific information are you looking for in this Prolog file?'
+    'What specific information are you looking for in this Prolog file?',
+    'Feel free to ask me any questions about the Prolog file.',
+    'Let me know what kind of information you need from the Prolog data.',
+    'I am ready to assist you with queries related to this Prolog file.'
 ]
 
 x = "Knowledge"
