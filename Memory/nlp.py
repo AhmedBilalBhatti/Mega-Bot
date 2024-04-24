@@ -12,7 +12,12 @@ def preprocess_text(text):
         filtered_tokens = [lemmatizer.lemmatize(token) for token in tokens if token not in stop_words]
         
         return {'tokens': tokens,'filtered_tokens': filtered_tokens,'lemmatized_tokens': filtered_tokens}
-        
+
     except Exception as e:
         print(f"Error during preprocessing: {e}")
         return None
+
+
+def is_question(text):
+    question_words = ['who', 'what', 'where', 'when', 'why', 'how', 'is', 'are', 'do', 'does', 'can', 'could', 'should']
+    return any(word + ' ' in text.lower() for word in question_words) or text.endswith('?')

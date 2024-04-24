@@ -146,6 +146,12 @@ def prolog_handling(request):
                             results, meta = db.cypher_query(cypher_query, params)
                             print(results,meta)
 
+
+
+
+
+
+
                 elif predicate > 1:
                     created_at_threshold = datetime.now() - timedelta(seconds=10)
                     nodes = []
@@ -154,6 +160,7 @@ def prolog_handling(request):
                         x_name = part1.strip()
                         y_name = part2.strip()
                         z_values = [z.strip() for z in z_values]
+                        
                         try:
                             x_node = Prolog_Members.nodes.first(full_name=x_name, created_at__gte=str(created_at_threshold))
                         except:
@@ -192,6 +199,14 @@ def prolog_handling(request):
                                     RETURN r
                                 """
                                 results, meta = db.cypher_query(cypher_query, params)
+
+
+
+
+
+
+
+
                 else:
                     continue
 

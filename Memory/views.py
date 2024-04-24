@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
+from neomodel import *
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -14,6 +15,7 @@ from .Emails import *
 from .models import *
 from .Speech import *
 from .aiml import *
+from .nlp import *
 from .OTP import *
 from .ML import *
 import re
@@ -196,8 +198,25 @@ def chat(request):
 
 
 
+            elif is_question(message):
+                processed_data = preprocess_text(message)
+                if processed_data:
+                    filtered_tokens = processed_data['filtered_tokens']
+                    if len(filtered_tokens) >= 2:
+                        name = filtered_tokens[-1]
+                        rel = filtered_tokens[0]
+                        if Prolog_Members.nodes.get(full_name=name):
+                            member = Prolog_Members.nodes.filter(full_name=name).first()
+                            if member.is_connected(rel):
+                                # Retrieve related attribute or information
+                                related_attribute = member.rel.get(attribute=rel)
+                                bot_response = related_attribute.attribute
+                results = Prolog_Members.nodes.all().fetch_relations(rel)
+                for result in results:
+                    print(result[0])
+                    print(result[1])
 
-                
+
             else:
                 bot_response = kernel.respond(message)
                 if bot_response == "I'm sorry, I didn't understand what you said.":
