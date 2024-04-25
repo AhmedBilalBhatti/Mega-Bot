@@ -146,12 +146,6 @@ def prolog_handling(request):
                             results, meta = db.cypher_query(cypher_query, params)
                             print(results,meta)
 
-
-
-
-
-
-
                 elif predicate > 1:
                     created_at_threshold = datetime.now() - timedelta(seconds=10)
                     for name in names:
@@ -200,11 +194,6 @@ def prolog_handling(request):
                                         RETURN r
                                     """
                                     results, meta = db.cypher_query(cypher_query, params)
-
-
-
-
-
                 else:
                     continue
 
