@@ -154,54 +154,52 @@ def prolog_handling(request):
 
                 elif predicate > 1:
                     created_at_threshold = datetime.now() - timedelta(seconds=10)
-                    nodes = []
                     for name in names:
-                        part1, part2, *z_values = name.split(',')
-                        x_name = part1.strip()
-                        y_name = part2.strip()
-                        z_values = [z.strip() for z in z_values]
-                        
-                        try:
-                            x_node = Prolog_Members.nodes.first(full_name=x_name, created_at__gte=str(created_at_threshold))
-                        except:
-                            x_node = Prolog_Members(uid=session, full_name=x_name, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S')).save()
-                        try:
-                            x_node = Prolog_Members.nodes.first(full_name=y_name, created_at__gte=str(created_at_threshold))
-                        except:
-                            y_node = Prolog_Members(uid=session, full_name=y_name, created_at=created_at_threshold.strftime('%Y-%m-%d %H:%M:%S')).save()
+                        parts = name.split(',')
+                        if len(parts) >= 2:
+                            part1 = parts[0].strip()
+                            part2 = parts[1].strip()
+                            z_values = [z.strip() for z in parts[2:]]  # Get all remaining parts as z_values
 
-                        if x_node and y_node:
-                            params = {
-                                    "x_name": x_name,
-                                    "y_name": y_name,
+                            try:
+                                x_node = Prolog_Members.nodes.first(full_name=part1, created_at__gte=str(created_at_threshold))
+                            except:
+                                x_node = Prolog_Members(uid=session, full_name=part1).save()
+                                
+                            try:
+                                y_node = Prolog_Members.nodes.first(full_name=part2, created_at__gte=str(created_at_threshold))
+                            except:
+                                y_node = Prolog_Members(uid=session, full_name=part2).save()
+
+                            if x_node and y_node:
+                                params = {
+                                    "x_name": part1,
+                                    "y_name": part2,
                                     "att": att
                                 }
-                            cypher_query = f"""
-                                MATCH (n1:Prolog_Members {{full_name: $x_name}})
-                                MATCH (n2:Prolog_Members {{full_name: $y_name}})
-                                CREATE (n1)-[r:`{att}`]->(n2)
-                                RETURN r
-                            """
-                            results, meta = db.cypher_query(cypher_query, params)
-
-                        for z_value in z_values:
-                            z_attribute_node = Attribute(uid=session, attribute=z_value).save()
-
-                            if y_node and z_attribute_node:
-                                params = {
-                                    "y_name": y_name,
-                                    "z_value": z_value
-                                }
-                                cypher_query = """
-                                    MATCH (n2:Prolog_Members {full_name: $y_name})
-                                    MATCH (z:Attribute {attribute: $z_value})
-                                    CREATE (n2)-[r:HAS]->(z)
+                                cypher_query = f"""
+                                    MATCH (n1:Prolog_Members {{full_name: $x_name}})
+                                    MATCH (n2:Prolog_Members {{full_name: $y_name}})
+                                    CREATE (n1)-[r:`{att}`]->(n2)
                                     RETURN r
                                 """
                                 results, meta = db.cypher_query(cypher_query, params)
 
+                            for z_value in z_values:
+                                z_attribute_node = Attribute(uid=session, attribute=z_value).save()
 
-
+                                if y_node and z_attribute_node:
+                                    params = {
+                                        "y_name": part2,
+                                        "z_value": z_value
+                                    }
+                                    cypher_query = """
+                                        MATCH (n2:Prolog_Members {full_name: $y_name})
+                                        MATCH (z:Attribute {attribute: $z_value})
+                                        CREATE (n2)-[r:HAS]->(z)
+                                        RETURN r
+                                    """
+                                    results, meta = db.cypher_query(cypher_query, params)
 
 
 

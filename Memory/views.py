@@ -208,7 +208,6 @@ def chat(request):
                         if Prolog_Members.nodes.get(full_name=name):
                             member = Prolog_Members.nodes.filter(full_name=name).first()
                             if member.is_connected(rel):
-                                # Retrieve related attribute or information
                                 related_attribute = member.rel.get(attribute=rel)
                                 bot_response = related_attribute.attribute
                 results = Prolog_Members.nodes.all().fetch_relations(rel)
