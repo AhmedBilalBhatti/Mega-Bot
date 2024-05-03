@@ -201,8 +201,10 @@ def chat(request):
                 result = pre_process(message)
                 lemmatized_tokens = result[0]
                 vect_features = result[1]
+                check = lemmatized_tokens[0]
+                double_check = Prolog_Members.nodes.first(full_name = check)
                 person = detect_persons(lemmatized_tokens)
-                if person:
+                if person and double_check:
                     Total_person = len(person)
                     if Total_person == 1:
                         name = "".join(vect_features[:-1])
@@ -214,25 +216,12 @@ def chat(request):
                         cypher_query = f"""
                                     MATCH (p:Prolog_Members {{full_name: $name}})
                                     MATCH (p)<-[r:`{relation}`]-(other)
-                                    RETURN {{other.fullname}};
+                                    RETURN other.full_name;
                                 """
                         results, meta = db.cypher_query(cypher_query, params)
-                        print('Results ================== ',results)
-                        print('meta ================== ',meta)
-
-                        if results:
-                            other_full_name = results[0][0]
-                            print("Other Full Name:", other_full_name)
-
-                        # bot_response = f"{} is {relation} of {name}"
-                        # maintain_history(request, message, bot_response)
-                        print('Resulys ================== ',results)
-
-                        # relationship = results[0][0]
-                        # element_id = relationship.element_id
-
-                        bot_response = element_id
-
+                        mem = results[0][0]
+                        bot_response = f"{mem} is {relation} of {name}."
+                        maintain_history(request, message, bot_response)
 
                     # elif Total_person == 2:
 
@@ -244,6 +233,6 @@ def chat(request):
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
                     maintain_history(request, message, bot_response)
-            return JsonResponse({'bot_response': bot_response})
+                    return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})
