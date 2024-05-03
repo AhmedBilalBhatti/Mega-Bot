@@ -202,9 +202,8 @@ def chat(request):
                 lemmatized_tokens = result[0]
                 vect_features = result[1]
                 check = lemmatized_tokens[0]
-                double_check = Prolog_Members.nodes.first(full_name = check)
                 person = detect_persons(lemmatized_tokens)
-                if person and double_check:
+                if person:
                     Total_person = len(person)
                     if Total_person == 1:
                         name = "".join(vect_features[:-1])
@@ -212,7 +211,6 @@ def chat(request):
                         params = {
                             "name": name,
                             "relation": relation}
-
                         cypher_query = f"""
                                     MATCH (p:Prolog_Members {{full_name: $name}})
                                     MATCH (p)<-[r:`{relation}`]-(other)
@@ -220,8 +218,9 @@ def chat(request):
                                 """
                         results, meta = db.cypher_query(cypher_query, params)
                         mem = results[0][0]
-                        bot_response = f"{mem} is {relation} of {name}."
+                        bot_response = f"{mem.capitalize()} is {relation} of {name.capitalize()}."
                         maintain_history(request, message, bot_response)
+                        return JsonResponse({'bot_response': bot_response})
 
                     # elif Total_person == 2:
 
