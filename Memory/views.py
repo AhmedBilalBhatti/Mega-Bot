@@ -5,11 +5,11 @@ from django.contrib.auth import logout
 from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
-from neomodel import *
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
 from .web_scrap import *
+from neomodel import *
 from .prolog import *
 from .Emails import *
 from .models import *
@@ -197,23 +197,37 @@ def chat(request):
                 bot_response = translator.translate(response, dest='ur').text
 
 
-
             elif is_question(message):
-                processed_data = preprocess_text(message)
-                if processed_data:
-                    filtered_tokens = processed_data['filtered_tokens']
-                    if len(filtered_tokens) >= 2:
-                        name = filtered_tokens[-1]
-                        rel = filtered_tokens[0]
-                        if Prolog_Members.nodes.get(full_name=name):
-                            member = Prolog_Members.nodes.filter(full_name=name).first()
-                            if member.is_connected(rel):
-                                related_attribute = member.rel.get(attribute=rel)
-                                bot_response = related_attribute.attribute
-                results = Prolog_Members.nodes.all().fetch_relations(rel)
-                for result in results:
-                    print(result[0])
-                    print(result[1])
+                result = pre_process(message)
+                lemmatized_tokens = result[0]
+                vect_features = result[1]
+                person = detect_persons(lemmatized_tokens)
+                if person:
+                    Total_person = len(person)
+                    if Total_person == 1:
+                        name = lemmatized_tokens[:-1]
+                        relation = lemmatized_tokens[0]
+                        params = {
+                            "name": name,
+                            "att": relation}
+
+                        print(name,relation)
+                        cypher_query = f"""
+                                    MATCH (n1:Prolog_Members {{full_name: $name}})
+                                    CREATE (n1)-[r:`{att}`]-()
+                                    RETURN r
+                                """
+                        results, meta = db.cypher_query(cypher_query, params)
+
+                        # bot_response = "{}"
+                        print(results)
+
+
+                    # elif Total_person == 2:
+
+
+                    # else:
+
 
 
             else:
