@@ -26,8 +26,8 @@ def detect_persons(text_list):
 
 
 def pre_process(text):
+    vectorizer = CountVectorizer()
     preprocessed_text = preprocess_text(text)
-
     tokens = word_tokenize(preprocessed_text)
 
     stop_words = set(stopwords.words('english'))
@@ -35,7 +35,7 @@ def pre_process(text):
 
     lemmatizer = WordNetLemmatizer()
     lemmatized_tokens = [lemmatizer.lemmatize(word) for word in filtered_tokens]
-
+    vectorizer.fit_transform(lemmatized_tokens)
     print("Processed Text:",lemmatized_tokens)
     print("Extracted Features:", vectorizer.get_feature_names_out())
     vect_features = vectorizer.get_feature_names_out()
