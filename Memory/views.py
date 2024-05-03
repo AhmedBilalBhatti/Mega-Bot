@@ -213,14 +213,17 @@ def chat(request):
 
                         cypher_query = f"""
                                     MATCH (p:Prolog_Members {{full_name: $name}})
-                                    MATCH (p)<-[r:`{relation}`]-()
-                                    RETURN r
+                                    MATCH (p)<-[r:`{relation}`]-(other)
+                                    RETURN {{other.fullname}};
                                 """
                         results, meta = db.cypher_query(cypher_query, params)
-                        print('Resulys ================== ',results)
-                        print(relationship = results[0][0])
-                        mem = Prolog_Members.nodes.first(uid=relationship.identity)
-                        print(mem)
+                        print('Results ================== ',results)
+                        print('meta ================== ',meta)
+
+                        if results:
+                            other_full_name = results[0][0]
+                            print("Other Full Name:", other_full_name)
+
                         # bot_response = f"{} is {relation} of {name}"
                         # maintain_history(request, message, bot_response)
                         print('Resulys ================== ',results)
