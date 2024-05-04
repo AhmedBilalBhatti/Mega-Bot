@@ -206,17 +206,17 @@ def chat(request):
                 if person:
                     Total_person = len(person)
                     if Total_person == 1:
-                        name = "".join(lemmatized_tokens[:-1])
-                        relation = "".join(lemmatized_tokens[1])
+                        name = "".join(lemmatized_tokens[1])
+                        relation = "".join(lemmatized_tokens[:-1])
                         params = {
                             "name": name,
                             "relation": relation}
                         cypher_query = f"""
-                                    MATCH (p:Prolog_Members {{full_name: $name}})
-                                    MATCH (p)<-[r:`{relation}`]-(other)
-                                    RETURN other.full_name;
-                                """
+                                        MATCH (p:Prolog_Members {{full_name: $name}})
+                                        MATCH (p)-[r:`{relation}`]-(other)
+                                        RETURN other.full_name; """
                         results, meta = db.cypher_query(cypher_query, params)
+                        print(results)
                         mem = results[0][0]
                         bot_response = f"{mem.capitalize()} is {relation} of {name.capitalize()}."
                         maintain_history(request, message, bot_response)
@@ -229,8 +229,6 @@ def chat(request):
 
             else:
                 bot_response = kernel.respond(message)
-                maintain_history(request, message, bot_response)
-                return JsonResponse({'bot_response': bot_response})
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
                     maintain_history(request, message, bot_response)
