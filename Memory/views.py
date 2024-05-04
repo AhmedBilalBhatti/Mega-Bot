@@ -202,9 +202,9 @@ def chat(request):
                 lemmatized_tokens = result[0]
                 vect_features = result[1]
                 check = lemmatized_tokens[0]
-                person = detect_persons(lemmatized_tokens)
+                person = True#detect_persons(lemmatized_tokens)
                 if person:
-                    Total_person = len(person)
+                    Total_person = 1#len(person)
                     if Total_person == 1:
                         name = "".join(lemmatized_tokens[1])
                         relation = "".join(lemmatized_tokens[:-1])
@@ -216,7 +216,7 @@ def chat(request):
                                         MATCH (p)-[r:`{relation}`]-(other)
                                         RETURN other.full_name; """
                         results, meta = db.cypher_query(cypher_query, params)
-                        print(results)
+                        y = len(results)
                         mem = results[0][0]
                         bot_response = f"{mem.capitalize()} is {relation} of {name.capitalize()}."
                         maintain_history(request, message, bot_response)
