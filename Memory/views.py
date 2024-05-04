@@ -206,8 +206,8 @@ def chat(request):
                 if person:
                     Total_person = len(person)
                     if Total_person == 1:
-                        name = "".join(vect_features[:-1])
-                        relation = "".join(vect_features[1])
+                        name = "".join(lemmatized_tokens[:-1])
+                        relation = "".join(lemmatized_tokens[1])
                         params = {
                             "name": name,
                             "relation": relation}
@@ -229,6 +229,8 @@ def chat(request):
 
             else:
                 bot_response = kernel.respond(message)
+                maintain_history(request, message, bot_response)
+                return JsonResponse({'bot_response': bot_response})
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
                     maintain_history(request, message, bot_response)
