@@ -204,6 +204,7 @@ def chat(request):
                 check = lemmatized_tokens[0]
                 person = detect_persons(lemmatized_tokens)
                 if person:
+                    print('Person',person)
                     Total_person = len(person)
                     if Total_person == 1:
                         name = "".join(vect_features[:-1])
