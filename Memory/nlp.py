@@ -15,6 +15,9 @@ def preprocess_text(text): # Special char
     return text
 
 
+
+
+
 def detect_persons(text_list):
     persons = []
     combined_text = ' '.join(text_list)
@@ -23,6 +26,9 @@ def detect_persons(text_list):
         if ent.label_ == "PERSON":
             persons.append((ent.text, ent.label_))
     return persons
+
+
+
 
 
 

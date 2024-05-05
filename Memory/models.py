@@ -45,7 +45,6 @@ class Session_History(StructuredNode):
         self.save()
 
 
-
 class Prolog_Members(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)

@@ -196,7 +196,6 @@ def chat(request):
                 response = kernel.respond(english)
                 bot_response = translator.translate(response, dest='ur').text
 
-
             elif is_question(message):
                 result = pre_process(message)
                 lemmatized_tokens = result[0]
@@ -215,9 +214,9 @@ def chat(request):
                             "name": name,
                             "relation": relation}
                         cypher_query = f"""
-                                        MATCH (p:Prolog_Members {{full_name: $name}})
-                                        MATCH (p)-[r:`{relation}`]-(other)
-                                        RETURN other.full_name; """
+                            MATCH (p:Prolog_Members {{full_name: $name}})
+                            MATCH (p)-[r:`{relation}`]-(other)
+                            RETURN other.full_name; """
                         results, meta = db.cypher_query(cypher_query, params)
                         formatted_names = []
                         for result in results:
@@ -235,12 +234,14 @@ def chat(request):
                         return JsonResponse({'bot_response': bot_response})
                 else:
                     bot_response = kernel.respond(message)
+                    return JsonResponse({'bot_response': bot_response})
                     if bot_response == "I'm sorry, I didn't understand what you said.":
                         bot_response = web_scraping(message)
                         maintain_history(request, message, bot_response)
                         return JsonResponse({'bot_response': bot_response})
             else:
                 bot_response = kernel.respond(message)
+                return JsonResponse({'bot_response': bot_response})
                 if bot_response == "I'm sorry, I didn't understand what you said.":
                     bot_response = web_scraping(message)
                     maintain_history(request, message, bot_response)
