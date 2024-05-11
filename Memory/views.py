@@ -204,7 +204,7 @@ def chat(request):
 
                 params = {"name": name,"relation": relation}
                 cypher_query = f"""
-                    MATCH (p:Prolog_Members {{full_name: $name}})
+                    MATCH (p:Person {{full_name: $name}})
                     MATCH (p)<-[r:`{relation}`]-(other)
                     RETURN other.full_name; """
                 results, meta = db.cypher_query(cypher_query, params)
@@ -221,11 +221,11 @@ def chat(request):
                     else:
                         name_str = ', '.join(formatted_names[:-1]) + f", and {formatted_names[-1]}"
 
-                    if name_str:
+                    if name_str != '':
                         kernel.setPredicate('namey',name_str.capitalize())
                         bot_response = kernel.respond(message)
-                    else:
-                        bot_response = initial_response
+                else:
+                    bot_response = initial_response
 
             if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)

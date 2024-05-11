@@ -116,9 +116,9 @@ def prolog_handling(request):
                 if predicate == 0:
                     if names:
                         try:
-                            node = Prolog_Members.nodes.first(uid=session, full_name=names)
+                            node = Person.nodes.first(uid=session, full_name=names)
                         except:
-                            node = Prolog_Members(uid=session, full_name=names).save()
+                            node = Person(uid=session, full_name=names).save()
 
                         attribute = Attribute(uid=session, attribute=att).save()
 
@@ -131,15 +131,15 @@ def prolog_handling(request):
                     name1 = name1.strip()
                     name2 = name2.strip()
                     try:
-                        check = Prolog_Members.nodes.first(full_name=name1, created_at__gte=created_at_threshold)
+                        check = Person.nodes.first(full_name=name1, created_at__gte=created_at_threshold)
                     except:
-                        check = Prolog_Members(uid=session, full_name=name1).save()
+                        check = Person(uid=session, full_name=name1).save()
                     if check:
                         params = {"name1": name1,"name2": name2,"session":session,"att": att}
                         if params:
                             cypher_query = f"""
-                                MATCH (n1:Prolog_Members {{uid: $session, full_name: $name1}})
-                                MATCH (n2:Prolog_Members {{uid: $session, full_name: $name2}})
+                                MATCH (n1:Person {{uid: $session, full_name: $name1}})
+                                MATCH (n2:Person {{uid: $session, full_name: $name2}})
                                 CREATE (n1)-[r:`{att}`]->(n2)
                                 RETURN r
                             """
@@ -156,14 +156,14 @@ def prolog_handling(request):
                             z_values = [z.strip() for z in parts[2:]]
 
                             try:
-                                x_node = Prolog_Members.nodes.first(full_name=part1, created_at__gte=str(created_at_threshold))
+                                x_node = Person.nodes.first(full_name=part1, created_at__gte=str(created_at_threshold))
                             except:
-                                x_node = Prolog_Members(uid=session, full_name=part1).save()
+                                x_node = Person(uid=session, full_name=part1).save()
                                 
                             try:
-                                y_node = Prolog_Members.nodes.first(full_name=part2, created_at__gte=str(created_at_threshold))
+                                y_node = Person.nodes.first(full_name=part2, created_at__gte=str(created_at_threshold))
                             except:
-                                y_node = Prolog_Members(uid=session, full_name=part2).save()
+                                y_node = Person(uid=session, full_name=part2).save()
 
                             if x_node and y_node:
                                 params = {
@@ -172,8 +172,8 @@ def prolog_handling(request):
                                     "att": att
                                 }
                                 cypher_query = f"""
-                                    MATCH (n1:Prolog_Members {{full_name: $x_name}})
-                                    MATCH (n2:Prolog_Members {{full_name: $y_name}})
+                                    MATCH (n1:Person {{full_name: $x_name}})
+                                    MATCH (n2:Person {{full_name: $y_name}})
                                     CREATE (n1)-[r:`{att}`]->(n2)
                                     RETURN r
                                 """
@@ -188,7 +188,7 @@ def prolog_handling(request):
                                         "z_value": z_value
                                     }
                                     cypher_query = """
-                                        MATCH (n2:Prolog_Members {full_name: $y_name})
+                                        MATCH (n2:Person {full_name: $y_name})
                                         MATCH (z:Attribute {attribute: $z_value})
                                         CREATE (n2)-[r:HAS]->(z)
                                         RETURN r
@@ -215,15 +215,15 @@ def prolog_handling(request):
                     }
 
                     cypher_query_check = f"""
-                        MATCH (n1:Prolog_Members {{uid: $session, full_name: $name11}})-[r:`{relation12}`]->(n2:Prolog_Members {{uid: $session, full_name: $name22}})
+                        MATCH (n1:Person {{uid: $session, full_name: $name11}})-[r:`{relation12}`]->(n2:Person {{uid: $session, full_name: $name22}})
                         RETURN r
                     """
                     existing_relationships, _ = db.cypher_query(cypher_query_check, params)
 
                     if not existing_relationships and name11 != name22:
                         cypher_query_create = f"""
-                            MATCH (n1:Prolog_Members {{uid: $session, full_name: $name11}})
-                            MATCH (n2:Prolog_Members {{uid: $session, full_name: $name22}})
+                            MATCH (n1:Person {{uid: $session, full_name: $name11}})
+                            MATCH (n2:Person {{uid: $session, full_name: $name22}})
                             CREATE (n1)-[r:`{relation12}`]->(n2)
                             RETURN r
                         """
@@ -302,10 +302,10 @@ def extract_arguments(prolog_fact):
 
 
 def make_graph(session, node1, node1_gender, relationship_type, node2, node2_gender):
-    node_1 = Prolog_Members(uid=session, name=node1, gender=node1_gender)
+    node_1 = Person(uid=session, name=node1, gender=node1_gender)
     node_1.save()
 
-    node_2 = Prolog_Members(uid=session, name=node2, gender=node2_gender)
+    node_2 = Person(uid=session, name=node2, gender=node2_gender)
     node_2.save()
 
     node_1.add_relationship(node_2, relationship_type)

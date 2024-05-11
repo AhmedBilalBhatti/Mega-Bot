@@ -45,12 +45,12 @@ class Session_History(StructuredNode):
         self.save()
 
 
-class Prolog_Members(StructuredNode):
+class Person(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-    parent = RelationshipTo('Prolog_Members','IS_PARENT_OF')
+    parent = RelationshipTo('Person','IS_PARENT_OF')
     fact  = RelationshipTo('Attribute','IS')
 
 
