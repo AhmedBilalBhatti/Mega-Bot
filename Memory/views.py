@@ -196,7 +196,7 @@ def chat(request):
                 response = kernel.respond(english)
                 bot_response = translator.translate(response, dest='ur').text
             else:
-                kernel.respond(message)
+                initial_response = kernel.respond(message)
 
 
             if kernel.getPredicate("namex") and kernel.getPredicate("relationx"):
@@ -211,22 +211,25 @@ def chat(request):
                     MATCH (p)-[r:`{relation}`]-(other)
                     RETURN other.full_name; """
                 results, meta = db.cypher_query(cypher_query, params)
-                formatted_names = []
-                for result in results:
-                    other_name = result[0]
-                    formatted_names.append(other_name)
-                if len(formatted_names) == 1:
-                    name_str = formatted_names[0]
-                elif len(formatted_names) == 2:
-                    name_str = f"{formatted_names[0]} and {formatted_names[1]}"
+                if results:
+                    formatted_names = []
+                    for result in results:
+                        other_name = result[0]
+                        formatted_names.append(other_name)
+                    results = None
+                    if len(formatted_names) == 1:
+                        name_str = formatted_names[0]
+                    elif len(formatted_names) == 2:
+                        name_str = f"{formatted_names[0]} and {formatted_names[1]}"
+                    else:
+                        name_str = ', '.join(formatted_names[:-1]) + f", and {formatted_names[-1]}"
+
+                    kernel.setPredicate('namey',name_str)
+                    bot_response = kernel.respond(message)
                 else:
-                    name_str = ', '.join(formatted_names[:-1]) + f", and {formatted_names[-1]}"
+                    bot_response = initial_response
 
-                kernel.setPredicate('namey',name_str)
-                kernel.setPredicate('relationy',relation)
-
-                bot_response = kernel.respond(message)
-                print("BJDCLKV;SJ;LSKV;LSJV;LDSNV;SDN KNKNK",bot_response)
+                
 
 
             # elif is_question(message):

@@ -74,12 +74,13 @@
   <template>What</template>
 </category> -->
 
-
-
 <category>
   <pattern>WHO IS * OF *</pattern>
   <template>
-    <set name="relationx"><star/></set><set name="namex"><star index="2"/></set>
+    <think>
+      <set name="relationx"><star/></set>
+      <set name="namex"><star index="2"/></set>
+    </think>
     <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
   </template>
 </category>
