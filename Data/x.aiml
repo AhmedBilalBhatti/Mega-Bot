@@ -68,11 +68,6 @@
   <template>I am a AI chatbot and i have no gender</template>
 </category>
 
-<!-- Add a default category for unknown input -->
-<!-- <category>
-  <pattern></pattern>
-  <template>What</template>
-</category> -->
 <category>
   <pattern>WHO IS * OF *</pattern>
   <template>
