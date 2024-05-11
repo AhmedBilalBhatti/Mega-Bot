@@ -78,4 +78,16 @@
   <pattern></pattern>
   <template>What</template>
 </category>
+
+<category id="1">
+  <pattern>Who is <set name="relationx"></set>* of <set name="namex"></set>*</pattern>
+  <template>
+    <set name="answer_name"><get name="namex"/></set> is <set name="answer_relation"><get name="relationx"/></set> of <get name="namex"/>.
+  </template>
+  <priority>5</priority>
+</category>
+
+
+
+
 </aiml>
