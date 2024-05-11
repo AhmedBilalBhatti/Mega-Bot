@@ -204,7 +204,7 @@ def chat(request):
                 params = {"name": name,"relation": relation}
                 cypher_query = f"""
                     MATCH (p:Person {{full_name: $name}})
-                    MATCH (p)<-[r:`{relation}`]-(other)
+                    MATCH (p)-[r:`{relation}`]-(other)
                     RETURN other.full_name; """
                 results, meta = db.cypher_query(cypher_query, params)
 
@@ -224,7 +224,7 @@ def chat(request):
                         kernel.setPredicate('namey',name_str.capitalize())
                         bot_response = kernel.respond(message)
                 else:
-                    bot_response = 'No Knowledge Found according to your Query.'
+                    bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
 
 
