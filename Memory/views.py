@@ -225,7 +225,7 @@ def chat(request):
                         kernel.setPredicate('namey',name_str.capitalize())
                         bot_response = kernel.respond(message)
                 else:
-                    bot_response = initial_response
+                    bot_response = bot_response
 
             if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)
