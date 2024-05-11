@@ -73,7 +73,6 @@
   <pattern></pattern>
   <template>What</template>
 </category> -->
-
 <category>
   <pattern>WHO IS * OF *</pattern>
   <template>

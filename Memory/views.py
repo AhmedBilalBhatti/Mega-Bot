@@ -196,7 +196,7 @@ def chat(request):
                 response = kernel.respond(english)
                 bot_response = translator.translate(response, dest='ur').text
             else:
-                initial_response = kernel.respond(message)
+                bot_response = kernel.respond(message)
 
             if kernel.getPredicate("namex") and kernel.getPredicate("relationx"):
                 name = kernel.getPredicate("namex").lower()
@@ -209,25 +209,26 @@ def chat(request):
                     RETURN other.full_name; """
                 results, meta = db.cypher_query(cypher_query, params)
 
-                formatted_names = [result[0] for result in results] if results else []
-                name_str = ''
-
-                if formatted_names:
+                if results:
+                    formatted_names = []
+                    for result in results:
+                        other_name = result[0]
+                        formatted_names.append(other_name)
                     if len(formatted_names) == 1:
                         name_str = formatted_names[0]
+                    elif len(formatted_names) == 2:
+                        name_str = f"{formatted_names[0]} and {formatted_names[1]}"
                     else:
-                        last_name = formatted_names.pop()
-                        name_str = f"{', '.join(formatted_names)} and {last_name}"
+                        name_str = ', '.join(formatted_names[:-1]) + f", and {formatted_names[-1]}"
 
-                if name_str:
-                    kernel.setPredicate('namey', name_str.capitalize())
-                    bot_response = kernel.respond(message)
-                else:
-                    bot_response = initial_response
+                    if name_str:
+                        kernel.setPredicate('namey',name_str.capitalize())
+                        bot_response = kernel.respond(message)
+                    else:
+                        bot_response = initial_response
 
-            if initial_response == "I'm sorry, I didn't understand what you said.":
+            if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)
-            bot_response = initial_response
             maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
 
