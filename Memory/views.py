@@ -167,7 +167,6 @@ def maintain_history(request, user, bot):
 
 # ========================================================================================================
 
-
 def chat(request):    
     session = request.session.get('user_id')
     try:
@@ -225,7 +224,12 @@ def chat(request):
                         kernel.setPredicate('namey',name_str.capitalize())
                         bot_response = kernel.respond(message)
                 else:
-                    bot_response = bot_response
+                    bot_response = 'No Knowledge Found according to your Query.'
+
+
+
+
+
 
             if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)
