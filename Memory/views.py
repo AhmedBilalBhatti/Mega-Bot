@@ -168,7 +168,6 @@ def maintain_history(request, user, bot):
 # ========================================================================================================
 
 
-    
 def chat(request):    
     session = request.session.get('user_id')
     try:

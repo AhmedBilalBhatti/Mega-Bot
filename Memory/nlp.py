@@ -14,10 +14,6 @@ def preprocess_text(text): # Special char
     text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
     return text
 
-
-
-
-
 def detect_persons(text_list):
     persons = []
     combined_text = ' '.join(text_list)
@@ -26,11 +22,6 @@ def detect_persons(text_list):
         if ent.label_ == "PERSON":
             persons.append((ent.text, ent.label_))
     return persons
-
-
-
-
-
 
 def pre_process(text):
     vectorizer = CountVectorizer()
@@ -48,7 +39,6 @@ def pre_process(text):
     vect_features = vectorizer.get_feature_names_out()
     return lemmatized_tokens , vect_features
 
-
 def words_frequency(lemmatized_tokens):
     vectorizer = CountVectorizer()
     X = vectorizer.fit_transform([' '.join(lemmatized_tokens)])
@@ -61,7 +51,6 @@ def words_frequency(lemmatized_tokens):
     for word, frequency in word_frequencies.items():
         print(f"{word}: {frequency}")
         return word , frequency
-
 
 def is_question(text):
     question_words = ['who', 'what', 'where', 'when', 'why', 'how', 'is', 'are', 'do', 'does', 'can', 'could', 'should']

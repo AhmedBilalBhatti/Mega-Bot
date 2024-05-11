@@ -153,7 +153,7 @@ def prolog_handling(request):
                         if len(parts) >= 2:
                             part1 = parts[0].strip()
                             part2 = parts[1].strip()
-                            z_values = [z.strip() for z in parts[2:]]  # Get all remaining parts as z_values
+                            z_values = [z.strip() for z in parts[2:]]
 
                             try:
                                 x_node = Prolog_Members.nodes.first(full_name=part1, created_at__gte=str(created_at_threshold))
