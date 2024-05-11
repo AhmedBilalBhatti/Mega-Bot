@@ -69,25 +69,19 @@
 </category>
 
 <!-- Add a default category for unknown input -->
-<category>
-  <pattern>*</pattern>
-  <template>I'm sorry, I didn't understand what you said.</template>
-</category>
-
-<category>
+<!-- <category>
   <pattern></pattern>
   <template>What</template>
-</category>
+</category> -->
 
-<category id="1">
-  <pattern>Who is <set name="relationx"></set>* of <set name="namex"></set>*</pattern>
+
+
+<category>
+  <pattern>WHO IS * OF *</pattern>
   <template>
-    <set name="answer_name"><get name="namex"/></set> is <set name="answer_relation"><get name="relationx"/></set> of <get name="namex"/>.
+    <set name="relationx"><star/></set><set name="namex"><star index="2"/></set>
+    <get name="namey"/> is <get name="relationx"/> of <get name="namex"/>.
   </template>
-  <priority>5</priority>
 </category>
-
-
-
 
 </aiml>

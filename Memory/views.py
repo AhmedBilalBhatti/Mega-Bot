@@ -190,14 +190,43 @@ def chat(request):
         kernel.setPredicate('name',user.username)
         kernel.setPredicate('gender',user.gender)
         if message:
+            bot_response = kernel.respond(message)
             if  re.match(urdu_pattern, message):
                 english = translator.translate(message).text
                 response = kernel.respond(english)
                 bot_response = translator.translate(response, dest='ur').text
+            else:
+                kernel.respond(message)
 
 
-            elif kernel.getPredicate("namex") and kernel.getPredicate("relationx"):
-                print(kernel.getPredicate("namex"), kernel.getPredicate("relationx"))
+            if kernel.getPredicate("namex") and kernel.getPredicate("relationx"):
+                name = kernel.getPredicate("namex")
+                relation = kernel.getPredicate("relationx")
+                params = {
+                    "name": name,
+                    "relation": relation
+                    }
+                cypher_query = f"""
+                    MATCH (p:Prolog_Members {{full_name: $name}})
+                    MATCH (p)-[r:`{relation}`]-(other)
+                    RETURN other.full_name; """
+                results, meta = db.cypher_query(cypher_query, params)
+                formatted_names = []
+                for result in results:
+                    other_name = result[0]
+                    formatted_names.append(other_name)
+                if len(formatted_names) == 1:
+                    name_str = formatted_names[0]
+                elif len(formatted_names) == 2:
+                    name_str = f"{formatted_names[0]} and {formatted_names[1]}"
+                else:
+                    name_str = ', '.join(formatted_names[:-1]) + f", and {formatted_names[-1]}"
+
+                kernel.setPredicate('namey',name_str)
+                kernel.setPredicate('relationy',relation)
+
+                bot_response = kernel.respond(message)
+                print("BJDCLKV;SJ;LSKV;LSJV;LDSNV;SDN KNKNK",bot_response)
 
 
             # elif is_question(message):
@@ -243,12 +272,10 @@ def chat(request):
                 #         bot_response = web_scraping(message)
                 #         maintain_history(request, message, bot_response)
                 #         return JsonResponse({'bot_response': bot_response})
-            else:
-                bot_response = kernel.respond(message)
-                return JsonResponse({'bot_response': bot_response})
-                if bot_response == "I'm sorry, I didn't understand what you said.":
-                    bot_response = web_scraping(message)
-                    maintain_history(request, message, bot_response)
-                    return JsonResponse({'bot_response': bot_response})
+
+            if bot_response == "I'm sorry, I didn't understand what you said.":
+                bot_response = web_scraping(message)
+            maintain_history(request, message, bot_response)
+            return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})
