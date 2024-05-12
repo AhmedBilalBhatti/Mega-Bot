@@ -1,6 +1,4 @@
-<?xml version = "1.0" encoding = "UTF-8"?>
 <aiml>
-   <!-- Define some basic categories -->
 <category>
   <pattern>HELLO</pattern>
   <template>Hi there!</template>
@@ -79,19 +77,19 @@
   </template>
 </category>
 
-<category>
+<!-- <category>
   <pattern>IS * * OF *</pattern>
   <template>
     <think>
-      <set name="personx"><star index="1"/></set>
-      <set name="relationx"><star index="2"/></set>
+      <set name="personx"><star/></set>
+      <set name="relationv"><star index="2"/></set>
       <set name="persony"><star index="3"/></set>
     </think>
-    <condition name="relationxx">
-      <li value="relationxx">Yes, <get name="personxx"/> is the <get name="relationxx"/> of <get name="personyy"/>.</li>
+    <condition name="relationv">
+      <li value="relationv">Yes, <get name="personx"/> is the <get name="relationv"/> of <get name="persony"/>.</li>
       <li>No, <get name="personx"/> is not the <get name="relationx"/> of <get name="persony"/>.</li>
     </condition>
   </template>
-</category>
+</category> -->
 
 </aiml>

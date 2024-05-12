@@ -226,46 +226,30 @@ def chat(request):
                 else:
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
+            # if kernel.getPredicate("relationv"):
+            #     name = kernel.getPredicate("personx").lower()
+            #     relation = kernel.getPredicate("relationv").lower()
+            #     name2 = kernel.getPredicate("persony").lower()
 
 
+            #     params = {"name": name,"name2": name2,"relation": relation}
 
+            #     print('===============================================================',params)
 
+            #     cypher_query = f"""
+            #         MATCH (p:Person {{full_name: $name}})
+            #         MATCH (p1:Person {{full_name: $name2}})
+            #         RETURN EXISTS((p)-[:`{relation}`]-(p1)) AS relationship_exists;
+            #     """
+            #     results, meta = db.cypher_query(cypher_query, params)
 
-
-
-
-            elif kernel.getPredicate("personx") and kernel.getPredicate("relationx") and kernel.getPredicate("persony"):
-                name = kernel.getPredicate("personx").lower()
-                relation = kernel.getPredicate("relationx").lower()
-                name2 = kernel.getPredicate("persony").lower()
-
-
-                params = {"name": name,"name2": name2,"relation": relation}
-
-                print('===============================================================',params)
-
-                # cypher_query = f"""
-                #     MATCH (p:Person {{full_name: $name}})
-                #     MATCH (p1:Person {{full_name: $name2}})
-                #     RETURN EXISTS((p)-[:`{relation}`]-(p1)) AS relationship_exists;
-                # """
-                # results, meta = db.cypher_query(cypher_query, params)
-
-                # if results[0][0]:
-                #     kernel.setPredicate('personxx',name.capitalize())
-                #     kernel.setPredicate('relationxx',relation.capitalize())
-                #     kernel.setPredicate('personyy',name2.capitalize())
-                #     bot_response = kernel.respond(message)
-                # else:
-                #     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
-
-
-
-
-
-
-
-
+            #     if results[0][0]:
+            #         kernel.setPredicate('personxx',name.capitalize())
+            #         kernel.setPredicate('relationxx',relation.capitalize())
+            #         kernel.setPredicate('personyy',name2.capitalize())
+            #         bot_response = kernel.respond(message)
+            #     else:
+            #         bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
             if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)
