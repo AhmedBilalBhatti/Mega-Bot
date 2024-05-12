@@ -80,15 +80,15 @@
 </category>
 
 <category>
-  <pattern>IS * OF *</pattern>
+  <pattern>IS * * OF *</pattern>
   <template>
     <think>
-      <set name="personx"><star/></set>
+      <set name="personx"><star index="1"/></set>
       <set name="relationx"><star index="2"/></set>
       <set name="persony"><star index="3"/></set>
     </think>
-    <condition name="relationx">
-      <li value="relationx">Yes, <get name="personx"/> is the <get name="relationx"/> of <get name="persony"/>.</li>
+    <condition name="relationxx">
+      <li value="relationxx">Yes, <get name="personxx"/> is the <get name="relationxx"/> of <get name="personyy"/>.</li>
       <li>No, <get name="personx"/> is not the <get name="relationx"/> of <get name="persony"/>.</li>
     </condition>
   </template>
