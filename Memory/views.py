@@ -226,7 +226,7 @@ def chat(request):
                 else:
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
-            # if kernel.getPredicate("relationv"):
+            # elif kernel.getPredicate("relationv"):
             #     name = kernel.getPredicate("personx").lower()
             #     relation = kernel.getPredicate("relationv").lower()
             #     name2 = kernel.getPredicate("persony").lower()
