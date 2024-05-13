@@ -44,7 +44,6 @@ class Session_History(StructuredNode):
         self.memory_list.append(formatted_message)
         self.save()
 
-
 class Person(StructuredNode):
     uid = StringProperty(blank=True)
     full_name = StringProperty(blank=True)
