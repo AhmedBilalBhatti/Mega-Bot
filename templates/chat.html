@@ -899,8 +899,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <img id="droneVideo" src="#" width="100%" height="100%" />
+            <div class="modal-body d-flex justify-content-center align-items-center" style="height: 400px;">
+                <img id="droneVideo" src="#" width="100%" height="100%" style="display: none;" />
+                <p id="noVideoMessage" style="display: none; color: red; text-align: center;">No Video detected</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" onclick="takePicture()">
@@ -912,14 +913,13 @@
                 <button type="button" class="btn" id="stopRecordingButton" onclick="stopRecording()" style="display: none;">
                     <i class="fas fa-stop"></i>
                 </button>
-                                    <span id="batteryIndicator" class="ml-3">
-    <i class="fas fa-battery-full"></i> <span id="batteryLevel">100</span>%
-</span>
+                <span style="color: white;" id="batteryIndicator" class="ml-3">
+                    <i class="fas fa-battery-full"></i> <span id="batteryLevel">100</span>%
+                </span>
             </div>
         </div>
     </div>
 </div>
-
 
 
 
@@ -959,47 +959,57 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
-    <script>
-        var updateInterval;
+<script>
+    var updateInterval;
 
-        function updateDroneVideo() {
-            $.ajax({
-                url: '/get_drone_frame',
-                method: 'GET',
-                success: function(data) {
+    function updateDroneVideo() {
+        $.ajax({
+            url: '/get_drone_frame',
+            method: 'GET',
+            success: function(data) {
+                if (data) {
                     $('#droneVideo').attr('src', 'data:image/jpeg;base64,' + data);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching drone frame:', error);
+                    $('#noVideoMessage').hide(); // Hide the error message if data is received
+                    $('#droneVideo').show(); // Show the video element
+                } else {
+                    $('#droneVideo').hide(); // Hide the video element
+                    $('#noVideoMessage').show(); // Show the error message
                 }
-            });
-        }
-
-        $('#videoModal').on('show.bs.modal', function (e) {
-            updateInterval = setInterval(updateDroneVideo, 1000);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching drone frame:', error);
+                $('#droneVideo').hide(); // Hide the video element
+                $('#noVideoMessage').show(); // Show the error message
+            }
         });
+    }
 
-        $('#videoModal').on('hide.bs.modal', function (e) {
-            clearInterval(updateInterval);
-        });
+    $('#videoModal').on('show.bs.modal', function (e) {
+        updateInterval = setInterval(updateDroneVideo, 1000);
+    });
 
-        function takePicture() {
-            console.log("Taking picture...");
-        }
+    $('#videoModal').on('hide.bs.modal', function (e) {
+        clearInterval(updateInterval);
+        $('#droneVideo').hide(); // Hide the video element
+        $('#noVideoMessage').hide(); // Hide the error message
+    });
 
-        function startRecording() {
-            console.log("Starting recording...");
-            $('#startRecordingButton').hide();
-            $('#stopRecordingButton').show();
-        }
+    function takePicture() {
+        console.log("Taking picture...");
+    }
 
-        function stopRecording() {
-            console.log("Stopping recording...");
-            $('#stopRecordingButton').hide();
-            $('#startRecordingButton').show();
-        }
-    </script>
+    function startRecording() {
+        console.log("Starting recording...");
+        $('#startRecordingButton').hide();
+        $('#stopRecordingButton').show();
+    }
 
+    function stopRecording() {
+        console.log("Stopping recording...");
+        $('#stopRecordingButton').hide();
+        $('#startRecordingButton').show();
+    }
+</script>
 
 
 

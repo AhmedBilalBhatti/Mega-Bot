@@ -14,6 +14,8 @@ def Tello_Takeoff():
 		tello = Tello()
 		tello.connect(False)
 		tello.takeoff()
+		bot_response='Yes'
+		return JsonResponse({'bot_response': bot_response})
 	except Exception as e:
 		print("Error taking off:", e)
 
@@ -31,19 +33,15 @@ def take_picture():
 	cv2.imwrite('tello_picture.jpg', frame)
 	tello.streamoff()
 
-
 def generate_drone_frames():
-	tello.streamon()
-	while True:
-		frame = tello.get_frame_read().frame
-		_, jpeg_frame = cv2.imencode('.jpg', frame)
-		base64_frame = base64.b64encode(jpeg_frame)
-		yield (b'--frame\r\n'
-				b'Content-Type: image/jpeg\r\n\r\n' + base64_frame + b'\r\n')
+    while True:
+        frame = tello.get_frame_read().frame
+        _, jpeg_frame = cv2.imencode('.jpg', frame)
+        base64_frame = base64.b64encode(jpeg_frame).decode('utf-8')
+        yield base64_frame
 
 def drone_video_feed(request):
-	return StreamingHttpResponse(generate_drone_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
-
+    return StreamingHttpResponse(generate_drone_frames(), content_type='text/plain')
 
 
 
@@ -73,10 +71,26 @@ def stop_recording():
 
 
 
-
+def Move_Backward(x):
+	try:
+		move_back(x)
+	except:
+		Print('Error')
 
 def Move_Forward(x):
 	try:
 		move_forward(x)
+	except:
+		Print('Error')
+
+def Move_Left(x):
+	try:
+		move_left(x)
+	except:
+		Print('Error')
+
+def Move_Right(x):
+	try:
+		move_right(x)
 	except:
 		Print('Error')

@@ -230,14 +230,26 @@ def chat(request):
 
             elif kernel.getPredicate("takeoff"):
                 Tello_Takeoff()
+                return JsonResponse({'bot_response': bot_response})
         
             elif kernel.getPredicate("land"):
                 Tello_Land()
             
             elif kernel.getPredicate("moveforward"):
                 value = kernel.getPredicate("moveforward")
-                print(value)
                 Move_Forward(value)
+
+            elif kernel.getPredicate("movebackward"):
+                value = kernel.getPredicate("movebackward")
+                Move_Backward(value)
+
+            elif kernel.getPredicate("moveleft"):
+                value = kernel.getPredicate("moveleft")
+                Move_Left(value)
+
+            elif kernel.getPredicate("moveright"):
+                value = kernel.getPredicate("moveright")
+                Move_Right(value)
 
             elif kernel.getPredicate("takepicture"):
                 take_picture()
