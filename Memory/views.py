@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
+from Sensory_Memory.views import *
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -198,6 +199,7 @@ def chat(request):
                 bot_response = kernel.respond(message)
 
             if kernel.getPredicate("namex") and kernel.getPredicate("relationx"):
+                print(kernel.getPredicate("namex"),kernel.getPredicate("relationx"))
                 name = kernel.getPredicate("namex").lower()
                 relation = kernel.getPredicate("relationx").lower()
 
@@ -226,17 +228,17 @@ def chat(request):
                 else:
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
-
-
-
-
-
-
             elif kernel.getPredicate("takeoff"):
-                print("Takeoff predicate is set.")
-            all_predicates = kernel.getPredicates()
-            print(all_predicates)
+                if ready():
+                    Takeoff()
+                else:
+                    bot_response = 'There is a Error while Operating.'
+                
+            
+            elif kernel.getPredicate("land"):
+                Land()
 
+                
             if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)
             maintain_history(request, message, bot_response)

@@ -6,6 +6,34 @@ import time
 
 is_recording = False
 out = None
+tello = Tello()
+
+def ready():
+	try:
+		tello.connect()
+		print("Battery:", tello.get_battery())
+		return True
+	except Exception as e:
+        print("Error connecting to Tello:", e)
+		return False
+
+def takeoff():
+    try:
+        tello.takeoff()
+        return True
+    except Exception as e:
+        print("Error taking off:", e)
+        return False
+
+def land():
+    try:
+        tello.land()
+        return True
+    except Exception as e:
+        print("Error landing:", e)
+        return False
+
+
 
 def video_stream():
     global is_recording, out

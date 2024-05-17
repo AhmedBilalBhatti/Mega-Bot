@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<aiml version="1.0">
+<aiml>
 <category>
-  <pattern>TAKEOFF</pattern>
+  <pattern>TAKEOFF *</pattern>
   <template>
-    <think>
-      <set name="takeoff"><star/></set>
-    </think>
+    <set name="takeoff"><star/></set>
     <random>
       <li>OK, taking off.</li>
       <li>Roger, drone is taking off now.</li>
@@ -14,11 +11,8 @@
     </random>
   </template>
 </category>
-
-
-
 <category>
-  <pattern>LAND</pattern>
+  <pattern>LAND *</pattern>
   <template>
     <think>
       <set name="land"><star/></set>
