@@ -33,6 +33,15 @@ def land():
         print("Error landing:", e)
         return False
 
+def take_picture():
+    tello.streamon()
+    frame_read = tello.get_frame_read()
+    frame = frame_read.frame
+    cv2.imwrite('tello_picture.jpg', frame)
+    tello.streamoff()
+    tello.end()
+
+
 
 
 def video_stream():
@@ -59,17 +68,7 @@ def video_stream():
     tello.streamoff()
     tello.end()
 
-def take_picture():
-    tello = Tello()
-    tello.connect()
-    tello.streamon()
 
-    frame_read = tello.get_frame_read()
-    frame = frame_read.frame
-    cv2.imwrite('tello_picture.jpg', frame)
-
-    tello.streamoff()
-    tello.end()
 
 def start_recording():
     global is_recording, out

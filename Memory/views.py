@@ -233,12 +233,13 @@ def chat(request):
                     Takeoff()
                 else:
                     bot_response = 'There is a Error while Operating.'
-                
-            
+        
             elif kernel.getPredicate("land"):
                 Land()
+            
+            elif kernel.getPredicate("takepicture"):
+                take_picture()
 
-                
             if bot_response == "I'm sorry, I didn't understand what you said.":
                 bot_response = web_scraping(message)
             maintain_history(request, message, bot_response)

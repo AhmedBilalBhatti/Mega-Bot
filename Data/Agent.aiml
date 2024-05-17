@@ -1,4 +1,5 @@
 <aiml>
+
 <category>
   <pattern>TAKEOFF *</pattern>
   <template>
@@ -11,6 +12,7 @@
     </random>
   </template>
 </category>
+
 <category>
   <pattern>LAND *</pattern>
   <template>
@@ -27,7 +29,7 @@
 </category>
 
 <category>
-  <pattern>TAKE PICTURE</pattern>
+  <pattern>TAKE * PICTURE</pattern>
   <template>
     <think>
       <set name="takepicture"><star/></set>
@@ -40,6 +42,9 @@
     </random>
   </template>
 </category>
+
+
+
 
 
 <category>
