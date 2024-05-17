@@ -3,6 +3,7 @@ from djitellopy import Tello
 import cv2
 import os
 import time
+import base64
 
 is_recording = False
 out = None
@@ -43,9 +44,6 @@ def take_picture():
 
 
 
-
-
-
 def generate_drone_frames():
 	tello.streamon()
 	while True:
@@ -57,6 +55,8 @@ def generate_drone_frames():
 
 def drone_video_feed(request):
 	return StreamingHttpResponse(generate_drone_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
+
 
 
 
