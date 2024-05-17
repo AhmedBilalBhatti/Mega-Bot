@@ -900,7 +900,7 @@
                 </button>
             </div>
             <div class="modal-body d-flex justify-content-center align-items-center" style="height: 400px;">
-                <img id="droneVideo" src="#" width="100%" height="100%" style="display: none;" />
+                <video id="droneVideo" src="http://localhost:8080/feed1.mjpg" autoplay width="100%" height="100%" style="display: none;"></video>
                 <p id="noVideoMessage" style="display: none; color: red; text-align: center;">No Video detected</p>
             </div>
             <div class="modal-footer">
@@ -960,40 +960,6 @@
 
 
 <script>
-    var updateInterval;
-
-    function updateDroneVideo() {
-        $.ajax({
-            url: '/get_drone_frame',
-            method: 'GET',
-            success: function(data) {
-                if (data) {
-                    $('#droneVideo').attr('src', 'data:image/jpeg;base64,' + data);
-                    $('#noVideoMessage').hide(); // Hide the error message if data is received
-                    $('#droneVideo').show(); // Show the video element
-                } else {
-                    $('#droneVideo').hide(); // Hide the video element
-                    $('#noVideoMessage').show(); // Show the error message
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching drone frame:', error);
-                $('#droneVideo').hide(); // Hide the video element
-                $('#noVideoMessage').show(); // Show the error message
-            }
-        });
-    }
-
-    $('#videoModal').on('show.bs.modal', function (e) {
-        updateInterval = setInterval(updateDroneVideo, 1000);
-    });
-
-    $('#videoModal').on('hide.bs.modal', function (e) {
-        clearInterval(updateInterval);
-        $('#droneVideo').hide(); // Hide the video element
-        $('#noVideoMessage').hide(); // Hide the error message
-    });
-
     function takePicture() {
         console.log("Taking picture...");
     }
