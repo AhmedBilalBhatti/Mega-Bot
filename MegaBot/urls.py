@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from Memory.urls import *
+from Sensory_Memory.urls import *
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Memory.urls'))
+    path('', include('Memory.urls')),
+    path('', include('Sensory_Memory.urls')),
 ]
 
 if settings.DEBUG:

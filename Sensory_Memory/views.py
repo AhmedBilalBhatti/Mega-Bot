@@ -14,7 +14,7 @@ def ready():
 		print("Battery:", tello.get_battery())
 		return True
 	except Exception as e:
-        print("Error connecting to Tello:", e)
+		print("Error connecting to Tello:", e)
 		return False
 
 def takeoff():
@@ -44,29 +44,20 @@ def take_picture():
 
 
 
-def video_stream():
-    global is_recording, out
-    
-    tello = Tello()
-    tello.connect()
-    tello.streamon()
 
-    cap = tello.get_frame_read()
 
-    while True:
-        frame = cap.frame
-        ret, jpeg = cv2.imencode('.jpg', frame)
-        frame = jpeg.tobytes()
-        
-        # Handle video recording
-        if is_recording and out is not None:
-            out.write(cap.frame)
-        
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+def generate_drone_frames():
+	tello.streamon()
+	while True:
+		frame = tello.get_frame_read().frame
+		_, jpeg_frame = cv2.imencode('.jpg', frame)
+		base64_frame = base64.b64encode(jpeg_frame)
+		yield (b'--frame\r\n'
+				b'Content-Type: image/jpeg\r\n\r\n' + base64_frame + b'\r\n')
 
-    tello.streamoff()
-    tello.end()
+def drone_video_feed(request):
+	return StreamingHttpResponse(generate_drone_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
 
 
 
