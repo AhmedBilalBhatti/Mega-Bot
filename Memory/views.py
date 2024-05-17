@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
-from Sensory_Memory.views import *
+from Sensory_Memory import *
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -229,10 +229,10 @@ def chat(request):
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
             elif kernel.getPredicate("takeoff"):
-                if ready():
+                try:
                     Takeoff()
-                else:
-                    bot_response = 'There is a Error while Operating.'
+                except Exception as e:
+                    bot_response = f'Error: {str(e)}'
         
             elif kernel.getPredicate("land"):
                 Land()

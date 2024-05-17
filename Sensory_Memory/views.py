@@ -7,41 +7,29 @@ import base64
 
 is_recording = False
 out = None
-tello = Tello()
 
-def ready():
-	try:
-		tello.connect()
-		print("Battery:", tello.get_battery())
-		return True
-	except Exception as e:
-		print("Error connecting to Tello:", e)
-		return False
 
 def takeoff():
-    try:
-        tello.takeoff()
-        return True
-    except Exception as e:
-        print("Error taking off:", e)
-        return False
+	try:
+		tello = Tello()
+		tello.connect(False)
+		tello.takeoff()
+	except Exception as e:
+		print("Error taking off:", e)
 
 def land():
-    try:
-        tello.land()
-        return True
-    except Exception as e:
-        print("Error landing:", e)
-        return False
+	try:
+		tello.land()
+		tello.end()
+	except Exception as e:
+		print("Error landing:", e)
 
 def take_picture():
-    tello.streamon()
-    frame_read = tello.get_frame_read()
-    frame = frame_read.frame
-    cv2.imwrite('tello_picture.jpg', frame)
-    tello.streamoff()
-    tello.end()
-
+	tello.streamon()
+	frame_read = tello.get_frame_read()
+	frame = frame_read.frame
+	cv2.imwrite('tello_picture.jpg', frame)
+	tello.streamoff()
 
 
 def generate_drone_frames():
