@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_neomodel',
     'neomodel',
     'Memory',
+    'Sensory_Memory',
 ]
 
 MIDDLEWARE = [

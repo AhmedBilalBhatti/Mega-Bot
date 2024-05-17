@@ -52,7 +52,6 @@ class Person(StructuredNode):
     parent = RelationshipTo('Person','IS_PARENT_OF')
     fact  = RelationshipTo('Attribute','IS')
 
-
 class Attribute(StructuredNode):
     uid = StringProperty(blank=True)
     attribute = StringProperty(blank=True)
@@ -68,7 +67,6 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.email
-
 
 class FAQS(models.Model):
     question = models.TextField()
