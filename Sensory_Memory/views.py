@@ -9,7 +9,7 @@ is_recording = False
 out = None
 
 
-def takeoff():
+def Tello_Takeoff():
 	try:
 		tello = Tello()
 		tello.connect(False)
@@ -17,7 +17,7 @@ def takeoff():
 	except Exception as e:
 		print("Error taking off:", e)
 
-def land():
+def Tello_Land():
 	try:
 		tello.land()
 		tello.end()

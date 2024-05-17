@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
-from Sensory_Memory import *
+from Sensory_Memory.views import Tello_Takeoff
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -230,12 +230,12 @@ def chat(request):
 
             elif kernel.getPredicate("takeoff"):
                 try:
-                    Takeoff()
+                    Tello_Takeoff()
                 except Exception as e:
                     bot_response = f'Error: {str(e)}'
         
             elif kernel.getPredicate("land"):
-                Land()
+                tello.land()
             
             elif kernel.getPredicate("takepicture"):
                 take_picture()
