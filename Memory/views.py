@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
-from Sensory_Memory.views import Tello_Takeoff
+from Sensory_Memory.views import *
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -229,14 +229,16 @@ def chat(request):
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
             elif kernel.getPredicate("takeoff"):
-                try:
-                    Tello_Takeoff()
-                except Exception as e:
-                    bot_response = f'Error: {str(e)}'
+                Tello_Takeoff()
         
             elif kernel.getPredicate("land"):
-                tello.land()
+                Tello_Land()
             
+            elif kernel.getPredicate("moveforward"):
+                value = kernel.getPredicate("moveforward")
+                print(value)
+                Move_Forward(value)
+
             elif kernel.getPredicate("takepicture"):
                 take_picture()
 

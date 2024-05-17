@@ -70,3 +70,13 @@ def stop_recording():
     if out is not None:
         out.release()
         out = None
+
+
+
+
+
+def Move_Forward(x):
+	try:
+		move_forward(x)
+	except:
+		Print('Error')

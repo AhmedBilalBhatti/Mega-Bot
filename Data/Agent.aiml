@@ -111,7 +111,7 @@
 
 
 <category>
-  <pattern>MOVE FORWARD *</pattern>
+  <pattern>MOVE FORWARD * CM</pattern>
   <template>
     <think>
       <set name="moveforward"><star/></set>
@@ -127,7 +127,7 @@
 
 
 <category>
-  <pattern>MOVE BACKWARD *</pattern>
+  <pattern>MOVE BACKWARD * CM</pattern>
   <template>
     <think>
       <set name="movebackward"><star/></set>
@@ -142,7 +142,7 @@
 </category>
 
 <category>
-  <pattern>MOVE LEFT *</pattern>
+  <pattern>MOVE LEFT * CM</pattern>
   <template>
     <think>
       <set name="moveleft"><star/></set>
@@ -157,7 +157,7 @@
 </category>
 
 <category>
-  <pattern>MOVE RIGHT *</pattern>
+  <pattern>MOVE RIGHT * CM</pattern>
   <template>
     <think>
       <set name="moveright"><star/></set>
