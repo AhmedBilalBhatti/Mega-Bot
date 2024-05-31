@@ -1,32 +1,280 @@
 <aiml>
-
 <category>
-  <pattern>TAKEOFF *</pattern>
-  <template>
-    <set name="takeoff"><star/></set>
-    <random>
-      <li>OK, taking off.</li>
-      <li>Roger, drone is taking off now.</li>
-      <li>Drone is in the air.</li>
-      <li>Initiating takeoff procedure.</li>
-    </random>
-  </template>
-</category>
+    <pattern>TAKEOFF</pattern>
+    <template>
+      <set name="takeoff">takeoff</set>
+      <random>
+        <li>OK, taking off.</li>
+        <li>Roger, drone is taking off now.</li>
+        <li>Drone is in the air.</li>
+        <li>Initiating takeoff procedure.</li>
+      </random>
+    </template>
+  </category>
 
-<category>
-  <pattern>LAND *</pattern>
+  <category>
+    <pattern>CAN YOU PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INITIATE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>TAKE OFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LET'S TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LAUNCH</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START FLYING</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>FLY</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+  <pattern>_ TAKEOFF _</pattern>
   <template>
-    <think>
-      <set name="land"><star/></set>
-    </think>
-    <random>
-      <li>OK, landing now.</li>
-      <li>Roger, drone is landing.</li>
-      <li>Drone is touching down.</li>
-      <li>Initiating landing procedure.</li>
-    </random>
+    <srai>TAKEOFF</srai>
   </template>
-</category>
+  </category>
+
+
+
+
+
+
+  <category>
+    <pattern>TAKEOFF</pattern>
+    <template>
+      <set name="takeoff">takeoff</set>
+      <random>
+        <li>OK, taking off.</li>
+        <li>Roger, drone is taking off now.</li>
+        <li>Drone is in the air.</li>
+        <li>Initiating takeoff procedure.</li>
+      </random>
+    </template>
+  </category>
+
+  <category>
+    <pattern>CAN YOU PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INITIATE TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>TAKE OFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LET'S TAKEOFF</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LAUNCH</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START FLYING</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>FLY</pattern>
+    <template>
+      <srai>TAKEOFF</srai>
+    </template>
+  </category>
+
+  <!-- LAND Categories -->
+  <category>
+    <pattern>LAND</pattern>
+    <template>
+      <think>
+        <set name="land">land</set>
+      </think>
+      <random>
+        <li>OK, landing now.</li>
+        <li>Roger, drone is landing.</li>
+        <li>Drone is touching down.</li>
+        <li>Initiating landing procedure.</li>
+      </random>
+    </template>
+  </category>
+
+  <category>
+    <pattern>PLEASE LAND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>CAN YOU PLEASE LAND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INITIATE LANDING</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>START LANDING</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>TOUCHDOWN</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>LET'S LAND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>DESCEND</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+    <pattern>BRING IT DOWN</pattern>
+    <template>
+      <srai>LAND</srai>
+    </template>
+  </category>
+
+  <category>
+  <pattern>_ LAND _</pattern>
+  <template>
+    <srai>LAND</srai>
+  </template>
+  </category>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <category>
   <pattern>TAKE * PICTURE</pattern>

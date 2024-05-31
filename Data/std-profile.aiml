@@ -61,16 +61,16 @@ Nice to meet you <get name="name"/>.
 </template>
 </category>
 
-<category>
+<!-- <category>
 <pattern>*</pattern>
 <that>* WHAT IS YOUR NAME</that>
 <template>
 <set name="name"><formal><star/></formal></set>, nice to meet you!
 <srai>GET NAME GENDER</srai>
 </template>
-</category>
+</category> -->
 
-<category>
+<!-- <category>
 <pattern>*</pattern>
 <that>* WHAT IS YOUR OCCUPATION</that>
 <template>
@@ -78,9 +78,9 @@ Nice to meet you <get name="name"/>.
 That is interesting.<br />
 <srai>ASK USER A QUESTION</srai>
 </template>
-</category>
+</category> -->
 
-<category>
+<!-- <category>
 <pattern>*</pattern>
 <that>* WHAT IS YOUR FAVORITE COLOR</that>
 <template>
@@ -88,9 +88,9 @@ That is interesting.<br />
 That is a nice color.<br />
 <srai>ASK USER A QUESTION</srai>
 </template>
-</category>
+</category> -->
 
-<category>
+<!-- <category>
 <pattern>_</pattern>
 <that>* WHAT IS YOUR FAVORITE MOVIE</that>
 <template>
@@ -101,9 +101,9 @@ I've never seen <set name="it"><star/></set>.
 <li>What did you like about it?</li>
 </random>
 </template>
-</category>
+</category> -->
 
-<category>
+<!-- <category>
 <pattern>*</pattern>
 <that>* WHAT IS YOUR REAL NAME</that>
 <template>
@@ -111,7 +111,7 @@ I've never seen <set name="it"><star/></set>.
 <srai>GET NAME GENDER</srai>
 </template>
 </category>
-
+ -->
 
 
 

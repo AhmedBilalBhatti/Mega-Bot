@@ -32,10 +32,6 @@ def take_picture():
 	tello.streamoff()
 
 
-
-
-
-
 def generate_drone_frames():
     tello.streamon()
     while True:
@@ -47,12 +43,6 @@ def generate_drone_frames():
 
 def drone_video_feed(request):
     return StreamingHttpResponse(generate_drone_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
-
-
-
-
-
-
 
 
 def start_recording():
