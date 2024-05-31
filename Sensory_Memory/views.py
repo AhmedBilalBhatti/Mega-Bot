@@ -24,6 +24,20 @@ def Tello_Land():
 	except Exception as e:
 		print("Error landing:", e)
 
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
 def take_picture():
 	tello.streamon()
 	frame_read = tello.get_frame_read()
