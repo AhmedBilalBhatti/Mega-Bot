@@ -12,6 +12,7 @@ class Signups(StructuredNode):
     gender = StringProperty(required=True)
     face_id = BooleanProperty(default=False)
     profile_image = StringProperty()
+    ip = StringProperty(default=None,blank=True)
 
     chat = RelationshipTo('History_Chat', 'HAS')
 

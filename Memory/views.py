@@ -1,4 +1,6 @@
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.shortcuts import render,redirect
 from Memory.face_id import FaceRecognition
 from django.contrib.auth import logout
@@ -26,6 +28,7 @@ kernel = init_kernel()
 translator = Translator()
 urdu_pattern = r'^[\u0600-\u06FF\s]+$'
 
+
 def addFace(face_id):
     face_id = face_id
     faceRecognition.faceDetect(face_id)
@@ -48,7 +51,9 @@ def signup_login(request, action=None):
             email = request.POST.get('email')
             password = request.POST.get('password')
             dob_str = request.POST.get('dob')
-            has_webcam = request.POST.get('has_webcam', )
+            has_webcam = request.POST.get('has_webcam',)
+            ip_address = request.POST.get('ip_address')
+            print(ip_address)
             print(has_webcam)
             if dob_str:
                 try:
@@ -58,7 +63,7 @@ def signup_login(request, action=None):
             else:
                 return HttpResponseBadRequest("Date of birth is required.")
             gen = predict_gender(name)
-            user = Signups(username=name, email=email, password=password, dob=dob, gender=gen)
+            user = Signups(username=name, email=email, password=password, dob=dob, gender=gen,ip=ip_address)
             user.save()
             msg = "We are delighted to welcome you to our community! Your registration is confirmed, and we are excited to have you on board."
             user_element_id = user.element_id
@@ -77,10 +82,14 @@ def signup_login(request, action=None):
             if action == 'login':
                 mail = request.POST.get('emailid')
                 passcode = request.POST.get('password')
+                ip_address = request.POST.get('ip_address')
+                print(ip_address)
                 user = Signups.nodes.get(email=mail, password=passcode)
                 request.session['user_id'] = face_id or user.uid
                 Login_Trigger(user.username,mail)
                 if user:
+                    user.ip = ip_address
+                    user.save()
                     return redirect('index')
                 else:
                     return HttpResponse('Wrong Email or Password')
@@ -254,9 +263,10 @@ def chat(request):
             elif kernel.getPredicate("takepicture"):
                 take_picture()
 
-            if bot_response == "I'm sorry, I didn't understand what you said.":
+            default_message = "I'm sorry, I didn't understand what you said."
+            if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said."):
                 bot_response = web_scraping(message)
-            maintain_history(request, message, bot_response)
+                maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})
