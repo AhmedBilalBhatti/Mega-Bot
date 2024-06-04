@@ -238,6 +238,33 @@ def chat(request):
                 else:
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
+
+
+
+            elif kernel.getPredicate("person_sn") and kernel.getPredicate("relation_sn"):
+                person_sn = kernel.getPredicate("person_sn")
+                relation_sn = kernel.getPredicate("relation_sn")
+                gender = predict_gender(person_sn)
+
+                today_date = datetime.now().strftime('%Y-%m-%d')
+                chk_date = f"Episode - {today_date}"
+                session_history_data = Session_History.nodes.get(name=chk_date,uid=session)
+
+                last_two_bot_responses = get_last_bot_response(session_history_data)
+                name = get_last_bot_response(session_history_data)
+                top = Signups.nodes.get(uid=session)
+                email1 = top.email
+
+                params = {"name": name,"relation_sn": relation_sn,"email1":email1}
+                cypher_query = f"""
+                    MATCH (p:Person {{email1: $email1}})
+                    CREATE (s:SocialNetwork {{name:$name}})
+                    CREATE (p)-[r:`{relation_sn}`]->(s)
+                    RETURN s.name; """
+                results, meta = db.cypher_query(cypher_query, params)
+
+
+
             elif kernel.getPredicate("takeoff"):
                 Tello_Takeoff()
                 return JsonResponse({'bot_response': bot_response})

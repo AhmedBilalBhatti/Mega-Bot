@@ -2,6 +2,7 @@ from neomodel import StructuredNode, StringProperty,BooleanProperty,IntegerPrope
 from django.conf import settings
 from datetime import datetime
 from django.db import models
+from uuid import uuid4
 
 class Signups(StructuredNode):
     uid = StringProperty()
@@ -57,6 +58,17 @@ class Attribute(StructuredNode):
     uid = StringProperty(blank=True)
     attribute = StringProperty(blank=True)
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+
+class SocialNetwork(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    name = StringProperty()
+    gender = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.uid = str(uuid4())
 
 # =================================================================================================
 
