@@ -8,6 +8,7 @@ from datetime import datetime, date
 from django.contrib import messages
 from googletrans import Translator
 from Sensory_Memory.views import *
+from .Social_Network import *
 from .Update_Store import *
 from Memory.models import *
 from .decorators import *
@@ -264,14 +265,13 @@ def chat(request):
                 take_picture()
 
             default_message = "I'm sorry, I didn't understand what you said."
-            if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said."):
-                
+            if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said.") or bot_response=='':
                 chk = search_ip(current_user.email)
                 if chk:
-                    bot_response = search_ip(current_user.email)
-
-                bot_response = web_scraping(message)
-                maintain_history(request, message, bot_response)
+                    bot_response = chk
+                else:
+                    bot_response = web_scraping(message)
+            maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})

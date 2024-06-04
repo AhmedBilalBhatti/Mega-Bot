@@ -6,17 +6,18 @@ from .models import *
 
 
 def search_ip(email):
+    temp = ''
+    response = ''
     try:
         main_user = Signups.nodes.get(email=email)
         first_ip = main_user.ip
-        search = Signups.nodes.filter(ip=first_ip).exclude(email=email)
-        
+        search = Signups.nodes.exclude(email=email)
         for user in search:
-            temp = user.email
-            response = f'Do you know {temp}?'
-            return response
-
-        return False
+            if user.ip == first_ip:
+                temp = user.username
+                response = f'Do you know {temp}?'
+                break
+        return response
 
     except Signups.DoesNotExist:
         return False
