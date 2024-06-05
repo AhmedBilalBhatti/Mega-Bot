@@ -26,9 +26,11 @@ def search_ip(request,email):
 
 def get_after_know(s):
     parts = s.split("know")
-    asw = len(parts)
     if len(parts) > 1:
-        return parts[1].strip().split()[asw].rstrip('?')
+        name_part = parts[1].strip()
+        if '?' in name_part:
+            name_part = name_part.split('?')[0].strip()
+        return name_part
     else:
         return ""
 
