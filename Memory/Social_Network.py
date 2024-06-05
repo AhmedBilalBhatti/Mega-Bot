@@ -23,7 +23,6 @@ def search_ip(request,email):
     except Signups.DoesNotExist:
         return False
 
-
 def get_after_know(s):
     parts = s.split("know")
     if len(parts) > 1:
