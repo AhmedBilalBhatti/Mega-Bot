@@ -43,7 +43,6 @@ def get_last_bot_response(session_history_data):
 
     return refined
 
-
 def check_befor_asking(request,name2):
     session = request.session.get('user_id')
     user = Signups.nodes.filter(uid=session).get()
