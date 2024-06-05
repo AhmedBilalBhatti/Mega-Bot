@@ -5,17 +5,18 @@ from .models import *
 from neomodel import db
 from datetime import datetime
 
-def search_ip(request,email):
+def search_ip(email):
     temp = ''
     response = ''
     try:
         main_user = Signups.nodes.get(email=email)
         first_ip = main_user.ip
+        first_mail_1 = main_user.email
         search = Signups.nodes.exclude(email=email)
         for user in search:
             if user.ip == first_ip:
                 temp = user.username
-                if check_befor_asking(request,temp):
+                if check_befor_asking(first_mail_1,temp):
                     response = f'Do you know {temp}?'
                     break
         return response
@@ -42,10 +43,8 @@ def get_last_bot_response(session_history_data):
 
     return refined
 
-def check_befor_asking(request,name2):
-    session = request.session.get('user_id')
-    user = Signups.nodes.filter(uid=session).get()
-    email = user.email
+def check_befor_asking(mail,name2):
+    email = mail
     params = {"name2": name2,"email": email,"session":session}
     cypher_query = f"""
     MATCH (p:Signups {{email:$email}})

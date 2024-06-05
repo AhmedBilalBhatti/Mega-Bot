@@ -1,8 +1,10 @@
 from transformers import BartTokenizer, BartForConditionalGeneration
+from nltk.tokenize import word_tokenize
+from django.http import JsonResponse
+from django.core.cache import cache
 from gensim import corpora, models
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
- 
+from celery import shared_task
 
 
 def summary(text):
@@ -30,13 +32,6 @@ def summary(text):
     return final_string2
     
  
- 
- 
- 
-from django.core.cache import cache
-from django.http import JsonResponse
-from celery import shared_task
- 
 @shared_task
 def generate_summary(text):
     return final_string.split('.')[0] + '.'
@@ -46,8 +41,6 @@ def summary_view(request):
     cache_key = f'summary:{text}'
     summary = cache.get(cache_key)
     if summary is None:
-        # The summary wasn't in the cache, so we need to generate it
-        # This will run the task asynchronously and return immediately
         generate_summary.delay(text)
         return JsonResponse({'status': 'processing'})
     else:
