@@ -5,7 +5,7 @@ import datetime
 from neomodel import db
 from datetime import datetime
 
-def search_ip(email):
+def search_ip(request,email):
     temp = ''
     response = ''
     try:
@@ -15,7 +15,7 @@ def search_ip(email):
         for user in search:
             if user.ip == first_ip:
                 temp = user.username
-                if check_befor_asking(request,temp)
+                if check_befor_asking(request,temp):
                     response = f'Do you know {temp}?'
                     break
         return response
@@ -44,7 +44,7 @@ def get_last_bot_response(session_history_data):
     return refined
 
 
-def check_befor_asking(request,name2)
+def check_befor_asking(request,name2):
     session = request.session.get('user_id')
     user = Signups.nodes.filter(uid=session).get()
     email = user.email
@@ -54,8 +54,8 @@ def check_befor_asking(request,name2)
     cypher_query = f"""
     MATCH (p:Signups {{email:$email1}})
     CREATE (s:SocialNetwork {{name:$name,uid:$session}})
-    CREATE (p)<-[r:]-(s)
-    RETURN r; """ 
+    CREATE (s)-[r:'']->(p)
+    RETURN r; """
     results, meta = db.cypher_query(cypher_query, params)
 
     print(results)
