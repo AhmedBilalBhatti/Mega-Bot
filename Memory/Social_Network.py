@@ -1,7 +1,7 @@
 import re
+import datetime
 from .views import *
 from .models import *
-import datetime
 from neomodel import db
 from datetime import datetime
 
@@ -48,14 +48,16 @@ def check_befor_asking(request,name2):
     session = request.session.get('user_id')
     user = Signups.nodes.filter(uid=session).get()
     email = user.email
-
     params = {"name2": name2,"email": email,"session":session}
-
     cypher_query = f"""
-    MATCH (p:Signups {{email:$email1}})
-    CREATE (s:SocialNetwork {{name:$name,uid:$session}})
-    CREATE (s)-[r:'']->(p)
+    MATCH (p:Signups {{email:$email}})
+    MATCH (s:SocialNetwork {{name:$name2,uid:$session}})
+    MATCH (p)-[r]-(s)
     RETURN r; """
     results, meta = db.cypher_query(cypher_query, params)
+    print('Length of Result',len(results))
 
-    print(results)
+    if len(results) == 0:
+        return True
+    else:
+        return False

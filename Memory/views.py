@@ -300,8 +300,8 @@ def chat(request):
                 chk = search_ip(request,current_user.email)
                 if chk:
                     bot_response = chk
-                else:
-                    bot_response = web_scraping(message)
+                # else:
+                #     bot_response = web_scraping(message)
             maintain_history(request, message, bot_response)
             return JsonResponse({'bot_response': bot_response})
 
