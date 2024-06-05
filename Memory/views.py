@@ -13,6 +13,7 @@ from .Update_Store import *
 from Memory.models import *
 from .decorators import *
 from .web_scrap import *
+from neomodel import db
 from neomodel import *
 from .prolog import *
 from .Emails import *
@@ -238,9 +239,6 @@ def chat(request):
                 else:
                     bot_response = 'No knowledge Found in knowledgebase according to your Query.'
 
-
-
-
             elif kernel.getPredicate("person_sn") and kernel.getPredicate("relation_sn"):
                 person_sn = kernel.getPredicate("person_sn")
                 relation_sn = kernel.getPredicate("relation_sn")
@@ -255,15 +253,21 @@ def chat(request):
                 top = Signups.nodes.get(uid=session)
                 email1 = top.email
 
-                params = {"name": name,"relation_sn": relation_sn,"email1":email1}
-                cypher_query = f"""
-                    MATCH (p:Person {{email1: $email1}})
-                    CREATE (s:SocialNetwork {{name:$name}})
-                    CREATE (p)-[r:`{relation_sn}`]->(s)
-                    RETURN s.name; """
-                results, meta = db.cypher_query(cypher_query, params)
+                gen = predict_gender(name)
 
+                params = {"name": name,"relation_sn": relation_sn,"email1":email1,"session":session}
 
+                print(params)
+                if params:
+                    print('Access')
+                    cypher_query = f"""
+                        MATCH (p:Signups {{email:$email1}})
+                        CREATE (s:SocialNetwork {{name:$name,uid:$session}})
+                        CREATE (p)<-[r:`is_{relation_sn}`]-(s)
+                        RETURN r; """ 
+                    results, meta = db.cypher_query(cypher_query, params)
+
+                    print(results,meta)
 
             elif kernel.getPredicate("takeoff"):
                 Tello_Takeoff()

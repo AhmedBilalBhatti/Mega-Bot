@@ -2,6 +2,7 @@ import re
 from .views import *
 from .models import *
 import datetime
+from neomodel import db
 from datetime import datetime
 
 def search_ip(email):
@@ -14,8 +15,9 @@ def search_ip(email):
         for user in search:
             if user.ip == first_ip:
                 temp = user.username
-                response = f'Do you know {temp}?'
-                break
+                if check_befor_asking(request,temp)
+                    response = f'Do you know {temp}?'
+                    break
         return response
 
     except Signups.DoesNotExist:
@@ -40,3 +42,20 @@ def get_last_bot_response(session_history_data):
     refined = get_after_know(refine)
 
     return refined
+
+
+def check_befor_asking(request,name2)
+    session = request.session.get('user_id')
+    user = Signups.nodes.filter(uid=session).get()
+    email = user.email
+
+    params = {"name2": name2,"email": email,"session":session}
+
+    cypher_query = f"""
+    MATCH (p:Signups {{email:$email1}})
+    CREATE (s:SocialNetwork {{name:$name,uid:$session}})
+    CREATE (p)<-[r:]-(s)
+    RETURN r; """ 
+    results, meta = db.cypher_query(cypher_query, params)
+
+    print(results)
