@@ -5,7 +5,7 @@ from .models import *
 from neomodel import db
 from datetime import datetime
 
-def search_ip(email):
+def search_ip(request,email):
     temp = ''
     response = ''
     try:
@@ -16,7 +16,7 @@ def search_ip(email):
         for user in search:
             if user.ip == first_ip:
                 temp = user.username
-                if check_befor_asking(first_mail_1,temp):
+                if check_befor_asking(request,first_mail_1,temp):
                     response = f'Do you know {temp}?'
                     break
         return response
@@ -26,14 +26,16 @@ def search_ip(email):
 
 def get_after_know(s):
     parts = s.split("know")
+    asw = len(parts)
     if len(parts) > 1:
-        return parts[1].strip().split()[0].rstrip('?')
+        return parts[1].strip().split()[asw].rstrip('?')
     else:
         return ""
 
 def get_last_bot_response(session_history_data):
     bot_responses = [chat_message for chat_message in session_history_data.memory_list if chat_message.split(" - ")[1].startswith("Bot:")]
     last_two_bot_responses = bot_responses[-2:]
+    print(last_two_bot_responses)
 
     second_last_response = last_two_bot_responses[1] if last_two_bot_responses else None
 
@@ -43,16 +45,24 @@ def get_last_bot_response(session_history_data):
 
     return refined
 
-def check_befor_asking(mail,name2):
+def check_befor_asking(request,mail,name2):
+    results = ''
+    meta = ''
+    session = request.session.get('user_id')
     email = mail
     params = {"name2": name2,"email": email,"session":session}
+
     cypher_query = f"""
     MATCH (p:Signups {{email:$email}})
     MATCH (s:SocialNetwork {{name:$name2,uid:$session}})
     MATCH (p)-[r]-(s)
     RETURN r; """
-    results, meta = db.cypher_query(cypher_query, params)
-    print('Length of Result',len(results))
+
+    try:
+        results, meta = db.cypher_query(cypher_query, params)
+        print('Length of Result',len(results))
+    except Exception as e:
+        print(e)
 
     if len(results) == 0:
         return True

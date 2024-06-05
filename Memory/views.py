@@ -297,7 +297,7 @@ def chat(request):
 
             default_message = "I'm sorry, I didn't understand what you said."
             if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said.") or bot_response=='':
-                chk = search_ip(current_user.email)
+                chk = search_ip(request,current_user.email)
                 print('shkcgsdg',chk)
                 if chk:
                     print('hgjkHJ')
