@@ -308,3 +308,11 @@ def chat(request):
             return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})
+
+
+
+
+
+from .Topic_Modelling import *
+
+format_data(request)
