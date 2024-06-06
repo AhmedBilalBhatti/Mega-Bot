@@ -3,6 +3,7 @@ from djitellopy import Tello
 import cv2
 import os
 import time
+from django.http import StreamingHttpResponse
 import base64
 
 is_recording = False
@@ -46,17 +47,26 @@ def take_picture():
 	tello.streamoff()
 
 
-def generate_drone_frames():
+def generate_video_frames():
+    tello = Tello()
+    tello.connect()
     tello.streamon()
-    while True:
-        frame = tello.get_frame_read().frame
-        _, jpeg_frame = cv2.imencode('.jpg', frame)
-        base64_frame = base64.b64encode(jpeg_frame)
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + base64_frame + b'\r\n')
+    
+    try:
+        while True:
+            frame = tello.get_frame_read().frame
+            _, jpeg = cv2.imencode('.jpg', frame)
+            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+    except KeyboardInterrupt:
+        tello.streamoff()
+        tello.land()
+        tello.end()
+        exit(1)
+
 
 def drone_video_feed(request):
-    return StreamingHttpResponse(generate_drone_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
 
 
 def start_recording():

@@ -39,6 +39,7 @@
 
 </head>
 <style>
+
         .modal-dialog {
             max-width: 720px;
         }
@@ -184,6 +185,7 @@
                                 <ul class="inner-links-list" id="innerLink">
                                     <li class="active"><a href="#!" data-title="Ask anything">Ask anything</a></li>
                                     <li><a href="#" data-toggle="modal" data-target="#videoModal" data-title="Drone Footage">Drone Camera</a></li>
+
 
                                     <li><a href="#!" data-title="Image generator">Image generator</a></li>
                                     <li><a href="#!" data-title="Essay writer">Essay writer</a></li>
@@ -797,7 +799,8 @@
                 </button>
             </div>
             <div class="modal-body d-flex justify-content-center align-items-center" style="height: 400px;">
-                <video id="droneVideo" src="http://localhost:8080/feed1.mjpg" autoplay width="100%" height="100%" style="display: none;"></video>
+
+                <video id="droneVideo" autoplay width="100%" height="100%"></video>
                 <p id="noVideoMessage" style="display: none; color: red; text-align: center;">No Video detected</p>
             </div>
             <div class="modal-footer">
@@ -817,8 +820,7 @@
         </div>
     </div>
 </div>
-
-
+<!-- <img id="drone-video" src="" alt="Tello Drone Video Feed"> -->
 
 
 
@@ -898,6 +900,30 @@
     </script>
 
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+<!--     <script>
+        function updateVideoFeed() {
+            var img = document.getElementById('drone-video');
+            img.src = "/drone_video_feed/";  // URL to your Django view serving the video feed
+        }
+
+        // Call the function when the page loads
+        window.onload = function() {
+            updateVideoFeed();
+        };
+    </script> -->
+    <script>
+    function updateVideoFeed() {
+        var video = document.getElementById('droneVideo');
+        video.src = "/drone_video_feed/";  // URL to your Django view serving the video feed
+    }
+
+    // Call the function when the modal is shown
+    $('#videoModal').on('shown.bs.modal', function (e) {
+        updateVideoFeed();
+    });
+</script>
+
 
     <script>
         function startSpeechRecognition() {
@@ -1041,6 +1067,7 @@
     });
 
     </script>
+
 
 </body>
 </html>

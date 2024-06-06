@@ -41,14 +41,12 @@ def Topic_Generate(text):
 
 
 
-def format_data(request): 
-    session = request.session.get('user_id')
-    current_user = Signups.nodes.filter(uid = session).first()
-    today = datetime.today()
-    formatted_today = today.strftime('Episode - %Y-%m-%d')
+# def format_data(request): 
+#     session = request.session.get('user_id')
+#     current_user = Signups.nodes.filter(uid = session).first()
+#     today = datetime.today()
+#     formatted_today = today.strftime('Episode - %Y-%m-%d')
 
-    today_data = Session_History.nodes.get(name = formatted_today)
+#     today_data = Session_History.nodes.get(name = formatted_today)
 
-    print(today_data.memory_list)
-
-
+#     print(today_data.memory_list)

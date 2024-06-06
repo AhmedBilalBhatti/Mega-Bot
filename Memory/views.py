@@ -313,6 +313,6 @@ def chat(request):
 
 
 
-from .Topic_Modelling import *
+# from .Topic_Modelling import *
 
-format_data(request)
+# format_data(request)
