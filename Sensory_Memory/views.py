@@ -26,27 +26,6 @@ def Tello_Land():
 		print("Error landing:", e)
 
 
-
-
-
-
-
-
-
-
-
-
-
-		
-
-def take_picture():
-	tello.streamon()
-	frame_read = tello.get_frame_read()
-	frame = frame_read.frame
-	cv2.imwrite('tello_picture.jpg', frame)
-	tello.streamoff()
-
-
 def generate_video_frames():
     tello = Tello()
     tello.connect()
@@ -69,27 +48,43 @@ def drone_video_feed(request):
 
 
 
-def start_recording():
-    global is_recording, out
+
+
+		
+
+def take_picture():
+	tello.streamon()
+	frame_read = tello.get_frame_read()
+	frame = frame_read.frame
+	cv2.imwrite('tello_picture.jpg', frame)
+	tello.streamoff()
+
+
+
+
+
+
+# def start_recording():
+#     global is_recording, out
     
-    tello = Tello(False)
-    tello.connect()
-    tello.streamon()
+#     tello = Tello(False)
+#     tello.connect()
+#     tello.streamon()
 
-    frame_read = tello.get_frame_read()
-    frame = frame_read.frame
+#     frame_read = tello.get_frame_read()
+#     frame = frame_read.frame
     
-    height, width, _ = frame.shape
-    out = cv2.VideoWriter('tello_video.avi', cv2.VideoWriter_fourcc(*'XVID'), 20.0, (width, height))
+#     height, width, _ = frame.shape
+#     out = cv2.VideoWriter('tello_video.avi', cv2.VideoWriter_fourcc(*'XVID'), 20.0, (width, height))
 
-    is_recording = True
+#     is_recording = True
 
-def stop_recording():
-    global is_recording, out
-    is_recording = False
-    if out is not None:
-        out.release()
-        out = None
+# def stop_recording():
+#     global is_recording, out
+#     is_recording = False
+#     if out is not None:
+#         out.release()
+#         out = None
 
 
 def Move_Backward(x):
