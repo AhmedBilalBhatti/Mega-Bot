@@ -83,18 +83,37 @@ def drone_video_feed(request):
     return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
+def take_picture(request):
+    try:
+        # Connect to Tello and start video stream
+        tello.connect()
+        tello.streamon()
 
+        # Capture frame from the video stream
+        frame_read = tello.get_frame_read()
+        frame = frame_read.frame
 
+        if frame is not None:
+            # Save image to 'static' folder (ensure 'static' folder exists in your project)
+            file_path = os.path.join(settings.BASE_DIR, 'static', 'tello_picture.jpg')
+            cv2.imwrite(file_path, frame)
 
-def take_picture():
-	tello.streamon()
-	frame_read = tello.get_frame_read()
-	frame = frame_read.frame
-	cv2.imwrite('tello_picture.jpg', frame)
-	tello.streamoff()
+            # Convert image to base64 (optional)
+            with open(file_path, 'rb') as img_file:
+                img_str = base64.b64encode(img_file.read()).decode('utf-8')
 
+            return JsonResponse({'status': 'success', 'image': img_str})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Failed to capture frame from drone'})
 
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
+    finally:
+        # Clean up: Stop video stream and disconnect from Tello
+        tello.streamoff()
+        tello.end()
 
+        
 def Move_Backward(x):
 	try:
 		move_back(x)

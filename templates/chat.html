@@ -42,13 +42,13 @@
 </head>
 <style>
 
-        .modal-dialog {
-            max-width: 720px;
-        }
-        .modal-content {
-            width: 100%;
-            height: 545px;
-        }
+.modal-dialog {
+    max-width: 720px;
+}
+.modal-content {
+    width: 100%;
+    height: 545px;
+}
 
 .gg-play-button-o {
     box-sizing: border-box;
@@ -97,17 +97,17 @@
     transform: translateY(0px);
   }
 }
-        .modal-body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        #drone-video {
-            width: 100%;
-            height: auto;
-            max-height: 400px; /* You can adjust this value based on your requirements */
-        }
+#drone-video {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* You can adjust this value based on your requirements */
+}
 </style>
 
 <body>
@@ -210,8 +210,7 @@
                                     <!-- <li><a href="#" data-toggle="modal" data-target="#videoModal" data-title="Drone Footage">Drone Camera</a></li> -->
 
 
-                                    <li><a href="#!" data-title="Image generator">Image generator</a></li>
-                                    <li><a href="#!" data-title="Essay writer">Essay writer</a></li>
+                                    <li><a href="#!" data-title="Image generator">Image Enhancer</a></li>
                                     <li><a href="#!" data-title="Essay writer">Text Summarizer</a></li>
                                     <li><a href="#!" data-title="Essay writer">Topic Modeller</a></li>
                                 </ul>
@@ -806,7 +805,7 @@
                 <img id="drone-video" src="" alt="Tello Drone Video Feed">
 
                  <div class="modal-footer">
-                    <button type="button" class="modal-submit m-0" data-bs-dismiss="modal">Take Picture</button>
+                    <button type="button" class="modal-submit m-0" id="takePictureBtn" data-bs-dismiss="modal">Take Picture</button>
                 </div> 
             </div> 
         </div>
@@ -1045,6 +1044,29 @@
 
     </script>
 
+<script>
+$(document).ready(function() {
+    $('#takePictureBtn').click(function() {
+        $.ajax({
+            url: '{% url "take_picture" %}',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    console.log('Picture successfully captured and saved.');
+                } else {
+                    console.error('Failed to capture picture:', response.message);
+                    alert('Failed to capture picture. Please try again.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error capturing picture:', error);
+                alert('Error capturing picture. Please try again.');
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>
