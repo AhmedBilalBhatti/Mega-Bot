@@ -5,9 +5,12 @@ import cv2
 import os
 import time
 import base64
+import logging
 
 is_recording = False
 out = None
+
+logging.basicConfig(level=logging.INFO)
 
 
 def Tello_Takeoff():
@@ -24,16 +27,6 @@ def Tello_Land():
 		tello.end()
 	except Exception as e:
 		print("Error landing:", e)
-
-
-
-
-
-
-
-
-
-
 
 
 # def generate_video_frames():
@@ -56,18 +49,6 @@ def Tello_Land():
 # def drone_video_feed(request):
 #     return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
 
-
-
-
-
-
-
-
-
-
-import logging
-
-logging.basicConfig(level=logging.INFO)
 
 def generate_video_frames():
     tello = Tello()
@@ -105,10 +86,6 @@ def drone_video_feed(request):
 
 
 
-
-
-		
-
 def take_picture():
 	tello.streamon()
 	frame_read = tello.get_frame_read()
@@ -116,28 +93,6 @@ def take_picture():
 	cv2.imwrite('tello_picture.jpg', frame)
 	tello.streamoff()
 
-
-def start_recording():
-    global is_recording, out
-    
-    tello = Tello(False)
-    tello.connect()
-    tello.streamon()
-
-    frame_read = tello.get_frame_read()
-    frame = frame_read.frame
-    
-    height, width, _ = frame.shape
-    out = cv2.VideoWriter('tello_video.avi', cv2.VideoWriter_fourcc(*'XVID'), 20.0, (width, height))
-
-    is_recording = True
-
-def stop_recording():
-    global is_recording, out
-    is_recording = False
-    if out is not None:
-        out.release()
-        out = None
 
 
 def Move_Backward(x):
