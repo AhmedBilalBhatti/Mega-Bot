@@ -45,7 +45,7 @@
         }
         .modal-content {
             width: 100%;
-            height: 445px;
+            height: 490px;
         }
 
 .gg-play-button-o {
@@ -95,9 +95,21 @@
     transform: translateY(0px);
   }
 }
+        .modal-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #drone-video {
+            width: 100%;
+            height: auto;
+            max-height: 400px; /* You can adjust this value based on your requirements */
+        }
 </style>
 
 <body>
+    
     <section class="chatting-wrapper pt-0">
         <nav class="navbar navbar-expand-md p-0">
             <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
@@ -307,7 +319,7 @@
                     <div class="fixed-header">
                         <div class="d-flex align-items-center gap-2">
                             <button class="navbar-toggler d-md-none d-block" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#mainnavbarNav" aria-controls="mainnavbarNav" aria-expanded="false"
+                                data-bs-target="#mainnavbarNav" aria-contros="mainnavbarNav" aria-expanded="false"
                                 aria-label="Toggle navigation">
                                 <i class="iconsax" data-icon="text-align-justify"></i>
                             </button>
@@ -759,13 +771,13 @@
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Your Rating</h1>
+                 <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Drone Video</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="iconsax" data-icon="close-square"></i>
                     </button>
-                </div>
-                <div class="modal-body">
+                </div> 
+<!--                 <div class="modal-body">
                     <form class="auth-form">
                         <div class="form-group">
                             <label for="comment" class="form-label text-white">Type Something</label>
@@ -780,11 +792,14 @@
                         <li><i class="ri-star-fill"></i></li>
                         <li><i class="ri-star-fill"></i></li>
                     </ul>
-                </div>
-                <div class="modal-footer">
+                </div> -->
+
+                <img id="drone-video" src="" alt="Tello Drone Video Feed">
+
+<!--                 <div class="modal-footer">
                     <button type="button" class="modal-submit m-0" data-bs-dismiss="modal">Send</button>
-                </div>
-            </div>
+                </div> -->
+            </div> 
         </div>
     </div>
 
@@ -799,29 +814,18 @@
                 </button>
             </div>
             <div class="modal-body d-flex justify-content-center align-items-center" style="height: 400px;">
-
-                <video id="droneVideo" autoplay width="100%" height="100%"></video>
+                    
+                <!-- <video id="droneVideo" autoplay width="100%" height="100%"></video> -->
                 <p id="noVideoMessage" style="display: none; color: red; text-align: center;">No Video detected</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" onclick="takePicture()">
                     <i class="fas fa-camera"></i>
                 </button>
-<!--                 <button type="button" class="btn" id="startRecordingButton" onclick="startRecording()">
-                    <i class="fas fa-video"></i>
-                </button>
-                <button type="button" class="btn" id="stopRecordingButton" onclick="stopRecording()" style="display: none;">
-                    <i class="fas fa-stop"></i>
-                </button> -->
-<!--                 <span style="color: white;" id="batteryIndicator" class="ml-3">
-                    <i class="fas fa-battery-full"></i> <span id="batteryLevel">100</span>%
-                </span> -->
             </div>
         </div>
     </div>
-</div>
-<!-- <img id="drone-video" src="" alt="Tello Drone Video Feed"> -->
-
+</div> 
 
 
 
@@ -901,7 +905,7 @@
 
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
-<!--     <script>
+    <script>
         function updateVideoFeed() {
             var img = document.getElementById('drone-video');
             img.src = "/drone_video_feed/";  // URL to your Django view serving the video feed
@@ -911,19 +915,7 @@
         window.onload = function() {
             updateVideoFeed();
         };
-    </script> -->
-    <script>
-    function updateVideoFeed() {
-        var video = document.getElementById('droneVideo');
-        video.src = "/drone_video_feed/";  // URL to your Django view serving the video feed
-    }
-
-    // Call the function when the modal is shown
-    $('#videoModal').on('shown.bs.modal', function (e) {
-        updateVideoFeed();
-    });
-</script>
-
+    </script>
 
     <script>
         function startSpeechRecognition() {
@@ -970,7 +962,7 @@
         });
     </script>
 
-    <script>
+<!--     <script>
         document.onkeydown = (e) => {
             if (e.key == 123) {
                 e.preventDefault();
@@ -988,7 +980,7 @@
                 e.preventDefault();
             }
             };
-    </script>
+    </script> -->
     <script>
     document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
