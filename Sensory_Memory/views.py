@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import StreamingHttpResponse
 from djitellopy import Tello
+from .object_detect import *
 import cv2
 import os
 import time

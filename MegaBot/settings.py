@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'django_neomodel',
     'neomodel',
     'Memory',
@@ -51,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,11 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # CACHE_KEY_PREFIX = 'Neo4j'
 
 APPEND_SLASH = False
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",  # Adjust as per your frontend URL
-]
-
 
 SESSION_COOKIE_AGE = 6000
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
