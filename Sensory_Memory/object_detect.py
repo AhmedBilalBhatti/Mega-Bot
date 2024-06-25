@@ -96,23 +96,24 @@ net.setInputScale(1.0 / 127.5)
 net.setInputMean((127.5, 127.5, 127.5))
 net.setInputSwapRB(True)
 
-me = tello.Tello()
-me.connect()
-print(me.get_battery())
-me.streamoff()
-me.streamon()
+# me = tello.Tello()
+# me.connect()
+# print(me.get_battery())
+# me.streamoff()
+# me.streamon()
 
-while True:
-    img = me.get_frame_read().frame
-    classIds, confs, bbox = net.detect(img, confThreshold=thres, nmsThreshold=nmsThres)
-    try:
-        for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):
-            cvzone.cornerRect(img, box)
-            cv2.putText(img, f'{classNames[classId - 1].upper()} {round(conf * 100, 2)}',
-                        (box[0] + 10, box[1] + 30), cv2.FONT_HERSHEY_COMPLEX_SMALL,
-                        1, (0, 255, 0), 2)
-    except:
-        pass
+def detection():
+    while True:
+        img = me.get_frame_read().frame
+        classIds, confs, bbox = net.detect(img, confThreshold=thres, nmsThreshold=nmsThres)
+        try:
+            for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):
+                cvzone.cornerRect(img, box)
+                cv2.putText(img, f'{classNames[classId - 1].upper()} {round(conf * 100, 2)}',
+                            (box[0] + 10, box[1] + 30), cv2.FONT_HERSHEY_COMPLEX_SMALL,
+                            1, (0, 255, 0), 2)
+        except:
+            pass
 
-    cv2.imshow("Image", img)
-    cv2.waitKey(1)
+        cv2.imshow("Image", img)
+        cv2.waitKey(1)
