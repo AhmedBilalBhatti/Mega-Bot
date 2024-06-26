@@ -30,7 +30,6 @@ class History_Chat(StructuredNode):
     name = StringProperty()
     chat = ArrayProperty(StringProperty())
     created_at = DateTimeProperty(default_now=True)
-    sentiments = StringProperty(default=None,blank=True)
     memory_list = ArrayProperty(StringProperty())
 
     history = RelationshipTo('Session_History', 'HAS')
@@ -52,6 +51,7 @@ class Session_History(StructuredNode):
     uid = StringProperty()
     name = StringProperty()
     start_session = DateTimeProperty(default_now=True)
+    sentiments = StringProperty(default=None,blank=True)
     memory_list = ArrayProperty(StringProperty())
 
     def save_message(self, message_type, message_content):

@@ -164,6 +164,15 @@ def sentiment(request,text):
         
     return sentiments
 
+def process_sentiment(text):
+    chat_data = re.sub(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} - (User|Bot): ', '', text)
+    return chat_data
+
+def update_sentiment(text):
+    data = process_sentiment(text)
+    update = sentiment(request,data)
+    return update
+
 
 def maintain_history(request, user, bot):
     user_id = request.session.get('user_id')
@@ -182,6 +191,10 @@ def maintain_history(request, user, bot):
         try:
             name = f"Episode - {start_session.strftime('%Y-%m-%d')}" 
             session_history_node = Session_History.nodes.filter(uid=user_id, name=name).first()
+            data = session_history_node.memory_list
+            new_sent = update_sentiment(data)
+            session_history_node.sentiments = new_sent
+            session_history_node.save()
         except:
             name = f"Episode - {start_session.strftime('%Y-%m-%d')}" 
             session_history_node = Session_History(uid=user_id, name=name).save()
@@ -190,6 +203,8 @@ def maintain_history(request, user, bot):
     if session_history_node:
         session_history_node.save_message("User", user)
         session_history_node.save_message("Bot", bot)
+
+
 
 def extend_episode(request,user,bot,session):
     today = datetime.now().strftime('%Y-%m-%d')
