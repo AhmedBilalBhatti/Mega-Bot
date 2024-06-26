@@ -1,4 +1,5 @@
 from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.shortcuts import render,redirect
@@ -150,6 +151,20 @@ def contact(request):
     return render(request,'contact-us.html',{'session':session})
 
 # =======================================================================================================
+def sentiment(request,text):
+    sia = SentimentIntensityAnalyzer()
+    scores = sia.polarity_scores(text)
+    
+    if scores['compound'] >= 0.05:
+        sentiments = 'Positive sentiments'
+    elif scores['compound'] <= -0.05:
+        sentiments = 'Negative sentiments'
+    else:
+        sentiments = 'Neutral sentiments'
+        
+    return sentiments
+
+
 def maintain_history(request, user, bot):
     user_id = request.session.get('user_id')
     user_node = Signups.nodes.filter(uid=user_id).first()
@@ -181,8 +196,10 @@ def extend_episode(request,user,bot,session):
     check = f"Episode - {today}"
     obj_ep = Session_History.nodes.get(uid = session,name = check)
     try:
-        user_obj = Episode_Part(uid = session,name='Bot',response=bot).save()
-        bot_bot = Episode_Part(uid = session,name='User',response=user).save()
+        s1 = sentiment(request,bot)
+        s2 = sentiment(request,user)
+        user_obj = Episode_Part(uid = session,name='Bot',response=bot,sentiments=s1).save()
+        bot_bot = Episode_Part(uid = session,name='User',response=user,sentiments=s2).save()
         user_obj.relation.connect(obj_ep)
         bot_bot.relation.connect(obj_ep)
     except:
@@ -321,11 +338,3 @@ def chat(request):
             return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})
-
-
-
-
-
-# from .Topic_Modelling import *
-
-# format_data(request)
