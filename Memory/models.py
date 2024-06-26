@@ -43,15 +43,11 @@ class Episode_Part(StructuredNode):
 
     relation = RelationshipFrom('Session_History', 'HAS_CHAT')
 
-
-
-
-
 class Session_History(StructuredNode):
     uid = StringProperty()
     name = StringProperty()
     start_session = DateTimeProperty(default_now=True)
-    sentiments = StringProperty(default=None,blank=True)
+    overall_sentiments = StringProperty(default='neutral')
     memory_list = ArrayProperty(StringProperty())
 
     def save_message(self, message_type, message_content):

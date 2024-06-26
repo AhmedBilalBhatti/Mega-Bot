@@ -6,8 +6,6 @@ from PIL import Image
 from MegaBot.settings import BASE_DIR
 
 detector = cv2.CascadeClassifier(str(BASE_DIR)+'/haarcascade_frontalface_default.xml')
-
-
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 class FaceRecognition:    

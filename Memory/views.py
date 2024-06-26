@@ -77,8 +77,8 @@ def signup_login(request, action=None):
             user.save()
             Signup_Thanks(name,email,msg)
             print("Id===", face_id)
-            if has_webcam:
-                addFace(face_id)
+            # if has_webcam:
+            #     addFace(face_id)
             request.session['user_id'] = face_id or user.uid
             return redirect('index')
         else:
@@ -151,7 +151,7 @@ def contact(request):
     return render(request,'contact-us.html',{'session':session})
 
 # =======================================================================================================
-def sentiment(request,text):
+def sentiment(text):
     sia = SentimentIntensityAnalyzer()
     scores = sia.polarity_scores(text)
     
@@ -170,7 +170,7 @@ def process_sentiment(text):
 
 def update_sentiment(text):
     data = process_sentiment(text)
-    update = sentiment(request,data)
+    update = sentiment(data)
     return update
 
 
@@ -190,11 +190,7 @@ def maintain_history(request, user, bot):
         start_session = datetime.combine(date.today(), datetime.min.time())
         try:
             name = f"Episode - {start_session.strftime('%Y-%m-%d')}" 
-            session_history_node = Session_History.nodes.filter(uid=user_id, name=name).first()
-            data = session_history_node.memory_list
-            new_sent = update_sentiment(data)
-            session_history_node.sentiments = new_sent
-            session_history_node.save()
+            session_history_node = Session_History.nodes.get(uid=user_id, name=name)
         except:
             name = f"Episode - {start_session.strftime('%Y-%m-%d')}" 
             session_history_node = Session_History(uid=user_id, name=name).save()
@@ -203,7 +199,11 @@ def maintain_history(request, user, bot):
     if session_history_node:
         session_history_node.save_message("User", user)
         session_history_node.save_message("Bot", bot)
-
+        data = '\n'.join(session_history_node.memory_list)
+        new_sent = update_sentiment(data)
+        print('-=======================================-0-90-8908-97-07-87-87870896-968709',new_sent)
+        session_history_node.overall_sentiments = new_sent
+        session_history_node.save()
 
 
 def extend_episode(request,user,bot,session):
@@ -211,8 +211,8 @@ def extend_episode(request,user,bot,session):
     check = f"Episode - {today}"
     obj_ep = Session_History.nodes.get(uid = session,name = check)
     try:
-        s1 = sentiment(request,bot)
-        s2 = sentiment(request,user)
+        s1 = sentiment(bot)
+        s2 = sentiment(user)
         user_obj = Episode_Part(uid = session,name='Bot',response=bot,sentiments=s1).save()
         bot_bot = Episode_Part(uid = session,name='User',response=user,sentiments=s2).save()
         user_obj.relation.connect(obj_ep)
