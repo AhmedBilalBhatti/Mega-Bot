@@ -177,12 +177,16 @@ def maintain_history(request, user, bot):
         session_history_node.save_message("Bot", bot)
 
 def extend_episode(request,user,bot,session):
-    today = datetime.combine(date.today(), datetime.min.time())
-    check = f"Episode - {today.strftime('%Y-%m-%d')}"
-    obj_ep = History_Chat.nodes.get(name = check,uid = session)
-
-    user_obj = Episode_Part(uid = session,name='Bot',response=bot)
-    bot_bot = Episode_Part(uid = session,name='User',response=user)
+    today = datetime.now().strftime('%Y-%m-%d')
+    check = f"Episode - {today}"
+    obj_ep = Session_History.nodes.get(uid = session,name = check)
+    try:
+        user_obj = Episode_Part(uid = session,name='Bot',response=bot).save()
+        bot_bot = Episode_Part(uid = session,name='User',response=user).save()
+        user_obj.relation.connect(obj_ep)
+        bot_bot.relation.connect(obj_ep)
+    except:
+        print('Error')
 
 
 # ========================================================================================================
@@ -313,8 +317,7 @@ def chat(request):
                 else:
                     bot_response = web_scraping(message)
             maintain_history(request, message, bot_response)
-            if bot_response:
-                extend_episode(request,message,bot_response,session)
+            extend_episode(request,message,bot_response,session)
             return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})

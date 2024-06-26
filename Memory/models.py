@@ -42,7 +42,7 @@ class Episode_Part(StructuredNode):
     sentiments = StringProperty(default=None,blank=True)
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-    relation = RelationshipTo('History_Chat', 'HAS_CHAT')
+    relation = RelationshipFrom('Session_History', 'HAS_CHAT')
 
 
 

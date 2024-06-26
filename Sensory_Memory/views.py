@@ -8,6 +8,23 @@ import os
 import time
 import base64
 import logging
+import pywifi
+from pywifi import PyWiFi, const
+
+def get_current_wifi_name():
+    wifi = PyWiFi()
+    iface = wifi.interfaces()[0]
+    iface.scan()
+    time.sleep(2)
+    scan_results = iface.scan_results()
+    for network in scan_results:
+        if network.ssid == "DJI Tello":
+            return True
+    return False
+
+
+get_current_wifi_name()
+
 
 is_recording = False
 out = None
@@ -80,49 +97,112 @@ def Tello_Land():
 #     finally:
 #         tello.streamoff()
 #         tello.end()
+
 def generate_video_frames():
-    tello = Tello()
-    tello.connect()
-    tello.streamon()
+    check_for = get_current_wifi_name()
+    if check_for:
+        tello = Tello()
+        tello.connect()
+        tello.streamon()
 
-    try:
-        while True:
-            frame_read = tello.get_frame_read()
-            if frame_read.stopped:
-                tello.streamoff()
-                tello.end()
-                break
-            
-            frame = frame_read.frame
-            if frame is not None:
-                # Object detection logic
-                classIds, confs, bbox = net.detect(frame, confThreshold=thres, nmsThreshold=nmsThres)
-                try:
-                    for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):
-                        cvzone.cornerRect(frame, box)
-                        cv2.putText(frame, f'{classNames[classId - 1].upper()} {round(conf * 100, 2)}',
-                                    (box[0] + 10, box[1] + 30), cv2.FONT_HERSHEY_COMPLEX_SMALL,
-                                    1, (0, 255, 0), 2)
-                except Exception as e:
-                    logging.error(f"Error during object detection: {e}")
+        try:
+            while True:
+                frame_read = tello.get_frame_read()
+                if frame_read.stopped:
+                    tello.streamoff()
+                    tello.end()
+                    break
+                
+                frame = frame_read.frame
+                if frame is not None:
+                    # Object detection logic
+                    classIds, confs, bbox = net.detect(frame, confThreshold=thres, nmsThreshold=nmsThres)
+                    try:
+                        for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):
+                            cvzone.cornerRect(frame, box)
+                            cv2.putText(frame, f'{classNames[classId - 1].upper()} {round(conf * 100, 2)}',
+                                        (box[0] + 10, box[1] + 30), cv2.FONT_HERSHEY_COMPLEX_SMALL,
+                                        1, (0, 255, 0), 2)
+                    except Exception as e:
+                        logging.error(f"Error during object detection: {e}")
 
-                _, jpeg = cv2.imencode('.jpg', frame)
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
-            else:
-                logging.error("Frame is None")
-                continue
-            
-            time.sleep(0.1)  # Sleep to prevent high CPU usage
-    except Exception as e:
-        logging.error(f"Error during video stream handling: {e}")
-    finally:
-        tello.streamoff()
-        tello.end()
+                    _, jpeg = cv2.imencode('.jpg', frame)
+                    yield (b'--frame\r\n'
+                           b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+                else:
+                    logging.error("Frame is None")
+                    continue
+                
+                time.sleep(0.1)  
+        except Exception as e:
+            logging.error(f"Error during video stream handling: {e}")
+        finally:
+            tello.streamoff()
+            tello.end()
 
 @require_GET
 def drone_video_feed(request):
     return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+
+
+
+
+
+
+# def generate_video_frames():
+#     tello = Tello()
+#     try:
+#         tello.connect()
+#         tello.streamon()
+
+    
+#         while True:
+#             frame_read = tello.get_frame_read()
+#             if frame_read.stopped:
+#                 tello.streamoff()
+#                 tello.end()
+#                 break
+            
+#             frame = frame_read.frame
+#             if frame is not None:
+#                 # Object detection logic
+#                 classIds, confs, bbox = net.detect(frame, confThreshold=thres, nmsThreshold=nmsThres)
+#                 try:
+#                     for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):
+#                         cvzone.cornerRect(frame, box)
+#                         cv2.putText(frame, f'{classNames[classId - 1].upper()} {round(conf * 100, 2)}',
+#                                     (box[0] + 10, box[1] + 30), cv2.FONT_HERSHEY_COMPLEX_SMALL,
+#                                     1, (0, 255, 0), 2)
+#                 except Exception as e:
+#                     logging.error(f"Error during object detection: {e}")
+
+#                 _, jpeg = cv2.imencode('.jpg', frame)
+#                 yield (b'--frame\r\n'
+#                        b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+#             else:
+#                 logging.error("Frame is None")
+#                 continue
+            
+#             time.sleep(0.1)  
+#     except Exception as e:
+#         logging.error(f"Error during video stream handling: {e}")
+#     # finally:
+#     #     tello.streamoff()
+#     #     tello.end()
+
+# @require_GET
+# def drone_video_feed(request):
+#     return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+
+
+
+
+
+
+
+
 
 
 def take_picture(request):
