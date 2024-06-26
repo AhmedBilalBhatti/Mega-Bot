@@ -155,23 +155,23 @@
                                 "></i> <span>Help</span> </button>
                         </li> -->
 
-<li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Ratings" class="nav-item" role="presentation">
-    <button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onmouseover="changeColorOnHover(this)" onmouseout="restoreColor(this)">
-        <i class="bi bi-camera" style="color: #fff; transition: color 0.3s;">
-        </i>
-        <span>Rating</span>
-    </button>
-    <script>
-        function changeColorOnHover(element) {
-            var icon = element.querySelector('i');
-            icon.style.color = '#3BEDB2';
-        }
-        function restoreColor(element) {
-            var icon = element.querySelector('i');
-            icon.style.color = '#fff';
-        }
-    </script>
-</li>
+                        <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Ratings" class="nav-item" role="presentation">
+                            <button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onmouseover="changeColorOnHover(this)" onmouseout="restoreColor(this)">
+                                <i class="bi bi-camera" style="color: #fff; transition: color 0.3s;">
+                                </i>
+                                <span>Drone Video</span>
+                            </button>
+                            <script>
+                                function changeColorOnHover(element) {
+                                    var icon = element.querySelector('i');
+                                    icon.style.color = '#3BEDB2';
+                                }
+                                function restoreColor(element) {
+                                    var icon = element.querySelector('i');
+                                    icon.style.color = '#fff';
+                                }
+                            </script>
+                        </li>
 
 
                         <li data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Settings" class="nav-item"
@@ -946,7 +946,7 @@
         });
     </script>
 
-<!--     <script>
+     <script>
         document.onkeydown = (e) => {
             if (e.key == 123) {
                 e.preventDefault();
@@ -964,7 +964,7 @@
                 e.preventDefault();
             }
             };
-    </script> -->
+    </script>
     <script>
     document.addEventListener('contextmenu', function(event) {
     event.preventDefault();

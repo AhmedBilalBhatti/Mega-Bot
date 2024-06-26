@@ -150,7 +150,6 @@ def contact(request):
     return render(request,'contact-us.html',{'session':session})
 
 # =======================================================================================================
-
 def maintain_history(request, user, bot):
     user_id = request.session.get('user_id')
     user_node = Signups.nodes.filter(uid=user_id).first()
@@ -176,6 +175,15 @@ def maintain_history(request, user, bot):
     if session_history_node:
         session_history_node.save_message("User", user)
         session_history_node.save_message("Bot", bot)
+
+def extend_episode(request,user,bot,session):
+    today = datetime.combine(date.today(), datetime.min.time())
+    check = f"Episode - {today.strftime('%Y-%m-%d')}"
+    obj_ep = History_Chat.nodes.get(name = check,uid = session)
+
+    user_obj = Episode_Part(uid = session,name='Bot',response=bot)
+    bot_bot = Episode_Part(uid = session,name='User',response=user)
+
 
 # ========================================================================================================
 
@@ -305,6 +313,8 @@ def chat(request):
                 else:
                     bot_response = web_scraping(message)
             maintain_history(request, message, bot_response)
+            if bot_response:
+                extend_episode(request,message,bot_response,session)
             return JsonResponse({'bot_response': bot_response})
 
     return render(request, 'chat.html',{'current_user':current_user})

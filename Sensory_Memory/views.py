@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.decorators.http import require_GET
 from django.http import StreamingHttpResponse
 from djitellopy import Tello
 from .object_detect import *
@@ -119,6 +120,7 @@ def generate_video_frames():
         tello.streamoff()
         tello.end()
 
+@require_GET
 def drone_video_feed(request):
     return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
 

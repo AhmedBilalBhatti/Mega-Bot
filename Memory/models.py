@@ -21,15 +21,32 @@ class Signups(StructuredNode):
     class Meta:
         labels = ["Signups","Person"]
 
+
+
+
+
 class History_Chat(StructuredNode):
     uid = StringProperty()
     name = StringProperty()
     chat = ArrayProperty(StringProperty())
     created_at = DateTimeProperty(default_now=True)
-    # sentiments = StringProperty()
+    sentiments = StringProperty(default=None,blank=True)
     memory_list = ArrayProperty(StringProperty())
 
     history = RelationshipTo('Session_History', 'HAS')
+
+class Episode_Part(StructuredNode):
+    uid = StringProperty()
+    name = StringProperty()
+    response = StringProperty()
+    sentiments = StringProperty(default=None,blank=True)
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+    relation = RelationshipTo('History_Chat', 'HAS_CHAT')
+
+
+
+
 
 class Session_History(StructuredNode):
     uid = StringProperty()
@@ -69,6 +86,7 @@ class SocialNetwork(StructuredNode):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.uid = str(uuid4())
+
 
 # =================================================================================================
 
