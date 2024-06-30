@@ -98,8 +98,21 @@ def Tello_Land():
 #         tello.streamoff()
 #         tello.end()
 
-def get_command(message):
-    return message
+def create_parts(text_node,session,parts):
+    part_u = CommandPart(uid=session,part=parts).save()
+    print(part_u)
+    text_node.text_part.connect(part_u)
+
+def get_command(message,session):
+    if message and session:
+        text_node = CommandText(uid=session,sentence = message).save()
+        n = TextSensor.nodes.filter(uid=session).first()
+        n.text_sense.connect(text_node)
+        splitted = message.split()
+        for i in splitted:
+            create_parts(text_node,session,i)
+
+
 
 def make_sensory_and_link(request):
     session = request.session.get('user_id')
