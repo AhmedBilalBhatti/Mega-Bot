@@ -3,6 +3,7 @@ from django.views.decorators.http import require_GET
 from django.http import StreamingHttpResponse
 from djitellopy import Tello
 from .object_detect import *
+from Memory.models import *
 import cv2
 import os
 import time
@@ -10,6 +11,11 @@ import base64
 import logging
 import pywifi
 from pywifi import PyWiFi, const
+
+
+
+is_recording = False
+out = None
 
 def get_current_wifi_name():
     wifi = PyWiFi()
@@ -22,12 +28,6 @@ def get_current_wifi_name():
             return True
     return False
 
-
-get_current_wifi_name()
-
-
-is_recording = False
-out = None
 
 logging.basicConfig(level=logging.INFO)
 
@@ -98,10 +98,34 @@ def Tello_Land():
 #         tello.streamoff()
 #         tello.end()
 
-def generate_video_frames():
-    check_for = get_current_wifi_name()
+def make_sensory_and_link(request):
+    session = request.session.get('user_id')
+    user = Signups.nodes.filter(uid=session).first()
+    try:
+        sensor_node = SensoryMemory.nodes.get(uid = session,name='Sensor')
+    except:
+        sensor_node = SensoryMemory(uid = session,name='Sensor').save()
+        user.sense.connect(sensor_node)
+
+    try:
+        text_node = TextSensor.nodes.get(uid = session,name='Text Sensor')
+    except:
+        text_node = TextSensor(uid = session,name='Text Sensor').save()
+        sensor_node.textsense.connect(text_node)
+
+    try:
+        agent = Sensor.nodes.get(uid = session,name='DJI-TELLO')
+    except:
+        agent = Sensor(uid = session,name='DJI-TELLO').save()
+        sensor_node.sensor.connect(agent)
+
+
+
+
+def generate_video_frames(request):
+    check_for =True
     if check_for:
-        from Memory.views import make_sensory_and_link,request
+        from Memory.views import make_sensory_and_link
         make_sensory_and_link(request)
         tello = Tello()
         tello.connect()
@@ -144,7 +168,7 @@ def generate_video_frames():
 
 @require_GET
 def drone_video_feed(request):
-    return StreamingHttpResponse(generate_video_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(generate_video_frames(request), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 

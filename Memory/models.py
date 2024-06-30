@@ -87,7 +87,29 @@ class SocialNetwork(StructuredNode):
 class SensoryMemory(StructuredNode):
     uid = StringProperty(unique_index=True)
     name = StringProperty()
-    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))      
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S')) 
+
+    sense = RelationshipTo('Sense', 'SENSES')
+    textsense = RelationshipTo('TextSensor', 'HAS_SENTENCE')
+    sensor = RelationshipTo('Sensor', 'HAS_SENSOR')
+
+class TextSensor(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    name = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+    text_sense = RelationshipTo('Text', 'SENSES')
+
+class Sensor(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    name = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+
+class Text(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    name = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 class Sense(StructuredNode):
     uid = StringProperty(unique_index=True)
