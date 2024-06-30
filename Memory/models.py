@@ -98,7 +98,7 @@ class TextSensor(StructuredNode):
     name = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-    text_sense = RelationshipTo('Text', 'SENSES')
+    text_sense = RelationshipTo('CommandText', 'HAS')
 
 class Sensor(StructuredNode):
     uid = StringProperty(unique_index=True)
@@ -106,10 +106,24 @@ class Sensor(StructuredNode):
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
-class Text(StructuredNode):
+
+
+
+
+class CommandText(StructuredNode):
     uid = StringProperty(unique_index=True)
-    name = StringProperty()
+    sentence = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+    text_sense = RelationshipTo('CommandPart', 'HAS_PART')
+
+
+class CommandPart(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    part = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))   
+
+
 
 class Sense(StructuredNode):
     uid = StringProperty(unique_index=True)

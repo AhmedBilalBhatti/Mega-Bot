@@ -98,6 +98,9 @@ def Tello_Land():
 #         tello.streamoff()
 #         tello.end()
 
+def get_command(message):
+    return message
+
 def make_sensory_and_link(request):
     session = request.session.get('user_id')
     user = Signups.nodes.filter(uid=session).first()

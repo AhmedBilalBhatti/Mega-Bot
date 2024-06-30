@@ -2,6 +2,7 @@ from django.http import HttpResponse ,JsonResponse,HttpResponseBadRequest
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from Sensory_Memory.views import get_command
 from django.shortcuts import render,redirect
 from Memory.face_id import FaceRecognition
 from django.contrib.auth import logout
@@ -313,30 +314,33 @@ def chat(request):
                     print(results,meta)
 
             elif kernel.getPredicate("takeoff"):
+                get_command(message)
                 Tello_Takeoff()
                 return JsonResponse({'bot_response': bot_response})
         
             elif kernel.getPredicate("land"):
+                get_command(message)
                 Tello_Land()
             
             elif kernel.getPredicate("moveforward"):
+                get_command(message)
                 value = kernel.getPredicate("moveforward")
                 Move_Forward(value)
 
             elif kernel.getPredicate("movebackward"):
+                get_command(message)
                 value = kernel.getPredicate("movebackward")
                 Move_Backward(value)
 
             elif kernel.getPredicate("moveleft"):
+                get_command(message)
                 value = kernel.getPredicate("moveleft")
                 Move_Left(value)
 
             elif kernel.getPredicate("moveright"):
+                get_command(message)
                 value = kernel.getPredicate("moveright")
                 Move_Right(value)
-
-            elif kernel.getPredicate("takepicture"):
-                take_picture()
 
             default_message = "I'm sorry, I didn't understand what you said."
             if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said.") or bot_response=='':
