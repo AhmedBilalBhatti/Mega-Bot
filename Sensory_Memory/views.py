@@ -18,7 +18,7 @@ def get_current_wifi_name():
     time.sleep(2)
     scan_results = iface.scan_results()
     for network in scan_results:
-        if network.ssid == "DJI Tello":
+        if network.ssid == "DJI-TELLO":
             return True
     return False
 
@@ -101,6 +101,8 @@ def Tello_Land():
 def generate_video_frames():
     check_for = get_current_wifi_name()
     if check_for:
+        from Memory.views import make_sensory_and_link,request
+        make_sensory_and_link(request)
         tello = Tello()
         tello.connect()
         tello.streamon()

@@ -220,6 +220,15 @@ def extend_episode(request,user,bot,session):
     except:
         print('Error')
 
+def make_sensory_and_link(request):
+    session = request.session.get('user_id')
+    user = Signups.nodes.filter(uid=session).first()
+    try:
+        sensor_node = SensoryMemory.nodes.get(uid = session,name='Sensor')
+    except:
+        sensor_node = SensoryMemory(uid = session,name='Sensor')
+        user.sense.connect(sensor_node)
+
 
 # ========================================================================================================
 

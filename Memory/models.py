@@ -16,6 +16,7 @@ class Signups(StructuredNode):
     ip = StringProperty(default=None,blank=True)
 
     chat = RelationshipTo('History_Chat', 'HAS')
+    sense = RelationshipTo('SensoryMemory', 'SENSES')
 
 
     class Meta:
@@ -83,6 +84,17 @@ class SocialNetwork(StructuredNode):
         super().__init__(*args, **kwargs)
         self.uid = str(uuid4())
 
+class SensoryMemory(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    name = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))      
+
+class Sense(StructuredNode):
+    uid = StringProperty(unique_index=True)
+    sense_name = StringProperty()
+    start_value = StringProperty()
+    end_value = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S')) 
 
 # =================================================================================================
 
