@@ -105,13 +105,8 @@ class Sensor(StructuredNode):
     name = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-
-
-
-
-
 class CommandText(StructuredNode):
-    uid = StringProperty()
+    # uid = StringProperty()
     sentence = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -119,7 +114,7 @@ class CommandText(StructuredNode):
 
 
 class CommandPart(StructuredNode):
-    uid = StringProperty()
+    # uid = StringProperty()
     part = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))   
 

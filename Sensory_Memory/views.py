@@ -99,20 +99,17 @@ def Tello_Land():
 #         tello.end()
 
 def create_parts(text_node,session,parts):
-    part_u = CommandPart(uid=session,part=parts).save()
-    print(part_u)
+    part_u = CommandPart(part=parts).save()
     text_node.text_part.connect(part_u)
 
 def get_command(message,session):
     if message and session:
-        text_node = CommandText(uid=session,sentence = message).save()
+        text_node = CommandText(sentence = message).save()
         n = TextSensor.nodes.filter(uid=session).first()
         n.text_sense.connect(text_node)
         splitted = message.split()
         for i in splitted:
             create_parts(text_node,session,i)
-
-
 
 def make_sensory_and_link(request):
     session = request.session.get('user_id')
@@ -135,11 +132,8 @@ def make_sensory_and_link(request):
         agent = Sensor(uid = session,name='DJI-TELLO').save()
         sensor_node.sensor.connect(agent)
 
-
-
-
 def generate_video_frames(request):
-    check_for =True
+    check_for = get_current_wifi_name()
     if check_for:
         from Memory.views import make_sensory_and_link
         make_sensory_and_link(request)
