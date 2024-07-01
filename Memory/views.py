@@ -317,6 +317,20 @@ def chat(request):
                 get_command(message,session)
                 Tello_Takeoff()
                 return JsonResponse({'bot_response': bot_response})
+
+
+            elif kernel.getPredicate("turnon") or kernel.getPredicate("sec"):
+                get_command(message,session)
+                if kernel.getPredicate("sec"):
+                    val = kernel.getPredicate("sec")
+                    warmup(val)
+                else:
+                    warmup(None)
+                return JsonResponse({'bot_response': bot_response})
+
+
+
+
         
             elif kernel.getPredicate("land"):
                 get_command(message,session)

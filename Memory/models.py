@@ -122,10 +122,19 @@ class CommandPart(StructuredNode):
 
 class Sense(StructuredNode):
     uid = StringProperty(unique_index=True)
-    sense_name = StringProperty()
-    start_value = StringProperty()
-    end_value = StringProperty()
-    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S')) 
+    sense_name = StringProperty(default="FLIGHT")
+    temperature_range = StringProperty()
+    lowest_temperature = StringProperty()
+    highest_temperature = StringProperty()
+    battery = StringProperty()
+    barometer = StringProperty()
+    attitude = StringProperty()
+    speed = StringProperty()
+    height = StringProperty()
+    flight_time = StringProperty()
+    distance_tof = StringProperty()
+    created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
 
 # =================================================================================================
 

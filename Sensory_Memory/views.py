@@ -48,6 +48,95 @@ def Tello_Land():
 		print("Error landing:", e)
 
 
+def warmup(para=None):
+    tello = Tello()
+    try:
+        tello.connect()
+        tello.turn_motor_on()
+        if para:
+            time.sleep(para)
+        else:
+            time.sleep(15)
+        tello.turn_motor_off()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        tello.end()
+
+
+
+
+
+
+
+
+
+def fetch_drone_data(tello):
+    tello = Tello()
+    tello.connect()
+    def query_temperature(tello):
+        response = tello.send_read_command('temp?')
+        return response
+
+    def query_barometer(tello):
+        response = tello.send_read_command('baro?')
+        return response
+
+    def query_attitude(tello):
+        response = tello.send_read_command('attitude?')
+        return response
+
+    def query_speed(tello):
+        response = tello.send_read_command('speed?')
+        return response
+
+    def query_height(tello):
+        response = tello.send_read_command('height?')
+        return response
+
+    def query_flight_time(tello):
+        response = tello.get_flight_time()
+        return response
+
+    def query_distance_tof(tello):
+        response = tello.get_distance_tof()
+        return response
+
+    temperature_range = query_temperature(tello)
+    battery = tello.query_battery()
+    barometer = query_barometer(tello)
+    attitude = query_attitude(tello)
+    speed = query_speed(tello)
+    height = query_height(tello)
+    flight_time = query_flight_time(tello)
+    distance_tof = query_distance_tof(tello)
+
+    temperatures = temperature_range.replace('C', '').split('~')
+    lowest_temp = min(int(temperatures[0]), int(temperatures[1]))
+    highest_temp = max(int(temperatures[0]), int(temperatures[1]))
+
+    return {'temperature_range': temperature_range,'lowest_temperature': lowest_temp,'highest_temperature': highest_temp,'battery': battery,
+            'barometer': barometer,'attitude': attitude,'speed': speed,'height': height,'distance_tof': distance_tof}
+
+# drone_data = fetch_drone_data(tello)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # def generate_video_frames():
 #     tello = Tello()
 #     tello.connect()
@@ -151,7 +240,6 @@ def generate_video_frames(request):
                 
                 frame = frame_read.frame
                 if frame is not None:
-                    # Object detection logic
                     classIds, confs, bbox = net.detect(frame, confThreshold=thres, nmsThreshold=nmsThres)
                     try:
                         for classId, conf, box in zip(classIds.flatten(), confs.flatten(), bbox):

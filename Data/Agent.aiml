@@ -251,14 +251,44 @@
 
 
 
+<category>
+  <pattern>TURNON MOTORS</pattern>
+  <template>
+    <set name="turnon">turnon</set>
+    <random>
+      <li>OK, Turning on.</li>
+      <li>Roger</li>
+      <li>Initiating motor turning on procedure.</li>
+    </random>
+  </template>
+</category>
 
+<category>
+  <pattern>TURNON MOTORS FOR * SEC</pattern>
+  <template>
+    <think>
+      <set name="sec"><star/></set>
+    </think>
+    <random>
+      <li>OK, Turning on.</li>
+      <li>Roger</li>
+      <li>Initiating motor turning on procedure.</li>
+    </random>
+  </template>
+</category>
 
-
-
-
-
-
-
+<category>
+  <pattern>ACTIVATE MOTORS</pattern>
+  <template>
+    <set name="turnon">turnon</set>
+    <random>
+      <li>OK, motors activated.</li>
+      <li>Roger, motors are now active.</li>
+      <li>Motors are running.</li>
+      <li>Activating motors now.</li>
+    </random>
+  </template>
+</category>
 
 
 
