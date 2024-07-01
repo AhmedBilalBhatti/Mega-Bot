@@ -78,8 +78,8 @@ def signup_login(request, action=None):
             user.save()
             Signup_Thanks(name,email,msg)
             print("Id===", face_id)
-            # if has_webcam:
-            #     addFace(face_id)
+            if has_webcam:
+                addFace(face_id)
             request.session['user_id'] = face_id or user.uid
             return redirect('index')
         else:
@@ -357,7 +357,7 @@ def chat(request):
                 Move_Right(value)
 
             default_message = "I'm sorry, I didn't understand what you said."
-            if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said.") or bot_response=='':
+            if bot_response == default_message or default_message in bot_response or bot_response.endswith("I didn't understand what you said.") or bot_response=='' or bot_response=='I do not understand. What is your occupation?':
                 chk = search_ip(request,current_user.email)
                 print('shkcgsdg',chk)
                 if chk:
