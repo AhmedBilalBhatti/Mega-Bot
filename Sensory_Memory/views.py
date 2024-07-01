@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.http import StreamingHttpResponse
+from datetime import datetime, timedelta
 from djitellopy import Tello
 from .object_detect import *
 from Memory.models import *
@@ -116,9 +117,7 @@ def fetch_drone_data(tello):
     highest_temp = max(int(temperatures[0]), int(temperatures[1]))
 
     return {'temperature_range': temperature_range,'lowest_temperature': lowest_temp,'highest_temperature': highest_temp,'battery': battery,
-            'barometer': barometer,'attitude': attitude,'speed': speed,'height': height,'distance_tof': distance_tof}
-
-# drone_data = fetch_drone_data(tello)
+            'barometer': barometer,'attitude': attitude,'speed': speed,'height': height,'flight_time':flight_time,'distance_tof': distance_tof}
 
 
 
@@ -221,11 +220,53 @@ def make_sensory_and_link(request):
         agent = Sensor(uid = session,name='DJI-TELLO').save()
         sensor_node.sensor.connect(agent)
 
+
+def update_sensor(request):
+    session = request.session.get('user_id')    
+    drone_data = fetch_drone_data(tello)
+    agent = Sensor.nodes.get(uid = session,name='DJI-TELLO')
+    existing_flights_count=""
+    try:
+        existing_flights_count = Sense.nodes.filter(sense_name__startswith="FLIGHT").count()
+    except:
+        existing_flights_count = 0
+
+    flight_number = existing_flights_count + 1
+
+    sensor_node = ""
+    try:   
+        sensor_node = Sense.nodes.filter(created_at__gte=datetime.now() - timedelta(minutes=15)).order_by('-created_at').first()
+        sensor_node.updated_on = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sensor_node.save()
+    except:
+        sensor_node = Sense()
+        
+
+    sensor_node.sense_name = f"FLIGHT {flight_number}"
+    sensor_node.temperature_range = f"{drone_data['temperature_range']}°C"
+    sensor_node.lowest_temperature = f"{drone_data['lowest_temperature']}°C"
+    sensor_node.highest_temperature = f"{drone_data['highest_temperature']}°C"
+    sensor_node.battery = f"{drone_data['battery']}%"
+    sensor_node.barometer = f"{drone_data['barometer']} mbar"
+    sensor_node.attitude = f"{drone_data['attitude']}"
+    sensor_node.speed = f"{drone_data['speed']} cm/s"
+    sensor_node.height = f"{drone_data['height']}"
+    sensor_node.flight_time = f"{drone_data['flight_time']} seconds"
+    sensor_node.distance_tof = f"{drone_data['distance_tof']} cm" 
+    sensor_node.save()
+
+    agent.sense.connect(sensor_node)
+
+        
+
+
+
 def generate_video_frames(request):
     check_for = get_current_wifi_name()
     if check_for:
         from Memory.views import make_sensory_and_link
         make_sensory_and_link(request)
+        update_sensor(request)
         tello = Tello()
         tello.connect()
         tello.streamon()

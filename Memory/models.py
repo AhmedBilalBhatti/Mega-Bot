@@ -23,9 +23,6 @@ class Signups(StructuredNode):
         labels = ["Signups","Person"]
 
 
-
-
-
 class History_Chat(StructuredNode):
     uid = StringProperty()
     name = StringProperty()
@@ -89,7 +86,6 @@ class SensoryMemory(StructuredNode):
     name = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S')) 
 
-    sense = RelationshipTo('Sense', 'SENSES')
     textsense = RelationshipTo('TextSensor', 'HAS_SENTENCE')
     sensor = RelationshipTo('Sensor', 'HAS_SENSOR')
 
@@ -101,9 +97,10 @@ class TextSensor(StructuredNode):
     text_sense = RelationshipTo('CommandText', 'HAS')
 
 class Sensor(StructuredNode):
-    uid = StringProperty(unique_index=True)
+    uid = StringProperty()
     name = StringProperty()
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    sense = RelationshipTo('Sense', 'SENSES')
 
 class CommandText(StructuredNode):
     # uid = StringProperty()
@@ -119,9 +116,8 @@ class CommandPart(StructuredNode):
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))   
 
 
-
 class Sense(StructuredNode):
-    uid = StringProperty(unique_index=True)
+    # uid = StringProperty(unique_index=False)
     sense_name = StringProperty(default="FLIGHT")
     temperature_range = StringProperty()
     lowest_temperature = StringProperty()
@@ -133,8 +129,8 @@ class Sense(StructuredNode):
     height = StringProperty()
     flight_time = StringProperty()
     distance_tof = StringProperty()
+    updated_on = StringProperty(default='None')
     created_at = StringProperty(default=lambda: datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-
 
 # =================================================================================================
 
