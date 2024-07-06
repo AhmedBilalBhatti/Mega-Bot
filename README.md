@@ -36,7 +36,7 @@
 
 # Email Triggers
 **1. Signups**</br>
-![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/c858daf2-eb61-4c4d-af1b-8d491ff4a414)
+![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/c858daf2-eb61-4c4d-af1b-8d491ff4a414)</br>
 **2. Login**</br>
 ![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/831d784e-68e4-44b3-b354-8db7d1c5aced)
 
