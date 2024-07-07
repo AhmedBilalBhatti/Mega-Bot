@@ -34,9 +34,11 @@
 ![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/2e1d778d-1b53-4fa5-ab9f-c393b58dd97e)
 ![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/b0726ab0-2f51-4990-aa21-c57dda6fbf68)
 
-# Graph (DataBase):
-![graph](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/be03f183-6f12-476d-8ef4-f97293d1b0fb)
-
+# Graph (DataBase):\
+**1. With Bot Responses**:
+![graph](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/fac21dab-7101-4d5d-8752-7e597f53fa21)
+**2. Without Bot Responses**:
+![graph1](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/da5bb682-e004-44f9-bee1-26aa2dbf6b92)
 # Email Triggers
 **1. Signups**</br>
 ![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/c858daf2-eb61-4c4d-af1b-8d491ff4a414)</br>
