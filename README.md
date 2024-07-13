@@ -34,7 +34,7 @@
 ![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/2e1d778d-1b53-4fa5-ab9f-c393b58dd97e)
 ![image](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/b0726ab0-2f51-4990-aa21-c57dda6fbf68)
 
-# Graph (DataBase):\
+# Graph (DataBase):
 **1. With Bot Responses**:
 ![graph](https://github.com/AhmedBilalSSG/Mega-Bot/assets/110194946/fac21dab-7101-4d5d-8752-7e597f53fa21)
 **2. Without Bot Responses**:
